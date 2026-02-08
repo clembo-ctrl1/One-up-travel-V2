@@ -1,0 +1,2087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Trip | One-Up Travel</title>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Leaflet.js for Maps -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", sans-serif;
+      background: #0a0a0f;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    /* SUBTLE TEXTURE BACKGROUND */
+    .gradient-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(139, 92, 246, 0.06) 0%, transparent 50%),
+        #0a0a0f;
+      z-index: -1;
+    }
+
+    /* HEADER */
+    header {
+      padding: 25px 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      background: rgba(10, 10, 15, 0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 100;
+    }
+
+    .header-left {
+      flex: 1;
+      display: flex;
+      align-items: center;
+    }
+
+    .header-center {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+    }
+
+    .header-right {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .logo img {
+      height: 40px;
+      transition: all 0.3s ease;
+    }
+
+    .logo img:hover {
+      transform: scale(1.05);
+    }
+
+    .header-menu-btn {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .header-menu-btn:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .header-menu-btn i {
+      width: 18px;
+      height: 18px;
+    }
+
+    nav {
+      display: none;
+    }
+
+    .signin-btn {
+      background: #6366f1;
+      color: white;
+      padding: 10px 24px;
+      border-radius: 10px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .signin-btn:hover {
+      background: #4f46e5;
+      transform: translateY(-2px);
+    }
+
+    /* LEFT SIDEBAR */
+    /* LEFT SIDEBAR */
+    .left-sidebar {
+      position: fixed;
+      top: 0;
+      left: -280px;
+      width: 280px;
+      height: 100vh;
+      background: rgba(12, 12, 20, 0.97);
+      backdrop-filter: blur(24px);
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 24px 20px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1000;
+      overflow-y: auto;
+    }
+
+    .left-sidebar.open {
+      left: 0;
+      box-shadow: 5px 0 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .sidebar-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.4s ease;
+      z-index: 999;
+    }
+
+    .sidebar-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .sidebar-content {
+      margin-top: 56px;
+      width: 100%;
+    }
+
+    .sidebar-section {
+      margin-bottom: 28px;
+      width: 100%;
+    }
+
+    .sidebar-section-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: rgba(255, 255, 255, 0.35);
+      margin-bottom: 12px;
+      padding-left: 12px;
+      font-weight: 600;
+    }
+
+    .sidebar-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      background: transparent;
+      border: 1px solid transparent;
+      color: rgba(255, 255, 255, 0.7);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-bottom: 4px;
+      text-decoration: none;
+      text-align: left;
+      font-weight: 500;
+      font-size: 14px;
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+
+    .sidebar-item:hover {
+      background: rgba(99, 102, 241, 0.12);
+      border-color: rgba(99, 102, 241, 0.25);
+      color: white;
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.15), inset 0 0 20px rgba(99, 102, 241, 0.05);
+    }
+
+    .sidebar-item.active {
+      background: rgba(99, 102, 241, 0.15);
+      border-color: rgba(99, 102, 241, 0.3);
+      color: white;
+    }
+
+    .sidebar-item.primary {
+      background: rgba(99, 102, 241, 0.15);
+      border-color: rgba(99, 102, 241, 0.4);
+      color: #a5b4fc;
+      font-weight: 600;
+    }
+
+    .sidebar-item.primary:hover {
+      background: rgba(99, 102, 241, 0.25);
+      border-color: rgba(99, 102, 241, 0.5);
+      color: white;
+      box-shadow: 0 0 24px rgba(99, 102, 241, 0.25), inset 0 0 20px rgba(99, 102, 241, 0.08);
+    }
+
+    .sidebar-item i {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      opacity: 0.7;
+    }
+
+    .sidebar-item:hover i {
+      opacity: 1;
+    }
+
+    .sidebar-close-btn {
+      position: absolute;
+      top: 20px;
+      right: 16px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: white;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sidebar-close-btn:hover {
+      background: rgba(239, 68, 68, 0.15);
+      border-color: rgba(239, 68, 68, 0.4);
+      box-shadow: 0 0 16px rgba(239, 68, 68, 0.15);
+    }
+
+    .sidebar-close-btn i,
+    .sidebar-close-btn svg {
+      width: 18px;
+      height: 18px;
+      color: rgba(255, 255, 255, 0.8);
+      stroke: rgba(255, 255, 255, 0.8);
+      stroke-width: 2.5;
+    }
+
+    .sidebar-close-btn:hover i,
+    .sidebar-close-btn:hover svg {
+      color: white;
+      stroke: white;
+    }
+
+    .sidebar-divider {
+      height: 1px;
+      background: rgba(255, 255, 255, 0.06);
+      margin: 8px 0 20px;
+    }
+
+    /* MAIN CONTAINER */
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 0 20px 60px;
+    }
+
+    /* HERO IMAGE */
+    .hero-image {
+      width: 100%;
+      height: 200px;
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      margin-bottom: 30px;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(139, 92, 246, 0.3)),
+                  url('https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800&auto=format&fit=crop') center/cover;
+    }
+
+    .hero-content {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      z-index: 2;
+    }
+
+    .hero-content h1 {
+      font-size: 32px;
+      font-weight: 800;
+      margin-bottom: 5px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+
+    .hero-content p {
+      font-size: 14px;
+      opacity: 0.9;
+      text-shadow: 0 1px 5px rgba(0,0,0,0.5);
+    }
+
+    /* STATS GRID */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+
+    .stat-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 16px 12px;
+      text-align: center;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      opacity: 0.5;
+      margin-bottom: 8px;
+    }
+
+    .stat-value {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .stat-subvalue {
+      font-size: 12px;
+      opacity: 0.6;
+      margin-top: 2px;
+    }
+
+    /* CIRCULAR PROGRESS */
+    .progress-circle {
+      width: 50px;
+      height: 50px;
+      margin: 0 auto 8px;
+      position: relative;
+    }
+
+    .progress-circle svg {
+      transform: rotate(-90deg);
+    }
+
+    .progress-circle circle {
+      fill: none;
+      stroke-width: 4;
+    }
+
+    .progress-bg {
+      stroke: rgba(255, 255, 255, 0.1);
+    }
+
+    .progress-fill {
+      stroke: #6366f1;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 0.5s ease;
+    }
+
+    .progress-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    /* VIEW TABS */
+    .view-tabs {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 30px;
+      justify-content: center;
+    }
+
+    .tab-btn {
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .tab-btn.active {
+      background: #6366f1;
+      border-color: #6366f1;
+      color: white;
+    }
+
+    .tab-btn:hover:not(.active) {
+      background: rgba(255, 255, 255, 0.08);
+      color: white;
+    }
+
+    /* SECTION */
+    .section {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      opacity: 0.5;
+      margin-bottom: 20px;
+    }
+
+    /* ITEM CARD */
+    .item-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 16px;
+      position: relative;
+    }
+
+    .item-card:last-child {
+      margin-bottom: 0;
+    }
+
+    .item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-bottom: 12px;
+    }
+
+    .item-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .item-subtitle {
+      font-size: 13px;
+      opacity: 0.6;
+      line-height: 1.5;
+    }
+
+    .item-price {
+      font-size: 18px;
+      font-weight: 800;
+      color: #10b981;
+    }
+
+    .item-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      color: white;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: 0.3s;
+      margin-top: 12px;
+    }
+
+    .item-action:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-1px);
+    }
+
+    .item-action i {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* TOTAL SECTION */
+    .total-section {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.15));
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      border-radius: 16px;
+      padding: 32px 24px;
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .total-label {
+      font-size: 16px;
+      opacity: 0.8;
+      margin-bottom: 8px;
+    }
+
+    .total-amount {
+      font-size: 48px;
+      font-weight: 800;
+      color: #10b981;
+      margin-bottom: 24px;
+    }
+
+    .cta-button {
+      width: 100%;
+      padding: 16px;
+      background: #6366f1;
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-bottom: 12px;
+    }
+
+    .cta-button:hover {
+      background: #4f46e5;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
+    }
+
+    .save-trip-btn {
+      width: 100%;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .save-trip-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .save-trip-btn i {
+      width: 18px;
+      height: 18px;
+    }
+
+    .note {
+      font-size: 12px;
+      opacity: 0.5;
+      margin-top: 16px;
+    }
+
+    /* VIEW PANELS */
+    .view-panel {
+      display: none;
+    }
+
+    .view-panel.active {
+      display: block;
+    }
+
+    /* ==================== CALENDAR VIEW ==================== */
+    .calendar-container {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .calendar-month-title {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .calendar-nav {
+      display: flex;
+      gap: 8px;
+    }
+
+    .calendar-nav-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.25s ease;
+    }
+
+    .calendar-nav-btn:hover {
+      background: rgba(99, 102, 241, 0.15);
+      border-color: rgba(99, 102, 241, 0.4);
+      box-shadow: 0 0 12px rgba(99, 102, 241, 0.15);
+    }
+
+    .calendar-nav-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .calendar-weekdays {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+      margin-bottom: 8px;
+    }
+
+    .calendar-weekday {
+      text-align: center;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: rgba(255, 255, 255, 0.35);
+      padding: 8px 0;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+    }
+
+    .calendar-day {
+      aspect-ratio: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.5);
+      transition: all 0.25s ease;
+      cursor: pointer;
+      position: relative;
+      gap: 2px;
+    }
+
+    .calendar-day.current-month {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .calendar-day.today {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      font-weight: 700;
+    }
+
+    .calendar-day.trip-day {
+      background: rgba(99, 102, 241, 0.12);
+      border: 1px solid rgba(99, 102, 241, 0.25);
+      color: white;
+    }
+
+    .calendar-day.trip-start {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+
+    .calendar-day.trip-end {
+      background: rgba(244, 63, 94, 0.15);
+      border: 1px solid rgba(244, 63, 94, 0.4);
+    }
+
+    .calendar-day.selected {
+      background: rgba(99, 102, 241, 0.25);
+      border: 1px solid rgba(99, 102, 241, 0.5);
+      box-shadow: 0 0 16px rgba(99, 102, 241, 0.2);
+      color: white;
+      font-weight: 700;
+    }
+
+    .calendar-day:hover.current-month {
+      background: rgba(255, 255, 255, 0.08);
+      color: white;
+    }
+
+    .calendar-day-number {
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    .calendar-day-icons {
+      display: flex;
+      gap: 2px;
+      height: 8px;
+    }
+
+    .calendar-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+
+    .calendar-dot.flight { background: #f59e0b; }
+    .calendar-dot.hotel { background: #6366f1; }
+    .calendar-dot.activity { background: #10b981; }
+
+    /* CALENDAR LEGEND */
+    .calendar-legend {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.6);
+      font-weight: 500;
+    }
+
+    .legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .legend-dot.flight { background: #f59e0b; }
+    .legend-dot.hotel { background: #6366f1; }
+    .legend-dot.activity { background: #10b981; }
+    .legend-dot.arrival { background: rgba(16, 185, 129, 0.5); border: 1px solid #10b981; }
+    .legend-dot.departure { background: rgba(244, 63, 94, 0.5); border: 1px solid #f43f5e; }
+
+    /* DAY DETAIL PANEL */
+    .day-detail-panel {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 24px;
+      margin-top: 16px;
+      display: none;
+    }
+
+    .day-detail-panel.show {
+      display: block;
+      animation: fadeInUp 0.3s ease;
+    }
+
+    .day-detail-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .day-detail-date {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .day-detail-weather {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 10px 16px;
+    }
+
+    .weather-icon {
+      font-size: 24px;
+    }
+
+    .weather-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .weather-temp {
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .weather-desc {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.5);
+      text-transform: capitalize;
+    }
+
+    .weather-loading {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.4);
+      font-style: italic;
+    }
+
+    .day-event {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      margin-bottom: 8px;
+    }
+
+    .day-event:last-child {
+      margin-bottom: 0;
+    }
+
+    .day-event-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .day-event-icon.flight-icon {
+      background: rgba(245, 158, 11, 0.15);
+      color: #f59e0b;
+    }
+
+    .day-event-icon.hotel-icon {
+      background: rgba(99, 102, 241, 0.15);
+      color: #a5b4fc;
+    }
+
+    .day-event-icon.activity-icon {
+      background: rgba(16, 185, 129, 0.15);
+      color: #10b981;
+    }
+
+    .day-event-icon svg, .day-event-icon i {
+      width: 20px;
+      height: 20px;
+    }
+
+    .day-event-info {
+      flex: 1;
+    }
+
+    .day-event-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .day-event-detail {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .day-event-time {
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.7);
+      white-space: nowrap;
+    }
+
+    .no-events {
+      text-align: center;
+      padding: 24px;
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 14px;
+    }
+
+    /* ==================== INSIGHTS & MAP VIEW ==================== */
+    .insights-container {
+      margin-bottom: 20px;
+    }
+
+    .map-wrapper {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .map-header {
+      padding: 20px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .map-title {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .map-subtitle {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.5);
+      margin-top: 2px;
+    }
+
+    .map-filter-btns {
+      display: flex;
+      gap: 6px;
+    }
+
+    .map-filter-btn {
+      padding: 6px 14px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .map-filter-btn.active {
+      background: rgba(99, 102, 241, 0.2);
+      border-color: rgba(99, 102, 241, 0.4);
+      color: white;
+    }
+
+    .map-filter-btn:hover:not(.active) {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+    }
+
+    #insightsMap {
+      height: 400px;
+      width: 100%;
+    }
+
+    /* Leaflet popup styling */
+    .leaflet-popup-content-wrapper {
+      background: rgba(15, 15, 25, 0.95) !important;
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.15) !important;
+      border-radius: 12px !important;
+      color: white !important;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+    }
+
+    .leaflet-popup-tip {
+      background: rgba(15, 15, 25, 0.95) !important;
+      border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    }
+
+    .leaflet-popup-content {
+      margin: 14px 16px !important;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", sans-serif !important;
+      font-size: 13px !important;
+      line-height: 1.5 !important;
+      color: white !important;
+    }
+
+    .popup-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .popup-category {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #a5b4fc;
+      margin-bottom: 6px;
+    }
+
+    .popup-detail {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .leaflet-container {
+      background: #0a0a0f !important;
+    }
+
+    /* NEARBY PLACES LIST */
+    .nearby-section {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 24px;
+    }
+
+    .nearby-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .nearby-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .nearby-card:hover {
+      background: rgba(99, 102, 241, 0.08);
+      border-color: rgba(99, 102, 241, 0.2);
+      box-shadow: 0 0 16px rgba(99, 102, 241, 0.1);
+    }
+
+    .nearby-card:last-child {
+      margin-bottom: 0;
+    }
+
+    .nearby-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+
+    .nearby-icon.restaurant { background: rgba(245, 158, 11, 0.15); }
+    .nearby-icon.temple { background: rgba(139, 92, 246, 0.15); }
+    .nearby-icon.nature { background: rgba(16, 185, 129, 0.15); }
+    .nearby-icon.shopping { background: rgba(244, 63, 94, 0.15); }
+    .nearby-icon.spa { background: rgba(99, 102, 241, 0.15); }
+
+    .nearby-info {
+      flex: 1;
+    }
+
+    .nearby-name {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .nearby-desc {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .nearby-distance {
+      font-size: 12px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.4);
+      white-space: nowrap;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      header {
+        padding: 20px 25px;
+      }
+
+      nav {
+        display: none;
+      }
+
+      .container {
+        padding: 0 16px 40px;
+      }
+
+      .hero-content h1 {
+        font-size: 24px;
+      }
+
+      .total-amount {
+        font-size: 36px;
+      }
+
+      .view-tabs {
+        gap: 6px;
+      }
+
+      .tab-btn {
+        padding: 8px 14px;
+        font-size: 12px;
+      }
+
+      .calendar-day {
+        font-size: 12px;
+      }
+
+      .calendar-legend {
+        gap: 12px;
+      }
+
+      .day-detail-header {
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+      }
+
+      #insightsMap {
+        height: 300px;
+      }
+
+      .map-header {
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="gradient-bg"></div>
+
+  <!-- SIDEBAR OVERLAY -->
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleLeftSidebar()"></div>
+
+  <!-- LEFT SIDEBAR -->
+  <div class="left-sidebar" id="leftSidebar">
+    
+    <button class="sidebar-close-btn" onclick="toggleLeftSidebar()" aria-label="Close menu">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    </button>
+
+    <div class="sidebar-content">
+    
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">Quick Access</div>
+      <a href="index.html" class="sidebar-item">
+        <i data-lucide="home"></i>
+        <span>Home</span>
+      </a>
+      <a href="itinerary.html" class="sidebar-item active">
+        <i data-lucide="plane"></i>
+        <span>My Itinerary</span>
+      </a>
+      <a href="dashboard.html" class="sidebar-item">
+        <i data-lucide="layout-dashboard"></i>
+        <span>Saved Trips</span>
+      </a>
+    </div>
+
+    <div class="sidebar-divider"></div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">Explore</div>
+      <a href="index.html#trending" class="sidebar-item">
+        <i data-lucide="trending-up"></i>
+        <span>Trending Destinations</span>
+      </a>
+      <a href="contact.html" class="sidebar-item">
+        <i data-lucide="message-circle"></i>
+        <span>Contact Support</span>
+      </a>
+    </div>
+
+    <div class="sidebar-divider"></div>
+
+    <div class="sidebar-section" id="sidebarAuthSection">
+      <a href="auth.html" class="sidebar-item primary" id="sidebarAuthButton">
+        <i data-lucide="log-in"></i>
+        <span>Sign In</span>
+      </a>
+    </div>
+
+    </div>
+
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <!-- LEFT: Menu Button -->
+    <div class="header-left">
+      <button class="header-menu-btn" onclick="toggleLeftSidebar()">
+        <i data-lucide="menu"></i>
+        Menu
+      </button>
+    </div>
+
+    <!-- CENTER: Logo -->
+    <div class="header-center">
+      <a href="index.html" class="logo">
+        <img src="logo.png" alt="One-Up Travel">
+      </a>
+    </div>
+
+    <!-- RIGHT: Sign In Button -->
+    <div class="header-right">
+      <a href="auth.html" class="signin-btn" id="authButton">Sign In</a>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <div class="container">
+    
+    <!-- HERO IMAGE -->
+    <div class="hero-image">
+      <div class="hero-content">
+        <h1 id="tripTitle">Your Trip to Bali, Indonesia</h1>
+        <p id="tripDates">March 15, 2026 - March 22, 2026</p>
+      </div>
+    </div>
+
+    <!-- STATS GRID -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Duration</div>
+        <div class="stat-value" id="duration">7 days</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-label">Total Cost</div>
+        <div class="stat-value" id="totalCostStat">$2250</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-label">Activities</div>
+        <div class="stat-value" id="activitiesCount">4</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-label">Booking Progress</div>
+        <div class="progress-circle">
+          <svg width="50" height="50">
+            <circle class="progress-bg" cx="25" cy="25" r="20"></circle>
+            <circle class="progress-fill" cx="25" cy="25" r="20" 
+                    stroke-dasharray="125.6" stroke-dashoffset="125.6"></circle>
+          </svg>
+          <div class="progress-text">0%</div>
+        </div>
+        <div class="stat-subvalue">Planning</div>
+      </div>
+    </div>
+
+    <!-- VIEW TABS -->
+    <div class="view-tabs">
+      <button class="tab-btn active" onclick="switchView('list', this)">
+        <i data-lucide="list" style="width:14px;height:14px;margin-right:4px;vertical-align:-2px;"></i>
+        List View
+      </button>
+      <button class="tab-btn" onclick="switchView('calendar', this)">
+        <i data-lucide="calendar" style="width:14px;height:14px;margin-right:4px;vertical-align:-2px;"></i>
+        Calendar
+      </button>
+      <button class="tab-btn" onclick="switchView('insights', this)">
+        <i data-lucide="map-pin" style="width:14px;height:14px;margin-right:4px;vertical-align:-2px;"></i>
+        Insights & Map
+      </button>
+    </div>
+
+    <!-- ========== LIST VIEW ========== -->
+    <div id="listView" class="view-panel active">
+
+    <!-- FLIGHTS SECTION -->
+    <div class="section">
+      <div class="section-title">FLIGHTS</div>
+      
+      <div class="item-card">
+        <div class="item-header">
+          <div>
+            <div class="item-title">Outbound Flight</div>
+            <div class="item-subtitle">
+              Virgin Australia VA1<br>
+              Brisbane (BNE) → Denpasar (DPS)<br>
+              Depart: March 15, 2:15 PM | Arrive: 2:30 PM<br>
+              Duration: 6h 45m
+            </div>
+          </div>
+          <div class="item-price">$450</div>
+        </div>
+        <a href="#" class="item-action">
+          <i data-lucide="external-link"></i>
+          View on Skyscanner
+        </a>
+      </div>
+
+      <div class="item-card">
+        <div class="item-header">
+          <div>
+            <div class="item-title">Return Flight</div>
+            <div class="item-subtitle">
+              Virgin Australia VA4<br>
+              Denpasar (DPS) → Brisbane (BNE)<br>
+              Depart: March 22, 11:00 PM | Arrive: 11:45 PM<br>
+              Duration: 6h 45m
+            </div>
+          </div>
+          <div class="item-price">$480</div>
+        </div>
+        <a href="#" class="item-action">
+          <i data-lucide="external-link"></i>
+          View on Skyscanner
+        </a>
+      </div>
+    </div>
+
+    <!-- ACCOMMODATION SECTION -->
+    <div class="section">
+      <div class="section-title">ACCOMMODATION</div>
+      
+      <div class="item-card">
+        <div class="item-header">
+          <div>
+            <div class="item-title">Alila Ubud Resort</div>
+            <div class="item-subtitle">
+              Luxury hillside resort - 7 nights<br>
+              Deluxe Room with Valley View<br>
+              Includes: Breakfast, WiFi, Spa access
+            </div>
+          </div>
+          <div class="item-price">$980</div>
+        </div>
+        <a href="#" class="item-action">
+          <i data-lucide="external-link"></i>
+          View on Booking.com
+        </a>
+      </div>
+    </div>
+
+    <!-- ACTIVITIES SECTION -->
+    <div class="section">
+      <div class="section-title">ACTIVITIES & EXPERIENCES</div>
+      
+      <div class="item-card">
+        <div class="item-header">
+          <div>
+            <div class="item-title">Ubud Culture Tour</div>
+            <div class="item-subtitle">
+              Monkey Forest + Rice Terraces + Temple<br>
+              Full-day with lunch and transport
+            </div>
+          </div>
+          <div class="item-price">$65</div>
+        </div>
+        <a href="#" class="item-action">
+          <i data-lucide="external-link"></i>
+          Book Activity
+        </a>
+      </div>
+
+      <div class="item-card">
+        <div class="item-header">
+          <div>
+            <div class="item-title">Mount Batur Sunrise Hike</div>
+            <div class="item-subtitle">
+              Early morning hike with breakfast at peak<br>
+              Includes: Guide + hotel pickup included
+            </div>
+          </div>
+          <div class="item-price">$75</div>
+        </div>
+        <a href="#" class="item-action">
+          <i data-lucide="external-link"></i>
+          Book Activity
+        </a>
+      </div>
+
+      <div class="item-card">
+        <div class="item-header">
+          <div>
+            <div class="item-title">Balinese Cooking Class</div>
+            <div class="item-subtitle">
+              Market tour + Hands-on cooking + lunch<br>
+              5 hours in traditional kitchen
+            </div>
+          </div>
+          <div class="item-price">$85</div>
+        </div>
+        <a href="#" class="item-action">
+          <i data-lucide="external-link"></i>
+          Book Activity
+        </a>
+      </div>
+
+      <div class="item-card">
+        <div class="item-header">
+          <div>
+            <div class="item-title">Waterfall & Temple Tour</div>
+            <div class="item-subtitle">
+              Tegenungan + Tirta Empul + Tegalalang Falls<br>
+              6 hours with guide and transport
+            </div>
+          </div>
+          <div class="item-price">$60</div>
+        </div>
+        <a href="#" class="item-action">
+          <i data-lucide="external-link"></i>
+          Book Activity
+        </a>
+      </div>
+    </div>
+
+    <!-- TRAVEL INSURANCE SECTION -->
+    <div class="section">
+      <div class="section-title">TRAVEL INSURANCE</div>
+      
+      <div class="item-card">
+        <div class="item-header">
+          <div>
+            <div class="item-title">Travel Insurance</div>
+            <div class="item-subtitle">
+              Medical, Cancellation, Lost baggage<br>
+              World Nomads - 7 days coverage
+            </div>
+          </div>
+          <div class="item-price">$85</div>
+        </div>
+        <a href="#" class="item-action">
+          <i data-lucide="external-link"></i>
+          Get Quote
+        </a>
+      </div>
+    </div>
+
+    <!-- TOTAL SECTION -->
+    <div class="total-section">
+      <div class="total-label">Total Trip Cost</div>
+      <div class="total-amount">$2250</div>
+      
+      <button class="cta-button" onclick="bookTrip()">
+        Book This Trip
+      </button>
+
+      <button class="save-trip-btn" onclick="saveCurrentTrip()">
+        <i data-lucide="bookmark"></i>
+        Save Trip
+      </button>
+
+      <p class="note">One-click booking coming soon!</p>
+    </div>
+
+    </div><!-- end #listView -->
+
+    <!-- ========== CALENDAR VIEW ========== -->
+    <div id="calendarView" class="view-panel">
+      
+      <div class="calendar-container">
+        <div class="calendar-header">
+          <div class="calendar-month-title" id="calendarMonthTitle">March 2026</div>
+          <div class="calendar-nav">
+            <button class="calendar-nav-btn" onclick="navigateCalendar(-1)" aria-label="Previous month">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+            <button class="calendar-nav-btn" onclick="navigateCalendar(1)" aria-label="Next month">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="calendar-weekdays">
+          <div class="calendar-weekday">Sun</div>
+          <div class="calendar-weekday">Mon</div>
+          <div class="calendar-weekday">Tue</div>
+          <div class="calendar-weekday">Wed</div>
+          <div class="calendar-weekday">Thu</div>
+          <div class="calendar-weekday">Fri</div>
+          <div class="calendar-weekday">Sat</div>
+        </div>
+
+        <div class="calendar-grid" id="calendarGrid">
+          <!-- Generated by JS -->
+        </div>
+
+        <div class="calendar-legend">
+          <div class="legend-item"><div class="legend-dot arrival"></div>Arrival</div>
+          <div class="legend-item"><div class="legend-dot departure"></div>Departure</div>
+          <div class="legend-item"><div class="legend-dot flight"></div>Flight</div>
+          <div class="legend-item"><div class="legend-dot hotel"></div>Hotel Stay</div>
+          <div class="legend-item"><div class="legend-dot activity"></div>Activity</div>
+        </div>
+      </div>
+
+      <!-- Day Detail Panel -->
+      <div class="day-detail-panel" id="dayDetailPanel">
+        <div class="day-detail-header">
+          <div class="day-detail-date" id="dayDetailDate">March 15, 2026</div>
+          <div class="day-detail-weather" id="dayDetailWeather">
+            <span class="weather-loading">Loading weather...</span>
+          </div>
+        </div>
+        <div id="dayDetailEvents">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+    </div><!-- end #calendarView -->
+
+    <!-- ========== INSIGHTS & MAP VIEW ========== -->
+    <div id="insightsView" class="view-panel">
+      
+      <div class="map-wrapper">
+        <div class="map-header">
+          <div>
+            <div class="map-title">Trip Map</div>
+            <div class="map-subtitle">Your hotel & nearby recommendations</div>
+          </div>
+          <div class="map-filter-btns">
+            <button class="map-filter-btn active" onclick="filterMapPins('all', this)">All</button>
+            <button class="map-filter-btn" onclick="filterMapPins('food', this)">Food</button>
+            <button class="map-filter-btn" onclick="filterMapPins('culture', this)">Culture</button>
+            <button class="map-filter-btn" onclick="filterMapPins('nature', this)">Nature</button>
+          </div>
+        </div>
+        <div id="insightsMap"></div>
+      </div>
+
+      <div class="nearby-section">
+        <div class="nearby-title">Recommended Near Your Hotel</div>
+        <div id="nearbyList">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+    </div><!-- end #insightsView -->
+
+  </div>
+
+  <script>
+    // ============================
+    // SAFE LUCIDE INIT
+    // ============================
+    function initIcons() {
+      try { if (typeof lucide !== 'undefined') lucide.createIcons(); } catch(e) {}
+    }
+    initIcons();
+
+    // ============================
+    // TRIP DATA
+    // ============================
+    const tripData = {
+      destination: "Bali, Indonesia",
+      startDate: "2026-03-15",
+      endDate: "2026-03-22",
+      duration: 7,
+      lat: -8.5069,
+      lng: 115.2625,
+      hotelLat: -8.5069,
+      hotelLng: 115.3425,
+      hotelName: "Alila Ubud Resort",
+      flights: [
+        { type: "Outbound", airline: "Virgin Australia VA1", route: "Brisbane → Denpasar", depart: "2026-03-15T14:15", arrive: "2026-03-15T14:30", duration: "6h 45m", price: 450 },
+        { type: "Return", airline: "Virgin Australia VA4", route: "Denpasar → Brisbane", depart: "2026-03-22T23:00", arrive: "2026-03-22T23:45", duration: "6h 45m", price: 480 }
+      ],
+      accommodation: [
+        { name: "Alila Ubud Resort", description: "Luxury hillside resort", nights: 7, details: "Deluxe Room with Valley View", amenities: "Breakfast, WiFi, Spa access", price: 980, lat: -8.5069, lng: 115.3425 }
+      ],
+      activities: [
+        { name: "Ubud Culture Tour", description: "Monkey Forest + Rice Terraces + Temple", details: "Full-day with lunch and transport", price: 65, day: 2 },
+        { name: "Mount Batur Sunrise Hike", description: "Early morning hike with breakfast at peak", details: "Guide + hotel pickup included", price: 75, day: 3 },
+        { name: "Balinese Cooking Class", description: "Market tour + Hands-on cooking + lunch", details: "5 hours in traditional kitchen", price: 85, day: 5 },
+        { name: "Waterfall & Temple Tour", description: "Tegenungan + Tirta Empul + Tegalalang Falls", details: "6 hours with guide and transport", price: 60, day: 6 }
+      ],
+      insurance: [
+        { name: "Travel Insurance", description: "Medical, Cancellation, Lost baggage", provider: "World Nomads - 7 days coverage", price: 85 }
+      ]
+    };
+
+    // ============================
+    // NEARBY PLACES DATA
+    // ============================
+    const nearbyPlaces = [
+      { name: "Locavore", desc: "Award-winning fine dining, modern Indonesian", category: "food", icon: "🍽️", lat: -8.5074, lng: 115.2612, distance: "0.3 km" },
+      { name: "Ubud Royal Palace", desc: "Historic Balinese palace with nightly dances", category: "culture", icon: "🏛️", lat: -8.5068, lng: 115.2625, distance: "0.1 km" },
+      { name: "Sacred Monkey Forest", desc: "Nature sanctuary with 700+ macaques", category: "nature", icon: "🌿", lat: -8.5185, lng: 115.2588, distance: "1.4 km" },
+      { name: "Ubud Art Market", desc: "Traditional crafts, textiles, and souvenirs", category: "shopping", icon: "🛍️", lat: -8.5065, lng: 115.2632, distance: "0.2 km" },
+      { name: "Karsa Spa", desc: "Luxury rice paddy spa with organic treatments", category: "spa", icon: "💆", lat: -8.5110, lng: 115.2508, distance: "1.2 km" },
+      { name: "Tegallalang Rice Terraces", desc: "UNESCO-listed scenic terraced rice paddies", category: "nature", icon: "🌾", lat: -8.4312, lng: 115.2788, distance: "8.5 km" },
+      { name: "Tirta Empul Temple", desc: "Holy spring water temple for purification rituals", category: "culture", icon: "⛩️", lat: -8.4153, lng: 115.3154, distance: "12 km" },
+      { name: "Hujan Locale", desc: "Southeast Asian cuisine in a heritage building", category: "food", icon: "🍜", lat: -8.5058, lng: 115.2620, distance: "0.2 km" },
+      { name: "Campuhan Ridge Walk", desc: "Scenic hilltop walk between two valleys", category: "nature", icon: "🥾", lat: -8.5027, lng: 115.2488, distance: "1.5 km" },
+      { name: "Goa Gajah (Elephant Cave)", desc: "9th-century cave temple and bathing pools", category: "culture", icon: "🗿", lat: -8.5243, lng: 115.2874, distance: "3.5 km" }
+    ];
+
+    // ============================
+    // TAB SWITCHING
+    // ============================
+    let mapInitialized = false;
+
+    function switchView(view, btn) {
+      document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      
+      document.getElementById(view + 'View').classList.add('active');
+      btn.classList.add('active');
+
+      if (view === 'calendar') {
+        renderCalendar();
+      }
+
+      if (view === 'insights' && !mapInitialized) {
+        setTimeout(() => { initMap(); mapInitialized = true; }, 100);
+      }
+
+      initIcons();
+    }
+
+    // ============================
+    // CALENDAR
+    // ============================
+    let calendarYear = 2026;
+    let calendarMonth = 2; // March (0-indexed)
+    let selectedCalendarDate = null;
+    let weatherCache = {};
+
+    function navigateCalendar(dir) {
+      calendarMonth += dir;
+      if (calendarMonth > 11) { calendarMonth = 0; calendarYear++; }
+      if (calendarMonth < 0) { calendarMonth = 11; calendarYear--; }
+      renderCalendar();
+    }
+
+    function renderCalendar() {
+      const grid = document.getElementById('calendarGrid');
+      const title = document.getElementById('calendarMonthTitle');
+      
+      const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+      title.textContent = months[calendarMonth] + ' ' + calendarYear;
+
+      const firstDay = new Date(calendarYear, calendarMonth, 1).getDay();
+      const daysInMonth = new Date(calendarYear, calendarMonth + 1, 0).getDate();
+      const daysInPrev = new Date(calendarYear, calendarMonth, 0).getDate();
+
+      const tripStart = new Date(tripData.startDate);
+      const tripEnd = new Date(tripData.endDate);
+      const today = new Date();
+      today.setHours(0,0,0,0);
+
+      let html = '';
+
+      // Previous month padding
+      for (let i = firstDay - 1; i >= 0; i--) {
+        html += `<div class="calendar-day">${daysInPrev - i}</div>`;
+      }
+
+      // Current month days
+      for (let day = 1; day <= daysInMonth; day++) {
+        const date = new Date(calendarYear, calendarMonth, day);
+        date.setHours(0,0,0,0);
+        
+        let classes = 'calendar-day current-month';
+        let dots = '';
+
+        // Today?
+        if (date.getTime() === today.getTime()) classes += ' today';
+
+        // Trip day?
+        const isTripDay = date >= tripStart && date <= tripEnd;
+        if (isTripDay) {
+          classes += ' trip-day';
+          if (date.getTime() === tripStart.getTime()) classes += ' trip-start';
+          if (date.getTime() === tripEnd.getTime()) classes += ' trip-end';
+
+          // Check what happens on this day
+          const dayNum = Math.floor((date - tripStart) / 86400000) + 1;
+          let hasFlight = false, hasHotel = false, hasActivity = false;
+
+          // Flights on first & last day
+          if (dayNum === 1 || dayNum === tripData.duration) hasFlight = true;
+          // Hotel every night
+          if (dayNum <= tripData.duration) hasHotel = true;
+          // Activities
+          if (tripData.activities.some(a => a.day === dayNum)) hasActivity = true;
+
+          dots = '<div class="calendar-day-icons">';
+          if (hasFlight) dots += '<div class="calendar-dot flight"></div>';
+          if (hasHotel) dots += '<div class="calendar-dot hotel"></div>';
+          if (hasActivity) dots += '<div class="calendar-dot activity"></div>';
+          dots += '</div>';
+        }
+
+        // Selected?
+        if (selectedCalendarDate && date.getTime() === selectedCalendarDate.getTime()) {
+          classes += ' selected';
+        }
+
+        const dateStr = `${calendarYear}-${String(calendarMonth+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+
+        html += `<div class="${classes}" onclick="selectCalendarDay('${dateStr}')">
+          <span class="calendar-day-number">${day}</span>
+          ${dots}
+        </div>`;
+      }
+
+      // Next month padding
+      const totalCells = firstDay + daysInMonth;
+      const remaining = (7 - (totalCells % 7)) % 7;
+      for (let i = 1; i <= remaining; i++) {
+        html += `<div class="calendar-day">${i}</div>`;
+      }
+
+      grid.innerHTML = html;
+    }
+
+    function selectCalendarDay(dateStr) {
+      selectedCalendarDate = new Date(dateStr + 'T00:00:00');
+      renderCalendar();
+      showDayDetail(dateStr);
+    }
+
+    function showDayDetail(dateStr) {
+      const panel = document.getElementById('dayDetailPanel');
+      const dateEl = document.getElementById('dayDetailDate');
+      const eventsEl = document.getElementById('dayDetailEvents');
+      const weatherEl = document.getElementById('dayDetailWeather');
+
+      const date = new Date(dateStr + 'T00:00:00');
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      dateEl.textContent = date.toLocaleDateString('en-US', options);
+
+      // Get events for this day
+      const tripStart = new Date(tripData.startDate);
+      const tripEnd = new Date(tripData.endDate);
+      const isTripDay = date >= tripStart && date <= tripEnd;
+      const dayNum = isTripDay ? Math.floor((date - tripStart) / 86400000) + 1 : -1;
+
+      let eventsHtml = '';
+
+      if (isTripDay) {
+        // Flights
+        if (dayNum === 1) {
+          eventsHtml += `
+            <div class="day-event">
+              <div class="day-event-icon flight-icon"><i data-lucide="plane-takeoff"></i></div>
+              <div class="day-event-info">
+                <div class="day-event-title">${tripData.flights[0].airline}</div>
+                <div class="day-event-detail">${tripData.flights[0].route}</div>
+              </div>
+              <div class="day-event-time">2:15 PM</div>
+            </div>`;
+        }
+        if (dayNum === tripData.duration) {
+          eventsHtml += `
+            <div class="day-event">
+              <div class="day-event-icon flight-icon"><i data-lucide="plane-landing"></i></div>
+              <div class="day-event-info">
+                <div class="day-event-title">${tripData.flights[1].airline}</div>
+                <div class="day-event-detail">${tripData.flights[1].route}</div>
+              </div>
+              <div class="day-event-time">11:00 PM</div>
+            </div>`;
+        }
+
+        // Hotel
+        eventsHtml += `
+          <div class="day-event">
+            <div class="day-event-icon hotel-icon"><i data-lucide="bed-double"></i></div>
+            <div class="day-event-info">
+              <div class="day-event-title">${tripData.accommodation[0].name}</div>
+              <div class="day-event-detail">Night ${dayNum} of ${tripData.duration} · ${tripData.accommodation[0].details}</div>
+            </div>
+            <div class="day-event-time">All day</div>
+          </div>`;
+
+        // Activities
+        const dayActivities = tripData.activities.filter(a => a.day === dayNum);
+        dayActivities.forEach(a => {
+          eventsHtml += `
+            <div class="day-event">
+              <div class="day-event-icon activity-icon"><i data-lucide="compass"></i></div>
+              <div class="day-event-info">
+                <div class="day-event-title">${a.name}</div>
+                <div class="day-event-detail">${a.description}</div>
+              </div>
+              <div class="day-event-time">$${a.price}</div>
+            </div>`;
+        });
+      } else {
+        eventsHtml = '<div class="no-events">No trip events on this day</div>';
+      }
+
+      eventsEl.innerHTML = eventsHtml;
+      initIcons();
+
+      // Weather
+      weatherEl.innerHTML = '<span class="weather-loading">Loading weather...</span>';
+      fetchWeather(dateStr, isTripDay);
+
+      panel.classList.add('show');
+    }
+
+    // ============================
+    // WEATHER (Open-Meteo - free, no API key)
+    // ============================
+    const weatherCodes = {
+      0: { icon: '☀️', desc: 'Clear sky' },
+      1: { icon: '🌤️', desc: 'Mostly clear' },
+      2: { icon: '⛅', desc: 'Partly cloudy' },
+      3: { icon: '☁️', desc: 'Overcast' },
+      45: { icon: '🌫️', desc: 'Fog' },
+      48: { icon: '🌫️', desc: 'Freezing fog' },
+      51: { icon: '🌦️', desc: 'Light drizzle' },
+      53: { icon: '🌦️', desc: 'Drizzle' },
+      55: { icon: '🌧️', desc: 'Heavy drizzle' },
+      61: { icon: '🌧️', desc: 'Light rain' },
+      63: { icon: '🌧️', desc: 'Rain' },
+      65: { icon: '🌧️', desc: 'Heavy rain' },
+      71: { icon: '🌨️', desc: 'Light snow' },
+      73: { icon: '🌨️', desc: 'Snow' },
+      75: { icon: '❄️', desc: 'Heavy snow' },
+      80: { icon: '🌦️', desc: 'Rain showers' },
+      81: { icon: '🌧️', desc: 'Moderate showers' },
+      82: { icon: '⛈️', desc: 'Violent showers' },
+      95: { icon: '⛈️', desc: 'Thunderstorm' },
+      96: { icon: '⛈️', desc: 'Thunderstorm + hail' },
+      99: { icon: '⛈️', desc: 'Severe thunderstorm' }
+    };
+
+    async function fetchWeather(dateStr, isTripDay) {
+      const weatherEl = document.getElementById('dayDetailWeather');
+
+      if (!isTripDay) {
+        weatherEl.innerHTML = '<span class="weather-loading" style="font-style:normal;">🌍 Select a trip day for weather</span>';
+        return;
+      }
+
+      // Check cache
+      if (weatherCache[dateStr]) {
+        displayWeather(weatherCache[dateStr]);
+        return;
+      }
+
+      try {
+        const url = `https://api.open-meteo.com/v1/forecast?latitude=${tripData.lat}&longitude=${tripData.lng}&daily=temperature_2m_max,temperature_2m_min,weathercode&start_date=${dateStr}&end_date=${dateStr}&timezone=auto`;
+        const res = await fetch(url);
+        const data = await res.json();
+
+        if (data.daily) {
+          const weather = {
+            maxTemp: Math.round(data.daily.temperature_2m_max[0]),
+            minTemp: Math.round(data.daily.temperature_2m_min[0]),
+            code: data.daily.weathercode[0]
+          };
+          weatherCache[dateStr] = weather;
+          displayWeather(weather);
+        } else {
+          weatherEl.innerHTML = '<span class="weather-loading" style="font-style:normal;">🌡️ Forecast unavailable</span>';
+        }
+      } catch (err) {
+        // Fallback: show typical Bali weather
+        const fallback = { maxTemp: 30 + Math.floor(Math.random() * 3), minTemp: 23 + Math.floor(Math.random() * 2), code: [0, 1, 2, 61, 80, 95][Math.floor(Math.random() * 6)] };
+        weatherCache[dateStr] = fallback;
+        displayWeather(fallback);
+      }
+    }
+
+    function displayWeather(weather) {
+      const weatherEl = document.getElementById('dayDetailWeather');
+      const w = weatherCodes[weather.code] || { icon: '🌡️', desc: 'Unknown' };
+      weatherEl.innerHTML = `
+        <span class="weather-icon">${w.icon}</span>
+        <div class="weather-info">
+          <span class="weather-temp">${weather.maxTemp}° / ${weather.minTemp}°C</span>
+          <span class="weather-desc">${w.desc}</span>
+        </div>`;
+    }
+
+    // ============================
+    // INSIGHTS MAP (Leaflet + OpenStreetMap)
+    // ============================
+    let insightsMap = null;
+    let mapMarkers = [];
+
+    function initMap() {
+      insightsMap = L.map('insightsMap', {
+        zoomControl: false
+      }).setView([tripData.hotelLat, tripData.hotelLng], 14);
+
+      L.control.zoom({ position: 'topright' }).addTo(insightsMap);
+
+      // Dark map tiles
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        attribution: '© <a href="https://carto.com/">CARTO</a> © <a href="https://www.openstreetmap.org/">OSM</a>',
+        maxZoom: 19
+      }).addTo(insightsMap);
+
+      // Hotel marker (special)
+      const hotelIcon = L.divIcon({
+        className: 'custom-marker',
+        html: '<div style="background:#6366f1;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;border:3px solid white;box-shadow:0 4px 12px rgba(99,102,241,0.5);">🏨</div>',
+        iconSize: [36, 36],
+        iconAnchor: [18, 18]
+      });
+
+      L.marker([tripData.hotelLat, tripData.hotelLng], { icon: hotelIcon })
+        .addTo(insightsMap)
+        .bindPopup(`
+          <div class="popup-category">Your Hotel</div>
+          <div class="popup-title">${tripData.hotelName}</div>
+          <div class="popup-detail">${tripData.accommodation[0].details}<br>${tripData.accommodation[0].amenities}</div>
+        `);
+
+      // Add nearby places
+      addNearbyMarkers('all');
+      renderNearbyList('all');
+    }
+
+    function addNearbyMarkers(filter) {
+      // Clear existing
+      mapMarkers.forEach(m => insightsMap.removeLayer(m));
+      mapMarkers = [];
+
+      const categoryColors = {
+        food: '#f59e0b',
+        culture: '#8b5cf6',
+        nature: '#10b981',
+        shopping: '#f43f5e',
+        spa: '#6366f1'
+      };
+
+      nearbyPlaces.forEach(place => {
+        if (filter !== 'all' && place.category !== filter) return;
+
+        const color = categoryColors[place.category] || '#6366f1';
+        const icon = L.divIcon({
+          className: 'custom-marker',
+          html: `<div style="background:${color};width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;border:2px solid rgba(255,255,255,0.8);box-shadow:0 2px 8px rgba(0,0,0,0.3);">${place.icon}</div>`,
+          iconSize: [30, 30],
+          iconAnchor: [15, 15]
+        });
+
+        const marker = L.marker([place.lat, place.lng], { icon })
+          .addTo(insightsMap)
+          .bindPopup(`
+            <div class="popup-category">${place.category}</div>
+            <div class="popup-title">${place.name}</div>
+            <div class="popup-detail">${place.desc}<br>📍 ${place.distance} from hotel</div>
+          `);
+
+        mapMarkers.push(marker);
+      });
+    }
+
+    function filterMapPins(filter, btn) {
+      document.querySelectorAll('.map-filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      addNearbyMarkers(filter);
+      renderNearbyList(filter);
+    }
+
+    function renderNearbyList(filter) {
+      const list = document.getElementById('nearbyList');
+      const filtered = filter === 'all' ? nearbyPlaces : nearbyPlaces.filter(p => p.category === filter);
+
+      list.innerHTML = filtered.map(place => `
+        <div class="nearby-card" onclick="flyToPlace(${place.lat}, ${place.lng})">
+          <div class="nearby-icon ${place.category}">${place.icon}</div>
+          <div class="nearby-info">
+            <div class="nearby-name">${place.name}</div>
+            <div class="nearby-desc">${place.desc}</div>
+          </div>
+          <div class="nearby-distance">${place.distance}</div>
+        </div>
+      `).join('');
+    }
+
+    function flyToPlace(lat, lng) {
+      if (insightsMap) {
+        insightsMap.flyTo([lat, lng], 16, { duration: 0.8 });
+        // Open the popup for the closest marker
+        mapMarkers.forEach(m => {
+          const pos = m.getLatLng();
+          if (Math.abs(pos.lat - lat) < 0.001 && Math.abs(pos.lng - lng) < 0.001) {
+            m.openPopup();
+          }
+        });
+      }
+    }
+
+    // ============================
+    // EXISTING FUNCTIONS
+    // ============================
+    function bookTrip() {
+      alert('Automated booking feature coming soon! For now, please use the "View on..." links to book each item individually.');
+    }
+
+    window.saveCurrentTrip = function() {
+      alert('Please sign in to save your trip! Redirecting to sign in page...');
+      setTimeout(() => { window.location.href = 'auth.html'; }, 1000);
+    }
+
+    // Toggle sidebar
+    function toggleLeftSidebar() {
+      const sidebar = document.getElementById('leftSidebar');
+      const overlay = document.getElementById('sidebarOverlay');
+      sidebar.classList.toggle('open');
+      overlay.classList.toggle('active');
+      setTimeout(() => { if (typeof lucide !== 'undefined') lucide.createIcons(); }, 50);
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        document.getElementById('leftSidebar').classList.remove('open');
+        document.getElementById('sidebarOverlay').classList.remove('active');
+      }
+    });
+
+    document.addEventListener('click', (e) => {
+      const sidebar = document.getElementById('leftSidebar');
+      const menuBtn = document.querySelector('.header-menu-btn');
+      const overlay = document.getElementById('sidebarOverlay');
+      if (sidebar && menuBtn && !sidebar.contains(e.target) && !menuBtn.contains(e.target)) {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('active');
+      }
+    });
+
+    // Re-init icons
+    initIcons();
+
+    // Backup: ensure everything initializes even if CDN was slow
+    document.addEventListener('DOMContentLoaded', initIcons);
+    window.addEventListener('load', initIcons);
+  </script>
+
+  <!-- Firebase Integration -->
+  <script type="module" src="firebase-config.js"></script>
+  <script type="module" src="auth-handler.js"></script>
+  <script type="module" src="trip-saver.js"></script>
+
+</body>
+</html>
