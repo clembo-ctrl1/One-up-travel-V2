@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Premium Itinerary Concept | One-Up Travel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: rgba(255,255,255,0.03);
+      --surface-2: rgba(255,255,255,0.06);
+      --border: rgba(255,255,255,0.07);
+      --border-2: rgba(255,255,255,0.12);
+      --text: #ffffff;
+      --text-2: rgba(255,255,255,0.6);
+      --text-3: rgba(255,255,255,0.35);
+      --indigo: #6366f1;
+      --indigo-glow: rgba(99,102,241,0.15);
+      --green: #10b981;
+      --green-glow: rgba(16,185,129,0.15);
+      --amber: #f59e0b;
+      --amber-glow: rgba(245,158,11,0.15);
+      --rose: #f43f5e;
+      --rose-glow: rgba(244,63,94,0.15);
+      --violet: #8b5cf6;
+      --radius: 14px;
+      --font: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --mono: 'Space Mono', monospace;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* =============== PAGE LOADER =============== */
+    .page-loader {
+      position: fixed; inset: 0; background: var(--bg); z-index: 9999;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 24px;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+    .page-loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+    .loader-logo {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: linear-gradient(135deg, var(--indigo), var(--violet));
+      display: flex; align-items: center; justify-content: center; font-size: 24px;
+      animation: pulse-glow 1.5s ease infinite;
+    }
+    .loader-skeleton { width: 320px; display: flex; flex-direction: column; gap: 12px; }
+    .skeleton-bar {
+      height: 12px; border-radius: 6px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.04) 75%);
+      background-size: 200% 100%; animation: shimmer 1.5s infinite;
+    }
+    .skeleton-bar:nth-child(1) { width: 80%; }
+    .skeleton-bar:nth-child(2) { width: 60%; }
+    .skeleton-bar:nth-child(3) { width: 90%; }
+    .skeleton-bar:nth-child(4) { width: 45%; }
+    .loader-text { font-size: 13px; color: var(--text-3); letter-spacing: 1px; text-transform: uppercase; font-weight: 600; }
+    @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+    @keyframes pulse-glow { 0%,100% { box-shadow: 0 0 20px rgba(99,102,241,0.3); } 50% { box-shadow: 0 0 40px rgba(99,102,241,0.6); } }
+
+    /* =============== TOAST =============== */
+    .toast-container { position: fixed; top: 24px; right: 24px; z-index: 10000; display: flex; flex-direction: column; gap: 10px; }
+    .toast {
+      display: flex; align-items: center; gap: 12px; padding: 14px 20px; border-radius: 12px;
+      background: rgba(15,15,25,0.95); backdrop-filter: blur(20px); border: 1px solid var(--border-2);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4); font-size: 13px; font-weight: 600;
+      animation: toast-in 0.4s cubic-bezier(0.16, 1, 0.3, 1); transition: all 0.3s ease; max-width: 360px;
+    }
+    .toast.success { border-color: rgba(16,185,129,0.3); }
+    .toast.success .toast-icon { color: var(--green); }
+    .toast.info { border-color: rgba(99,102,241,0.3); }
+    .toast.info .toast-icon { color: var(--indigo); }
+    .toast-icon { width: 20px; height: 20px; flex-shrink: 0; }
+    .toast-msg { flex: 1; }
+    .toast-close { background: none; border: none; color: var(--text-3); cursor: pointer; width: 16px; height: 16px; padding: 0; }
+    .toast.removing { opacity: 0; transform: translateX(100px); }
+    @keyframes toast-in { from { opacity: 0; transform: translateX(100px); } to { opacity: 1; transform: translateX(0); } }
+
+    /* =============== AMBIENT =============== */
+    .ambient { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+    .ambient-orb { position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.12; animation: float 20s ease-in-out infinite; }
+    .ambient-orb:nth-child(1) { width: 600px; height: 600px; background: var(--indigo); top: -200px; right: -100px; }
+    .ambient-orb:nth-child(2) { width: 500px; height: 500px; background: var(--violet); bottom: -150px; left: -100px; animation-delay: -7s; }
+    .ambient-orb:nth-child(3) { width: 400px; height: 400px; background: var(--green); top: 50%; left: 50%; animation-delay: -14s; opacity: 0.06; }
+    @keyframes float { 0%,100% { transform: translate(0,0) scale(1); } 33% { transform: translate(30px,-30px) scale(1.05); } 66% { transform: translate(-20px,20px) scale(0.95); } }
+
+    /* =============== STANDARD HEADER =============== */
+    header {
+      padding: 25px 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      background: rgba(10, 10, 15, 0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 100;
+    }
+    .header-left { flex: 1; display: flex; align-items: center; }
+    .header-center { flex: 1; display: flex; justify-content: center; }
+    .header-right { flex: 1; display: flex; justify-content: flex-end; align-items: center; }
+    .logo { display: flex; align-items: center; text-decoration: none; }
+    .logo img { height: 40px; transition: all 0.3s ease; }
+    .logo img:hover { transform: scale(1.05); }
+    .header-menu-btn {
+      background: transparent; border: 1px solid rgba(255,255,255,0.2); color: white;
+      padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 500; font-size: 14px;
+      transition: all 0.3s ease; display: flex; align-items: center; gap: 8px; font-family: var(--font);
+    }
+    .header-menu-btn:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.3); }
+    .header-menu-btn i { width: 18px; height: 18px; }
+    .signin-btn {
+      background: var(--indigo); color: white; padding: 10px 24px; border-radius: 10px;
+      font-weight: 600; text-decoration: none; transition: 0.3s; font-size: 14px;
+    }
+    .signin-btn:hover { background: #4f46e5; transform: translateY(-2px); }
+
+    /* =============== LEFT SIDEBAR =============== */
+    .left-sidebar {
+      position: fixed; top: 0; left: -280px; width: 280px; height: 100vh;
+      background: rgba(12, 12, 20, 0.97); backdrop-filter: blur(24px);
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 24px 20px; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1000; overflow-y: auto;
+    }
+    .left-sidebar.open { left: 0; box-shadow: 5px 0 40px rgba(0, 0, 0, 0.5); }
+    .sidebar-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.5); z-index: 999; opacity: 0; visibility: hidden;
+      transition: all 0.4s ease;
+    }
+    .sidebar-overlay.active { opacity: 1; visibility: visible; }
+    .sidebar-close-btn {
+      position: absolute; top: 20px; right: 16px;
+      background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12);
+      color: white; width: 36px; height: 36px; border-radius: 10px; cursor: pointer;
+      transition: all 0.25s ease; display: flex; align-items: center; justify-content: center;
+    }
+    .sidebar-close-btn:hover {
+      background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.4);
+      box-shadow: 0 0 16px rgba(239, 68, 68, 0.15);
+    }
+    .sidebar-close-btn svg { width: 18px; height: 18px; stroke: rgba(255,255,255,0.8); }
+    .sidebar-close-btn:hover svg { stroke: white; }
+    .sidebar-content { padding-top: 40px; }
+    .sidebar-section { margin-bottom: 8px; }
+    .sidebar-section-title {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px;
+      color: rgba(255, 255, 255, 0.3); margin-bottom: 12px; padding: 0 14px; font-weight: 600;
+    }
+    .sidebar-item {
+      display: flex; align-items: center; gap: 12px; width: 100%;
+      background: transparent; border: 1px solid transparent;
+      color: rgba(255, 255, 255, 0.7); padding: 12px 14px; border-radius: 10px;
+      font-size: 14px; font-weight: 500; text-decoration: none; cursor: pointer;
+      transition: all 0.25s ease; font-family: var(--font);
+    }
+    .sidebar-item:hover {
+      background: rgba(99, 102, 241, 0.12); border-color: rgba(99, 102, 241, 0.25); color: white;
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.15), inset 0 0 20px rgba(99, 102, 241, 0.05);
+    }
+    .sidebar-item.active {
+      background: rgba(99, 102, 241, 0.15); border-color: rgba(99, 102, 241, 0.3); color: white;
+    }
+    .sidebar-item.primary {
+      background: rgba(99, 102, 241, 0.15); border-color: rgba(99, 102, 241, 0.4);
+      color: #a5b4fc; font-weight: 600;
+    }
+    .sidebar-item i { width: 18px; height: 18px; flex-shrink: 0; opacity: 0.7; }
+    .sidebar-item:hover i { opacity: 1; }
+    .sidebar-divider { height: 1px; background: rgba(255, 255, 255, 0.06); margin: 8px 0 20px; }
+
+    /* =============== MAIN =============== */
+    .main {
+      position: relative; z-index: 1; max-width: 680px;
+      margin: 0 auto; padding: 0 20px 80px;
+    }
+
+    /* =============== HERO GALLERY =============== */
+    .hero { position: relative; margin: 0 -20px; height: 260px; overflow: hidden; }
+    .hero-gallery { display: flex; height: 100%; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+    .hero-slide {
+      min-width: 100%; height: 100%; background-size: cover; background-position: center; position: relative;
+    }
+    .hero-slide::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(10,10,15,0.95) 0%, rgba(10,10,15,0.3) 50%, transparent 100%);
+    }
+    .hero-content { position: absolute; bottom: 0; left: 0; right: 0; padding: 32px; z-index: 2; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px;
+      background: rgba(99,102,241,0.2); border: 1px solid rgba(99,102,241,0.3);
+      border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1px; color: #a5b4fc; margin-bottom: 12px;
+    }
+    .hero-title { font-size: 36px; font-weight: 800; letter-spacing: -1px; line-height: 1.1; margin-bottom: 6px; text-shadow: 0 2px 20px rgba(0,0,0,0.5); }
+    .hero-subtitle { font-size: 15px; color: var(--text-2); }
+    .hero-dots { position: absolute; bottom: 16px; right: 32px; z-index: 3; display: flex; gap: 6px; }
+    .hero-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.3); cursor: pointer; transition: all 0.3s ease; }
+    .hero-dot.active { background: white; width: 24px; border-radius: 4px; }
+
+    /* =============== COUNTDOWN =============== */
+    .countdown-bar {
+      display: flex; align-items: center; justify-content: center; gap: 24px; padding: 20px;
+      margin: 24px 0;
+      background: linear-gradient(135deg, rgba(99,102,241,0.08), rgba(139,92,246,0.08));
+      border: 1px solid rgba(99,102,241,0.15); border-radius: var(--radius);
+      position: relative; overflow: hidden;
+    }
+    .countdown-bar::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(99,102,241,0.05), transparent);
+      animation: countdown-sweep 3s ease infinite;
+    }
+    @keyframes countdown-sweep { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+    .countdown-label { font-size: 13px; font-weight: 600; color: var(--text-2); display: flex; align-items: center; gap: 8px; }
+    .countdown-label i { width: 16px; height: 16px; color: var(--amber); }
+    .countdown-units { display: flex; gap: 16px; }
+    .countdown-unit { text-align: center; }
+    .countdown-number { font-family: var(--mono); font-size: 24px; font-weight: 700; color: white; line-height: 1; }
+    .countdown-word { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-3); margin-top: 4px; }
+
+    /* =============== STATS =============== */
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 28px; }
+    .stat-card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 18px 14px; text-align: center; transition: all 0.3s ease;
+    }
+    .stat-card:hover { border-color: var(--border-2); background: var(--surface-2); transform: translateY(-2px); }
+    .stat-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-size: 18px; }
+    .stat-icon.indigo { background: var(--indigo-glow); }
+    .stat-icon.green { background: var(--green-glow); }
+    .stat-icon.amber { background: var(--amber-glow); }
+    .stat-icon.rose { background: var(--rose-glow); }
+    .stat-value { font-family: var(--mono); font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+    .stat-label { font-size: 11px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+
+    /* =============== CURRENCY PICKER =============== */
+    .currency-bar {
+      display: flex; align-items: center; justify-content: flex-end; gap: 10px; margin-bottom: 20px;
+    }
+    .currency-label { font-size: 12px; color: var(--text-3); font-weight: 600; }
+    .currency-select {
+      appearance: none; -webkit-appearance: none;
+      padding: 8px 36px 8px 14px;
+      background: var(--surface-2); border: 1px solid var(--border-2); border-radius: 10px;
+      color: white; font-family: var(--mono); font-size: 13px; font-weight: 700;
+      cursor: pointer; outline: none; transition: all 0.25s;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='rgba(255,255,255,0.5)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='2 4 6 8 10 4'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 12px center;
+    }
+    .currency-select:hover, .currency-select:focus {
+      border-color: rgba(99,102,241,0.4); background-color: var(--indigo-glow);
+    }
+    .currency-select option { background: #1a1a2e; color: white; }
+
+    /* =============== VIEW TABS =============== */
+    .view-tabs {
+      display: flex; gap: 4px; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 4px; margin-bottom: 24px;
+    }
+    .tab-btn {
+      flex: 1; padding: 10px 16px; background: transparent; border: none; border-radius: 8px;
+      color: var(--text-3); font-size: 13px; font-weight: 600; cursor: pointer;
+      transition: all 0.25s ease; display: flex; align-items: center; justify-content: center;
+      gap: 6px; font-family: var(--font);
+    }
+    .tab-btn i { width: 15px; height: 15px; }
+    .tab-btn.active { background: var(--indigo); color: white; box-shadow: 0 2px 12px rgba(99,102,241,0.3); }
+    .tab-btn:hover:not(.active) { color: white; background: var(--surface-2); }
+    .view-panel { display: none; animation: fadeInUp 0.4s ease; }
+    .view-panel.active { display: block; }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* =============== TIMELINE — COLLAPSED SUMMARY =============== */
+    .tl-summary-grid {
+      display: grid; gap: 10px;
+    }
+
+    .tl-summary-card {
+      display: flex; align-items: center; gap: 16px;
+      padding: 16px 20px; background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); cursor: pointer; transition: all 0.3s ease;
+      position: relative; overflow: hidden;
+    }
+
+    .tl-summary-card::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+      border-radius: 0 2px 2px 0;
+    }
+    .tl-summary-card.flight-card::before { background: var(--amber); }
+    .tl-summary-card.hotel-card::before { background: var(--indigo); }
+    .tl-summary-card.activity-card::before { background: var(--green); }
+    .tl-summary-card.free-card::before { background: var(--text-3); }
+
+    .tl-summary-card:hover {
+      border-color: var(--border-2); transform: translateY(-2px);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+    }
+
+    .tl-summary-card.expanded {
+      background: var(--surface-2); border-color: var(--border-2);
+    }
+
+    .tl-day-marker {
+      width: 44px; height: 44px; border-radius: 12px; flex-shrink: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      font-weight: 700; line-height: 1;
+    }
+    .tl-day-marker.flight { background: var(--amber-glow); color: var(--amber); }
+    .tl-day-marker.hotel { background: var(--indigo-glow); color: #a5b4fc; }
+    .tl-day-marker.activity { background: var(--green-glow); color: var(--green); }
+    .tl-day-marker.free { background: var(--surface-2); color: var(--text-3); }
+
+    .tl-day-num { font-size: 16px; }
+    .tl-day-label { font-size: 8px; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.8; }
+
+    .tl-summary-info { flex: 1; min-width: 0; }
+    .tl-summary-title { font-size: 15px; font-weight: 700; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .tl-summary-sub { font-size: 12px; color: var(--text-3); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .tl-summary-tag {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+      padding: 3px 8px; border-radius: 5px;
+    }
+    .tl-summary-tag.flight { background: var(--amber-glow); color: var(--amber); }
+    .tl-summary-tag.hotel { background: var(--indigo-glow); color: #a5b4fc; }
+    .tl-summary-tag.activity { background: var(--green-glow); color: var(--green); }
+    .tl-summary-tag.free { background: var(--surface-2); color: var(--text-3); }
+
+    .tl-summary-right {
+      display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0;
+    }
+    .tl-summary-price { font-family: var(--mono); font-size: 15px; font-weight: 700; color: var(--green); }
+    .tl-summary-weather { font-size: 13px; }
+    .tl-expand-icon {
+      width: 20px; height: 20px; color: var(--text-3); flex-shrink: 0;
+      transition: transform 0.3s ease;
+    }
+    .tl-summary-card.expanded .tl-expand-icon { transform: rotate(180deg); }
+
+    /* EXPANDED DETAIL */
+    .tl-detail {
+      max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.4s ease;
+      padding: 0 20px;
+    }
+    .tl-detail.open {
+      max-height: 500px; padding: 0 20px 20px;
+    }
+    .tl-detail-inner {
+      padding-top: 16px; border-top: 1px solid var(--border);
+    }
+    .tl-detail-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 8px 0; font-size: 13px; color: var(--text-2);
+    }
+    .tl-detail-label { color: var(--text-3); font-size: 12px; font-weight: 600; }
+    .tl-detail-value { font-weight: 600; }
+    .tl-detail-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 16px; margin-top: 12px;
+      background: var(--indigo-glow); border: 1px solid rgba(99,102,241,0.3);
+      border-radius: 8px; color: #a5b4fc; font-size: 12px; font-weight: 700;
+      text-decoration: none; transition: all 0.25s;
+    }
+    .tl-detail-link:hover {
+      background: rgba(99,102,241,0.25); border-color: rgba(99,102,241,0.5);
+      color: white; box-shadow: 0 0 16px rgba(99,102,241,0.15);
+    }
+    .tl-detail-link i { width: 14px; height: 14px; }
+
+    /* =============== MAP =============== */
+    .map-wrapper { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 20px; }
+    .map-header { padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; }
+    .map-title { font-size: 18px; font-weight: 700; }
+    .map-subtitle { font-size: 13px; color: var(--text-2); margin-top: 2px; }
+    .map-filters { display: flex; gap: 6px; }
+    .map-filter {
+      padding: 6px 14px; border-radius: 8px; background: var(--surface-2); border: 1px solid var(--border);
+      color: var(--text-3); font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.25s; font-family: var(--font);
+    }
+    .map-filter.active { background: var(--indigo-glow); border-color: rgba(99,102,241,0.4); color: white; }
+    .map-filter:hover:not(.active) { color: white; }
+    #insightsMap { height: 400px; width: 100%; }
+    .leaflet-container { background: var(--bg) !important; }
+    .leaflet-popup-content-wrapper {
+      background: rgba(15,15,25,0.95) !important; backdrop-filter: blur(20px);
+      border: 1px solid var(--border-2) !important; border-radius: 12px !important;
+      color: white !important; box-shadow: 0 8px 32px rgba(0,0,0,0.4) !important;
+    }
+    .leaflet-popup-tip { background: rgba(15,15,25,0.95) !important; }
+    .leaflet-popup-content { margin: 14px 16px !important; font-family: var(--font) !important; font-size: 13px !important; color: white !important; }
+    .popup-cat { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #a5b4fc; font-weight: 700; }
+    .popup-name { font-size: 15px; font-weight: 700; margin: 4px 0; }
+    .popup-desc { font-size: 12px; color: var(--text-2); }
+
+    .nearby-section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; }
+    .nearby-title { font-size: 16px; font-weight: 700; margin-bottom: 16px; }
+    .nearby-card {
+      display: flex; align-items: center; gap: 14px; padding: 14px 16px;
+      background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+      margin-bottom: 8px; cursor: pointer; transition: all 0.25s;
+    }
+    .nearby-card:hover { background: var(--indigo-glow); border-color: rgba(99,102,241,0.2); transform: translateX(4px); }
+    .nearby-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+    .nearby-icon.food { background: var(--amber-glow); }
+    .nearby-icon.culture { background: rgba(139,92,246,0.15); }
+    .nearby-icon.nature { background: var(--green-glow); }
+    .nearby-name { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+    .nearby-desc { font-size: 12px; color: var(--text-3); }
+    .nearby-dist { font-size: 12px; font-weight: 600; color: var(--text-3); white-space: nowrap; margin-left: auto; }
+
+    /* =============== TOTAL / CTA =============== */
+    .total-bar {
+      background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(139,92,246,0.1));
+      border: 1px solid rgba(99,102,241,0.2); border-radius: var(--radius);
+      padding: 28px; text-align: center; margin-top: 32px;
+    }
+    .total-label { font-size: 14px; color: var(--text-2); margin-bottom: 6px; }
+    .total-amount { font-family: var(--mono); font-size: 48px; font-weight: 700; color: var(--green); line-height: 1; margin-bottom: 4px; }
+    .total-local { font-size: 14px; color: var(--text-3); font-family: var(--mono); margin-bottom: 20px; }
+    .cta-row { display: flex; gap: 10px; }
+    .cta-btn {
+      flex: 1; padding: 14px; border-radius: 12px; font-size: 14px; font-weight: 700;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      gap: 8px; transition: all 0.3s; font-family: var(--font); border: none;
+    }
+    .cta-btn i { width: 18px; height: 18px; }
+    .cta-btn.primary { background: var(--indigo); color: white; }
+    .cta-btn.primary:hover { background: #4f46e5; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(99,102,241,0.4); }
+    .cta-btn.secondary { background: var(--surface-2); border: 1px solid var(--border); color: var(--text-2); }
+    .cta-btn.secondary:hover { background: var(--indigo-glow); border-color: rgba(99,102,241,0.3); color: white; }
+
+    /* =============== SHARE MODAL =============== */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px);
+      z-index: 1000; display: flex; align-items: center; justify-content: center;
+      opacity: 0; visibility: hidden; transition: all 0.3s ease;
+    }
+    .modal-overlay.show { opacity: 1; visibility: visible; }
+    .modal {
+      background: rgba(15,15,25,0.98); border: 1px solid var(--border-2); border-radius: 20px;
+      padding: 32px; width: 420px; max-width: 90vw; position: relative;
+      transform: scale(0.9) translateY(20px); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .modal-overlay.show .modal { transform: scale(1) translateY(0); }
+    .modal-title { font-size: 20px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+    .modal-title i { width: 22px; height: 22px; color: var(--indigo); }
+    .modal-desc { font-size: 13px; color: var(--text-2); margin-bottom: 24px; }
+    .share-link-box { display: flex; gap: 8px; margin-bottom: 20px; }
+    .share-link-input {
+      flex: 1; padding: 12px 16px; background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: 10px; color: var(--text-2); font-size: 13px; font-family: var(--mono); outline: none;
+    }
+    .share-link-copy {
+      padding: 12px 20px; background: var(--indigo); border: none; border-radius: 10px;
+      color: white; font-weight: 700; cursor: pointer; font-size: 13px; font-family: var(--font); transition: all 0.25s;
+    }
+    .share-link-copy:hover { background: #4f46e5; }
+    .share-methods { display: flex; gap: 12px; justify-content: center; }
+    .share-method {
+      width: 48px; height: 48px; border-radius: 14px; background: var(--surface-2);
+      border: 1px solid var(--border); display: flex; align-items: center; justify-content: center;
+      font-size: 20px; cursor: pointer; transition: all 0.25s;
+    }
+    .share-method:hover { transform: translateY(-2px); border-color: var(--border-2); box-shadow: 0 4px 16px rgba(0,0,0,0.3); }
+    .modal-close {
+      position: absolute; top: 16px; right: 16px; background: none; border: none;
+      color: var(--text-3); cursor: pointer; width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center; border-radius: 8px;
+    }
+    .modal-close:hover { background: var(--surface-2); color: white; }
+
+    /* =============== RESPONSIVE =============== */
+    @media (max-width: 640px) {
+      header { padding: 16px 20px; }
+      .hero { height: 220px; }
+      .hero-title { font-size: 26px; }
+      .countdown-bar { flex-direction: column; gap: 12px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .cta-row { flex-direction: column; }
+      .view-tabs { overflow-x: auto; }
+      .tab-btn { white-space: nowrap; font-size: 12px; }
+      .map-header { flex-direction: column; gap: 12px; align-items: flex-start; }
+      .total-amount { font-size: 36px; }
+      .tl-summary-title { font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- PAGE LOADER -->
+<div class="page-loader" id="pageLoader">
+  <div class="loader-logo">✈️</div>
+  <div class="loader-skeleton">
+    <div class="skeleton-bar"></div><div class="skeleton-bar"></div>
+    <div class="skeleton-bar"></div><div class="skeleton-bar"></div>
+  </div>
+  <div class="loader-text">Building your itinerary...</div>
+</div>
+
+<!-- TOAST -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- AMBIENT -->
+<div class="ambient"><div class="ambient-orb"></div><div class="ambient-orb"></div><div class="ambient-orb"></div></div>
+
+<!-- SIDEBAR OVERLAY -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleLeftSidebar()"></div>
+
+<!-- LEFT SIDEBAR -->
+<div class="left-sidebar" id="leftSidebar">
+  <button class="sidebar-close-btn" onclick="toggleLeftSidebar()" aria-label="Close menu">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+  </button>
+  <div class="sidebar-content">
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">Quick Access</div>
+      <a href="index.html" class="sidebar-item"><i data-lucide="home"></i><span>Home</span></a>
+      <a href="itinerary.html" class="sidebar-item active"><i data-lucide="plane"></i><span>My Itinerary</span></a>
+      <a href="dashboard.html" class="sidebar-item"><i data-lucide="layout-dashboard"></i><span>Saved Trips</span></a>
+    </div>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">Explore</div>
+      <a href="trending.html" class="sidebar-item"><i data-lucide="trending-up"></i><span>Trending</span></a>
+      <a href="contact.html" class="sidebar-item"><i data-lucide="message-circle"></i><span>Contact Support</span></a>
+    </div>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section" id="sidebarAuthSection">
+      <a href="auth.html" class="sidebar-item primary" id="sidebarAuthButton"><i data-lucide="log-in"></i><span>Sign In</span></a>
+    </div>
+  </div>
+</div>
+
+<!-- STANDARD HEADER -->
+<header>
+  <div class="header-left">
+    <button class="header-menu-btn" onclick="toggleLeftSidebar()"><i data-lucide="menu"></i> Menu</button>
+  </div>
+  <div class="header-center">
+    <a href="index.html" class="logo"><img src="logo.png" alt="One-Up Travel"></a>
+  </div>
+  <div class="header-right">
+    <a href="auth.html" class="signin-btn" id="authButton">Sign In</a>
+  </div>
+</header>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- HERO GALLERY -->
+  <div class="hero" id="heroGallery">
+    <div class="hero-gallery" id="heroSlider">
+      <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800&auto=format')"></div>
+      <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=800&auto=format')"></div>
+      <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1573790387438-4da905039392?w=800&auto=format')"></div>
+      <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1539367628448-4bc5c9d171c8?w=800&auto=format')"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-badge"><i data-lucide="sparkles" style="width:12px;height:12px"></i> AI-Planned Trip</div>
+      <div class="hero-title">Bali, Indonesia</div>
+      <div class="hero-subtitle">March 15 – 22, 2026 · 7 nights</div>
+    </div>
+    <div class="hero-dots" id="heroDots"></div>
+  </div>
+
+  <!-- COUNTDOWN -->
+  <div class="countdown-bar">
+    <div class="countdown-label"><i data-lucide="clock"></i> Trip starts in</div>
+    <div class="countdown-units" id="countdown">
+      <div class="countdown-unit"><div class="countdown-number" id="cdDays">--</div><div class="countdown-word">Days</div></div>
+      <div class="countdown-unit"><div class="countdown-number" id="cdHours">--</div><div class="countdown-word">Hours</div></div>
+      <div class="countdown-unit"><div class="countdown-number" id="cdMins">--</div><div class="countdown-word">Mins</div></div>
+      <div class="countdown-unit"><div class="countdown-number" id="cdSecs">--</div><div class="countdown-word">Secs</div></div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-icon indigo">🗓️</div><div class="stat-value" data-count="7">0</div><div class="stat-label">Days</div></div>
+    <div class="stat-card"><div class="stat-icon green">💰</div><div class="stat-value" data-count="2250" data-prefix="$">$0</div><div class="stat-label">Total Cost</div></div>
+    <div class="stat-card"><div class="stat-icon amber">⚡</div><div class="stat-value" data-count="4">0</div><div class="stat-label">Activities</div></div>
+    <div class="stat-card"><div class="stat-icon rose">✈️</div><div class="stat-value" data-count="2">0</div><div class="stat-label">Flights</div></div>
+  </div>
+
+  <!-- CURRENCY PICKER -->
+  <div class="currency-bar">
+    <span class="currency-label">Show prices in</span>
+    <select class="currency-select" id="currencySelect" onchange="changeCurrency(this.value)">
+      <option value="AUD" selected>🇦🇺 AUD</option>
+      <option value="USD">🇺🇸 USD</option>
+      <option value="EUR">🇪🇺 EUR</option>
+      <option value="GBP">🇬🇧 GBP</option>
+      <option value="IDR">🇮🇩 IDR</option>
+      <option value="JPY">🇯🇵 JPY</option>
+      <option value="SGD">🇸🇬 SGD</option>
+      <option value="NZD">🇳🇿 NZD</option>
+      <option value="THB">🇹🇭 THB</option>
+      <option value="MYR">🇲🇾 MYR</option>
+    </select>
+  </div>
+
+  <!-- VIEW TABS -->
+  <div class="view-tabs">
+    <button class="tab-btn active" onclick="switchView('timeline', this)"><i data-lucide="git-branch"></i> Timeline</button>
+    <button class="tab-btn" onclick="switchView('calendar', this)"><i data-lucide="calendar"></i> Calendar</button>
+    <button class="tab-btn" onclick="switchView('insights', this)"><i data-lucide="map-pin"></i> Map & Insights</button>
+  </div>
+
+  <!-- ========== TIMELINE VIEW ========== -->
+  <div id="timelineView" class="view-panel active">
+    <div class="tl-summary-grid" id="timelineGrid">
+      <!-- Built by JS -->
+    </div>
+  </div>
+
+  <!-- ========== CALENDAR VIEW (placeholder) ========== -->
+  <div id="calendarView" class="view-panel">
+    <div style="text-align:center; padding: 60px 20px; color: var(--text-3);">
+      <i data-lucide="calendar" style="width:48px; height:48px; margin-bottom: 16px; opacity: 0.3;"></i>
+      <p style="font-size: 16px; font-weight: 600; margin-bottom: 8px; color: var(--text-2);">Calendar View</p>
+      <p style="font-size: 13px;">Already built in your live file — interactive monthly calendar with weather, colour-coded trip days, and day detail panel.</p>
+    </div>
+  </div>
+
+  <!-- ========== INSIGHTS / MAP ========== -->
+  <div id="insightsView" class="view-panel">
+    <div class="map-wrapper">
+      <div class="map-header">
+        <div><div class="map-title">Trip Map</div><div class="map-subtitle">Your hotel & nearby recommendations</div></div>
+        <div class="map-filters">
+          <button class="map-filter active" onclick="filterMap('all',this)">All</button>
+          <button class="map-filter" onclick="filterMap('food',this)">Food</button>
+          <button class="map-filter" onclick="filterMap('culture',this)">Culture</button>
+          <button class="map-filter" onclick="filterMap('nature',this)">Nature</button>
+        </div>
+      </div>
+      <div id="insightsMap"></div>
+    </div>
+    <div class="nearby-section">
+      <div class="nearby-title">Recommended Near Your Hotel</div>
+      <div id="nearbyList"></div>
+    </div>
+  </div>
+
+  <!-- TOTAL / CTA -->
+  <div class="total-bar">
+    <div class="total-label">Total Trip Cost</div>
+    <div class="total-amount" id="totalDisplay">$2,250</div>
+    <div class="total-local" id="totalLocal">≈ Rp 23,175,000 IDR</div>
+    <div class="cta-row">
+      <button class="cta-btn primary" onclick="showToast('One-click booking coming soon!', 'info')"><i data-lucide="credit-card"></i> Book This Trip</button>
+      <button class="cta-btn secondary" onclick="openShareModal()"><i data-lucide="share-2"></i> Share</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- SHARE MODAL -->
+<div class="modal-overlay" id="shareModal" onclick="if(event.target===this)closeShareModal()">
+  <div class="modal">
+    <button class="modal-close" onclick="closeShareModal()"><i data-lucide="x" style="width:18px;height:18px"></i></button>
+    <div class="modal-title"><i data-lucide="share-2"></i> Share This Trip</div>
+    <div class="modal-desc">Send a read-only link to your travel companions so they can view the full itinerary.</div>
+    <div class="share-link-box">
+      <input class="share-link-input" value="https://oneuptravel.com/trip/bali-mar2026-xK9m" readonly id="shareInput">
+      <button class="share-link-copy" onclick="copyShareLink()">Copy</button>
+    </div>
+    <div class="share-methods">
+      <div class="share-method" onclick="showToast('Opening WhatsApp...','info')">💬</div>
+      <div class="share-method" onclick="showToast('Opening email...','info')">✉️</div>
+      <div class="share-method" onclick="showToast('Opening Messenger...','info')">💭</div>
+      <div class="share-method" onclick="showToast('Opening SMS...','info')">📱</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ===== SAFE LUCIDE =====
+  function initIcons() { try { if(typeof lucide!=='undefined') lucide.createIcons(); } catch(e){} }
+  initIcons();
+
+  // ===== SIDEBAR =====
+  function toggleLeftSidebar() {
+    document.getElementById('leftSidebar').classList.toggle('open');
+    document.getElementById('sidebarOverlay').classList.toggle('active');
+    setTimeout(initIcons, 50);
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.getElementById('leftSidebar').classList.remove('open');
+      document.getElementById('sidebarOverlay').classList.remove('active');
+    }
+  });
+
+  // ===== PAGE LOADER =====
+  setTimeout(() => {
+    document.getElementById('pageLoader').classList.add('hidden');
+    animateCountUp();
+    buildTimeline();
+    showToast('Itinerary ready! Tap any item to expand details.', 'success');
+  }, 2000);
+
+  // ===== TOAST =====
+  function showToast(msg, type='info') {
+    const c = document.getElementById('toastContainer');
+    const icons = { success:'check-circle', info:'info', warning:'alert-triangle' };
+    const t = document.createElement('div');
+    t.className = `toast ${type}`;
+    t.innerHTML = `<i data-lucide="${icons[type]}" class="toast-icon"></i><span class="toast-msg">${msg}</span><button class="toast-close" onclick="removeToast(this.parentElement)"><i data-lucide="x" style="width:14px;height:14px"></i></button>`;
+    c.appendChild(t); initIcons();
+    setTimeout(() => removeToast(t), 4000);
+  }
+  function removeToast(el) { if(!el||!el.parentElement) return; el.classList.add('removing'); setTimeout(()=>el.remove(),300); }
+
+  // ===== HERO GALLERY =====
+  let currentSlide = 0;
+  const slides = document.querySelectorAll('.hero-slide');
+  const dotsC = document.getElementById('heroDots');
+  slides.forEach((_,i)=>{ const d=document.createElement('div'); d.className=`hero-dot ${i===0?'active':''}`; d.onclick=()=>goToSlide(i); dotsC.appendChild(d); });
+  function goToSlide(i) { currentSlide=i; document.getElementById('heroSlider').style.transform=`translateX(-${i*100}%)`; document.querySelectorAll('.hero-dot').forEach((d,j)=>d.classList.toggle('active',j===i)); }
+  setInterval(()=>goToSlide((currentSlide+1)%slides.length), 5000);
+
+  // ===== COUNTDOWN =====
+  function updateCountdown() {
+    const diff = new Date('2026-03-15T14:15:00') - new Date();
+    if(diff<=0){document.getElementById('countdown').innerHTML='<div style="font-size:16px;font-weight:700;color:var(--green)">🎉 Trip is happening!</div>';return;}
+    document.getElementById('cdDays').textContent = Math.floor(diff/86400000);
+    document.getElementById('cdHours').textContent = String(Math.floor((diff%86400000)/3600000)).padStart(2,'0');
+    document.getElementById('cdMins').textContent = String(Math.floor((diff%3600000)/60000)).padStart(2,'0');
+    document.getElementById('cdSecs').textContent = String(Math.floor((diff%60000)/1000)).padStart(2,'0');
+  }
+  updateCountdown(); setInterval(updateCountdown,1000);
+
+  // ===== ANIMATE COUNT UP =====
+  function animateCountUp() {
+    document.querySelectorAll('.stat-value[data-count]').forEach(el=>{
+      const target=parseInt(el.dataset.count), prefix=el.dataset.prefix||'';
+      let cur=0; const step=Math.max(1,Math.floor(target/40));
+      const iv=setInterval(()=>{ cur=Math.min(cur+step,target); el.textContent=prefix+cur.toLocaleString(); if(cur>=target)clearInterval(iv); },30);
+    });
+  }
+
+  // ===== CURRENCY =====
+  const BASE_AUD = 2250;
+  const rates = { AUD:1, USD:0.65, EUR:0.60, GBP:0.52, IDR:10300, JPY:97.5, SGD:0.88, NZD:1.09, THB:23.1, MYR:3.05 };
+  const symbols = { AUD:'$', USD:'$', EUR:'€', GBP:'£', IDR:'Rp ', JPY:'¥', SGD:'S$', NZD:'NZ$', THB:'฿', MYR:'RM ' };
+  let currentCurrency = 'AUD';
+
+  function changeCurrency(code) {
+    currentCurrency = code;
+    const rate = rates[code];
+    const sym = symbols[code];
+    const fmt = (aud) => {
+      const val = Math.round(aud * rate);
+      return sym + val.toLocaleString();
+    };
+
+    // Update all prices
+    document.querySelectorAll('[data-aud]').forEach(el => {
+      el.textContent = fmt(parseInt(el.dataset.aud));
+    });
+
+    // Update total
+    document.getElementById('totalDisplay').textContent = fmt(BASE_AUD);
+    
+    // Show conversion note
+    if (code === 'AUD') {
+      document.getElementById('totalLocal').textContent = '≈ Rp ' + Math.round(BASE_AUD * rates.IDR).toLocaleString() + ' IDR';
+    } else {
+      document.getElementById('totalLocal').textContent = '≈ $' + BASE_AUD.toLocaleString() + ' AUD';
+    }
+
+    showToast(`Prices converted to ${code}`, 'info');
+  }
+
+  // ===== TIMELINE DATA =====
+  const timelineDays = [
+    {
+      day: 1, date: 'Sat, Mar 15', type: 'flight', weather: '☀️ 31°',
+      items: [
+        { tag: 'flight', title: 'Brisbane → Denpasar', sub: 'Virgin Australia VA1 · Economy', price: 450,
+          details: [
+            { label: 'Depart', value: '2:15 PM AEST' },
+            { label: 'Arrive', value: '2:30 PM WITA' },
+            { label: 'Duration', value: '6h 45m' },
+            { label: 'Cabin', value: 'Economy · Seat TBC' }
+          ],
+          link: { text: 'View on Skyscanner', url: '#', icon: 'external-link' }
+        },
+        { tag: 'hotel', title: 'Alila Ubud Resort — Check-in', sub: 'Deluxe Valley View · 7 nights', price: 980,
+          details: [
+            { label: 'Check-in', value: 'From 3:00 PM' },
+            { label: 'Room', value: 'Deluxe Room with Valley View' },
+            { label: 'Includes', value: 'Breakfast, WiFi, Spa access' },
+          ],
+          link: { text: 'View on Booking.com', url: '#', icon: 'external-link' }
+        }
+      ]
+    },
+    {
+      day: 2, date: 'Sun, Mar 16', type: 'activity', weather: '🌤️ 30°',
+      items: [
+        { tag: 'activity', title: 'Ubud Culture Tour', sub: 'Monkey Forest + Rice Terraces + Temple', price: 65,
+          details: [
+            { label: 'Time', value: '8:00 AM – 5:00 PM' },
+            { label: 'Duration', value: '9 hours (full day)' },
+            { label: 'Includes', value: 'Lunch, transport, guide' },
+          ],
+          link: { text: 'Book on GetYourGuide', url: '#', icon: 'external-link' }
+        }
+      ]
+    },
+    {
+      day: 3, date: 'Mon, Mar 17', type: 'activity', weather: '⛅ 22°',
+      items: [
+        { tag: 'activity', title: 'Mount Batur Sunrise Hike', sub: 'Breakfast at peak · Guide included', price: 75,
+          details: [
+            { label: 'Pickup', value: '2:00 AM from hotel' },
+            { label: 'Return', value: '~10:00 AM' },
+            { label: 'Difficulty', value: 'Moderate (1,717m)' },
+          ],
+          link: { text: 'Book on Viator', url: '#', icon: 'external-link' }
+        }
+      ]
+    },
+    {
+      day: 4, date: 'Tue, Mar 18', type: 'free', weather: '☀️ 32°',
+      items: [
+        { tag: 'free', title: 'Relax & Explore', sub: 'Free day — resort spa, Ubud town, hidden gems', price: 0,
+          details: [
+            { label: 'Suggestion', value: 'Campuhan Ridge Walk at sunset' },
+            { label: 'Nearby', value: 'Ubud Art Market (0.2 km)' },
+            { label: 'Resort', value: 'Spa treatments from $30' },
+          ],
+          link: null
+        }
+      ]
+    },
+    {
+      day: 5, date: 'Wed, Mar 19', type: 'activity', weather: '🌦️ 29°',
+      items: [
+        { tag: 'activity', title: 'Balinese Cooking Class', sub: 'Market tour + Hands-on cooking + lunch', price: 85,
+          details: [
+            { label: 'Time', value: '9:00 AM – 2:00 PM' },
+            { label: 'Duration', value: '5 hours' },
+            { label: 'Includes', value: 'Market visit, all ingredients, recipes' },
+          ],
+          link: { text: 'Book on Klook', url: '#', icon: 'external-link' }
+        }
+      ]
+    },
+    {
+      day: 6, date: 'Thu, Mar 20', type: 'activity', weather: '⛅ 30°',
+      items: [
+        { tag: 'activity', title: 'Waterfall & Temple Tour', sub: 'Tegenungan + Tirta Empul + Tegalalang', price: 60,
+          details: [
+            { label: 'Time', value: '8:30 AM – 2:30 PM' },
+            { label: 'Duration', value: '6 hours' },
+            { label: 'Includes', value: 'Guide, transport, sarong' },
+          ],
+          link: { text: 'Book on GetYourGuide', url: '#', icon: 'external-link' }
+        }
+      ]
+    },
+    {
+      day: 7, date: 'Fri, Mar 21', type: 'free', weather: '☀️ 31°',
+      items: [
+        { tag: 'free', title: 'Last Full Day', sub: 'Final shopping, spa, or beach trip to Seminyak', price: 0,
+          details: [
+            { label: 'Suggestion', value: 'Day trip to Seminyak Beach' },
+            { label: 'Shopping', value: 'Ubud Art Market souvenirs' },
+            { label: 'Evening', value: 'Farewell dinner at Locavore' },
+          ],
+          link: null
+        }
+      ]
+    },
+    {
+      day: 8, date: 'Sun, Mar 22', type: 'flight', weather: '🌤️ 30°',
+      items: [
+        { tag: 'hotel', title: 'Alila Ubud — Check-out', sub: 'Check-out by 12:00 PM', price: 0,
+          details: [
+            { label: 'Check-out', value: '12:00 PM' },
+            { label: 'Late checkout', value: 'Available on request' },
+          ],
+          link: null
+        },
+        { tag: 'flight', title: 'Denpasar → Brisbane', sub: 'Virgin Australia VA4 · Economy', price: 480,
+          details: [
+            { label: 'Depart', value: '11:00 PM WITA' },
+            { label: 'Arrive', value: '11:45 PM AEST (+1)' },
+            { label: 'Duration', value: '6h 45m' },
+          ],
+          link: { text: 'View on Skyscanner', url: '#', icon: 'external-link' }
+        }
+      ]
+    }
+  ];
+
+  function buildTimeline() {
+    const grid = document.getElementById('timelineGrid');
+    grid.innerHTML = timelineDays.map((day, di) => {
+      return day.items.map((item, ii) => {
+        const id = `tl-${di}-${ii}`;
+        const isFirst = ii === 0;
+        const priceHtml = item.price ? `<span class="tl-summary-price" data-aud="${item.price}">$${item.price}</span>` : '';
+        const linkHtml = item.link ? `<a href="${item.link.url}" class="tl-detail-link" onclick="event.stopPropagation()"><i data-lucide="${item.link.icon}"></i> ${item.link.text}</a>` : '';
+        
+        return `
+          <div class="tl-summary-card ${item.tag}-card" onclick="toggleTimeline('${id}', this)">
+            ${isFirst ? `
+            <div class="tl-day-marker ${day.type}">
+              <span class="tl-day-num">${day.day <= 7 ? day.day : '→'}</span>
+              <span class="tl-day-label">${day.day <= 7 ? 'Day' : 'Dep'}</span>
+            </div>` : `
+            <div class="tl-day-marker ${item.tag}" style="opacity:0.5">
+              <span style="font-size:12px">+</span>
+            </div>`}
+            <div class="tl-summary-info">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+                <span class="tl-summary-tag ${item.tag}">${item.tag}</span>
+                ${isFirst ? `<span style="font-size:11px;color:var(--text-3)">${day.date}</span>` : ''}
+              </div>
+              <div class="tl-summary-title">${item.title}</div>
+              <div class="tl-summary-sub">${item.sub}</div>
+            </div>
+            <div class="tl-summary-right">
+              ${priceHtml}
+              ${isFirst ? `<span class="tl-summary-weather">${day.weather}</span>` : ''}
+            </div>
+            <svg class="tl-expand-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </div>
+          <div class="tl-detail" id="${id}">
+            <div class="tl-detail-inner">
+              ${item.details.map(d => `
+                <div class="tl-detail-row">
+                  <span class="tl-detail-label">${d.label}</span>
+                  <span class="tl-detail-value">${d.value}</span>
+                </div>
+              `).join('')}
+              ${linkHtml}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }).join('');
+    initIcons();
+    // Apply current currency
+    if (currentCurrency !== 'AUD') changeCurrency(currentCurrency);
+  }
+
+  function toggleTimeline(id, card) {
+    const detail = document.getElementById(id);
+    const wasOpen = detail.classList.contains('open');
+    
+    // Close all
+    document.querySelectorAll('.tl-detail').forEach(d => d.classList.remove('open'));
+    document.querySelectorAll('.tl-summary-card').forEach(c => c.classList.remove('expanded'));
+    
+    if (!wasOpen) {
+      detail.classList.add('open');
+      card.classList.add('expanded');
+    }
+  }
+
+  // ===== TABS =====
+  let mapInit = false;
+  function switchView(view, btn) {
+    document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(view + 'View').classList.add('active');
+    btn.classList.add('active');
+    if (view === 'insights' && !mapInit) { setTimeout(()=>{initMap();mapInit=true;},150); }
+    initIcons();
+  }
+
+  // ===== MAP =====
+  let map=null, markers=[];
+  const nearbyPlaces=[
+    {name:"Locavore",desc:"Award-winning fine dining",cat:"food",icon:"🍽️",lat:-8.5074,lng:115.2612,dist:"0.3 km"},
+    {name:"Ubud Royal Palace",desc:"Historic palace with nightly dances",cat:"culture",icon:"🏛️",lat:-8.5068,lng:115.2625,dist:"0.1 km"},
+    {name:"Sacred Monkey Forest",desc:"Nature sanctuary, 700+ macaques",cat:"nature",icon:"🌿",lat:-8.5185,lng:115.2588,dist:"1.4 km"},
+    {name:"Ubud Art Market",desc:"Traditional crafts and souvenirs",cat:"culture",icon:"🛍️",lat:-8.5065,lng:115.2632,dist:"0.2 km"},
+    {name:"Tegallalang Rice Terraces",desc:"UNESCO scenic paddies",cat:"nature",icon:"🌾",lat:-8.4312,lng:115.2788,dist:"8.5 km"},
+    {name:"Hujan Locale",desc:"Southeast Asian cuisine",cat:"food",icon:"🍜",lat:-8.5058,lng:115.2620,dist:"0.2 km"},
+    {name:"Campuhan Ridge Walk",desc:"Scenic hilltop sunset walk",cat:"nature",icon:"🥾",lat:-8.5027,lng:115.2488,dist:"1.5 km"},
+    {name:"Goa Gajah",desc:"9th-century elephant cave temple",cat:"culture",icon:"🗿",lat:-8.5243,lng:115.2874,dist:"3.5 km"}
+  ];
+  function initMap(){
+    map=L.map('insightsMap',{zoomControl:false}).setView([-8.5069,115.3425],14);
+    L.control.zoom({position:'topright'}).addTo(map);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{attribution:'© CARTO © OSM',maxZoom:19}).addTo(map);
+    L.marker([-8.5069,115.3425],{icon:L.divIcon({className:'',html:'<div style="background:#6366f1;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;border:3px solid white;box-shadow:0 4px 16px rgba(99,102,241,0.5);">🏨</div>',iconSize:[40,40],iconAnchor:[20,20]})}).addTo(map).bindPopup('<div class="popup-cat">Your Hotel</div><div class="popup-name">Alila Ubud Resort</div><div class="popup-desc">Deluxe Valley View · 7 nights</div>');
+    addMarkers('all'); renderNearby('all');
+  }
+  function addMarkers(f){
+    markers.forEach(m=>map.removeLayer(m)); markers=[];
+    const colors={food:'#f59e0b',culture:'#8b5cf6',nature:'#10b981'};
+    nearbyPlaces.forEach(p=>{
+      if(f!=='all'&&p.cat!==f) return;
+      const m=L.marker([p.lat,p.lng],{icon:L.divIcon({className:'',html:`<div style="background:${colors[p.cat]||'#6366f1'};width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;border:2px solid rgba(255,255,255,0.8);box-shadow:0 2px 8px rgba(0,0,0,0.3);">${p.icon}</div>`,iconSize:[32,32],iconAnchor:[16,16]})}).addTo(map).bindPopup(`<div class="popup-cat">${p.cat}</div><div class="popup-name">${p.name}</div><div class="popup-desc">${p.desc}<br>📍 ${p.dist}</div>`);
+      markers.push(m);
+    });
+  }
+  function filterMap(f,btn){ document.querySelectorAll('.map-filter').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); addMarkers(f); renderNearby(f); }
+  function renderNearby(f){
+    const list=document.getElementById('nearbyList');
+    const items=f==='all'?nearbyPlaces:nearbyPlaces.filter(p=>p.cat===f);
+    list.innerHTML=items.map(p=>`<div class="nearby-card" onclick="flyTo(${p.lat},${p.lng})"><div class="nearby-icon ${p.cat}">${p.icon}</div><div><div class="nearby-name">${p.name}</div><div class="nearby-desc">${p.desc}</div></div><div class="nearby-dist">${p.dist}</div></div>`).join('');
+  }
+  function flyTo(lat,lng){ map.flyTo([lat,lng],16,{duration:0.8}); markers.forEach(m=>{const p=m.getLatLng();if(Math.abs(p.lat-lat)<0.001&&Math.abs(p.lng-lng)<0.001)m.openPopup();}); }
+
+  // ===== SHARE =====
+  function openShareModal(){ document.getElementById('shareModal').classList.add('show'); initIcons(); }
+  function closeShareModal(){ document.getElementById('shareModal').classList.remove('show'); }
+  function copyShareLink(){ navigator.clipboard.writeText(document.getElementById('shareInput').value).then(()=>showToast('Link copied!','success')); }
+
+  // ===== INIT =====
+  document.addEventListener('DOMContentLoaded', initIcons);
+  window.addEventListener('load', initIcons);
+</script>
+
+</body>
+</html>
