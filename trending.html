@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>One-Up Travel | Trending</title>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      background: #0a0a0f;
+      color: white;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* =============== BACKGROUND =============== */
+    .bg-ambient {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse at 20% 20%, rgba(99,102,241,0.07) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(139,92,246,0.05) 0%, transparent 50%),
+        #0a0a0f;
+    }
+
+    /* =============== HEADER =============== */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      padding: 18px 40px;
+      display: flex; justify-content: space-between; align-items: center;
+      background: rgba(10,10,15,0.85); backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .header-left { flex: 1; display: flex; align-items: center; }
+    .header-center { flex: 1; display: flex; justify-content: center; }
+    .header-right { flex: 1; display: flex; justify-content: flex-end; align-items: center; }
+
+    .logo { display: flex; align-items: center; text-decoration: none; }
+    .logo img { height: 60px; transition: all 0.3s ease; }
+    .logo img:hover { transform: scale(1.05); }
+
+    .header-menu-btn {
+      background: transparent; border: 1px solid rgba(255,255,255,0.2);
+      color: white; padding: 8px 16px; border-radius: 8px; cursor: pointer;
+      font-weight: 500; font-size: 14px; transition: all 0.3s;
+      display: flex; align-items: center; gap: 8px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .header-menu-btn:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.3); }
+    .header-menu-btn i { width: 18px; height: 18px; }
+
+    .signin-btn {
+      background: #6366f1; color: white; text-decoration: none;
+      padding: 10px 24px; border-radius: 10px; font-weight: 600; font-size: 15px;
+      transition: all 0.3s; box-shadow: 0 2px 8px rgba(99,102,241,0.2); margin-left: 20px;
+    }
+    .signin-btn:hover { background: #4f46e5; transform: translateY(-2px); }
+
+    /* =============== LEFT SIDEBAR =============== */
+    .left-sidebar {
+      position: fixed; top: 0; left: -280px; width: 280px; height: 100vh;
+      background: rgba(12,12,20,0.97); backdrop-filter: blur(24px);
+      border-right: 1px solid rgba(255,255,255,0.08);
+      padding: 24px 20px; transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+      z-index: 1000; overflow-y: auto;
+    }
+    .left-sidebar.open { left: 0; box-shadow: 5px 0 40px rgba(0,0,0,0.5); }
+
+    .sidebar-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+      opacity: 0; visibility: hidden; transition: all 0.4s; z-index: 999;
+    }
+    .sidebar-overlay.active { opacity: 1; visibility: visible; }
+
+    .sidebar-content { margin-top: 56px; width: 100%; }
+    .sidebar-section { margin-bottom: 28px; width: 100%; }
+    .sidebar-section-title {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px;
+      color: rgba(255,255,255,0.35); margin-bottom: 12px; padding-left: 12px; font-weight: 600;
+    }
+    .sidebar-item {
+      display: flex; align-items: center; gap: 12px; width: 100%;
+      background: transparent; border: 1px solid transparent;
+      color: rgba(255,255,255,0.7); padding: 12px 14px; border-radius: 10px;
+      margin-bottom: 4px; text-decoration: none; text-align: left;
+      font-weight: 500; font-size: 14px; transition: all 0.25s; cursor: pointer;
+    }
+    .sidebar-item:hover {
+      background: rgba(99,102,241,0.12); border-color: rgba(99,102,241,0.25); color: white;
+      box-shadow: 0 0 20px rgba(99,102,241,0.15), inset 0 0 20px rgba(99,102,241,0.05);
+    }
+    .sidebar-item.active { background: rgba(99,102,241,0.15); border-color: rgba(99,102,241,0.3); color: white; }
+    .sidebar-item.primary { background: rgba(99,102,241,0.15); border-color: rgba(99,102,241,0.4); color: #a5b4fc; font-weight: 600; }
+    .sidebar-item.primary:hover {
+      background: rgba(99,102,241,0.25); border-color: rgba(99,102,241,0.5); color: white;
+      box-shadow: 0 0 24px rgba(99,102,241,0.25), inset 0 0 20px rgba(99,102,241,0.08);
+    }
+    .sidebar-item i { width: 18px; height: 18px; flex-shrink: 0; opacity: 0.7; }
+    .sidebar-item:hover i { opacity: 1; }
+
+    .sidebar-close-btn {
+      position: absolute; top: 20px; right: 16px;
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+      color: white; width: 36px; height: 36px; border-radius: 10px;
+      cursor: pointer; transition: all 0.25s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .sidebar-close-btn:hover { background: rgba(239,68,68,0.15); border-color: rgba(239,68,68,0.4); box-shadow: 0 0 16px rgba(239,68,68,0.15); }
+    .sidebar-close-btn svg { width: 18px; height: 18px; stroke: rgba(255,255,255,0.8); stroke-width: 2.5; }
+    .sidebar-close-btn:hover svg { stroke: white; }
+    .sidebar-divider { height: 1px; background: rgba(255,255,255,0.06); margin: 8px 0 20px; }
+
+    /* =============== MAIN CONTENT =============== */
+    .main-content {
+      position: relative; z-index: 10;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 30px 80px;
+    }
+
+    /* Page header */
+    .page-header {
+      margin-bottom: 32px;
+    }
+
+    .page-title {
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      margin-bottom: 8px;
+    }
+
+    .page-title span {
+      background: linear-gradient(135deg, #f59e0b, #f43f5e, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .page-subtitle {
+      font-size: 15px;
+      color: rgba(255,255,255,0.4);
+    }
+
+    /* Filter tabs */
+    .feed-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 28px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    .feed-tab {
+      padding: 9px 20px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s;
+      white-space: nowrap;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.5);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .feed-tab:hover { background: rgba(255,255,255,0.08); color: white; }
+    .feed-tab.active { background: rgba(99,102,241,0.15); border-color: rgba(99,102,241,0.4); color: white; }
+
+    /* =============== FEED GRID =============== */
+    .feed-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px;
+    }
+
+    .feed-card {
+      position: relative;
+      aspect-ratio: 1;
+      overflow: hidden;
+      cursor: pointer;
+      border-radius: 2px;
+      background: rgba(255,255,255,0.03);
+    }
+
+    .feed-card img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease, filter 0.3s;
+    }
+
+    .feed-card:hover img { transform: scale(1.05); filter: brightness(0.7); }
+
+    /* Hover overlay */
+    .feed-card-overlay {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      gap: 24px;
+      background: rgba(0,0,0,0.3);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .feed-card:hover .feed-card-overlay { opacity: 1; }
+
+    .feed-card-stat {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 15px; font-weight: 700;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+    }
+
+    .feed-card-stat i { width: 20px; height: 20px; }
+
+    /* Post type badge on grid card */
+    .feed-card-type {
+      position: absolute;
+      top: 10px; right: 10px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      backdrop-filter: blur(8px);
+      z-index: 2;
+    }
+
+    .feed-card-type.itinerary { background: rgba(99,102,241,0.7); color: white; }
+    .feed-card-type.photo { background: rgba(16,185,129,0.7); color: white; }
+
+    /* Multi-image indicator */
+    .feed-card-multi {
+      position: absolute; top: 10px; right: 10px;
+      z-index: 2;
+    }
+    .feed-card-multi i { width: 22px; height: 22px; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.5)); }
+
+    /* =============== FULL-SCREEN POST MODAL =============== */
+    .post-modal-overlay {
+      position: fixed; inset: 0; z-index: 2000;
+      background: rgba(0,0,0,0.88);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .post-modal-overlay.open { display: flex; opacity: 1; }
+
+    .post-modal-close {
+      position: fixed; top: 20px; right: 24px;
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15);
+      color: white; width: 40px; height: 40px; border-radius: 50%;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: all 0.25s; z-index: 2001;
+    }
+    .post-modal-close:hover { background: rgba(255,255,255,0.2); }
+    .post-modal-close i { width: 22px; height: 22px; }
+
+    /* Nav arrows */
+    .post-nav {
+      position: fixed; top: 50%; transform: translateY(-50%);
+      width: 44px; height: 44px; border-radius: 50%;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+      color: white; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: all 0.25s; z-index: 2001;
+    }
+    .post-nav:hover { background: rgba(255,255,255,0.15); }
+    .post-nav i { width: 22px; height: 22px; }
+    .post-nav.prev { left: 20px; }
+    .post-nav.next { right: 20px; }
+
+    /* Post container */
+    .post-modal {
+      display: flex;
+      width: 90vw; max-width: 1100px;
+      height: 85vh; max-height: 720px;
+      background: #111118;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 40px 120px rgba(0,0,0,0.6);
+    }
+
+    /* Left: image */
+    .post-image-side {
+      flex: 1.2;
+      background: #000;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .post-image-side img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+
+    /* Itinerary mini card overlay on image */
+    .post-itin-overlay {
+      position: absolute;
+      bottom: 20px; left: 20px; right: 20px;
+      background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 14px;
+      padding: 18px 20px;
+    }
+
+    .post-itin-overlay .itin-dest {
+      font-size: 18px; font-weight: 800; margin-bottom: 4px;
+    }
+
+    .post-itin-overlay .itin-meta {
+      font-size: 12px; color: rgba(255,255,255,0.5);
+      display: flex; gap: 12px; margin-bottom: 10px;
+    }
+
+    .post-itin-overlay .itin-tags {
+      display: flex; gap: 6px; flex-wrap: wrap;
+    }
+
+    .itin-tag {
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .itin-tag.flight { background: rgba(245,158,11,0.2); color: #fcd34d; }
+    .itin-tag.hotel { background: rgba(99,102,241,0.2); color: #a5b4fc; }
+    .itin-tag.activity { background: rgba(16,185,129,0.2); color: #6ee7b7; }
+    .itin-tag.budget { background: rgba(244,63,94,0.2); color: #fda4af; }
+
+    .post-itin-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 12px; padding: 8px 16px;
+      background: #6366f1; border: none; border-radius: 8px;
+      color: white; font-size: 12px; font-weight: 700; cursor: pointer;
+      transition: all 0.25s;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .post-itin-btn:hover { background: #4f46e5; transform: translateY(-1px); }
+    .post-itin-btn i { width: 14px; height: 14px; }
+
+    /* Right: details + comments */
+    .post-details-side {
+      flex: 0.8;
+      display: flex;
+      flex-direction: column;
+      border-left: 1px solid rgba(255,255,255,0.06);
+    }
+
+    /* Post header */
+    .post-header {
+      display: flex; align-items: center; gap: 12px;
+      padding: 18px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .post-avatar {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .post-user-info { flex: 1; }
+    .post-username {
+      font-size: 14px; font-weight: 700;
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    .verified-badge {
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: #6366f1;
+      display: inline-flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .verified-badge i { width: 10px; height: 10px; color: white; }
+
+    .post-location {
+      font-size: 12px; color: rgba(255,255,255,0.4);
+      display: flex; align-items: center; gap: 4px;
+    }
+    .post-location i { width: 12px; height: 12px; }
+
+    .post-follow-btn {
+      padding: 6px 16px;
+      border-radius: 8px;
+      font-size: 12px; font-weight: 700;
+      background: transparent;
+      border: 1px solid rgba(99,102,241,0.5);
+      color: #a5b4fc;
+      cursor: pointer;
+      transition: all 0.25s;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .post-follow-btn:hover { background: rgba(99,102,241,0.15); color: white; }
+
+    /* Comments area */
+    .post-comments {
+      flex: 1;
+      padding: 16px 20px;
+      overflow-y: auto;
+    }
+
+    /* Caption */
+    .post-caption {
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .post-caption-user {
+      font-weight: 700; font-size: 13px;
+      margin-right: 6px;
+    }
+
+    .post-caption-text {
+      font-size: 13px; color: rgba(255,255,255,0.75);
+      line-height: 1.6;
+    }
+
+    .post-caption-time {
+      font-size: 11px; color: rgba(255,255,255,0.25);
+      margin-top: 8px;
+    }
+
+    /* Individual comment */
+    .comment-item {
+      display: flex; gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .comment-avatar {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .comment-body { flex: 1; }
+    .comment-user { font-size: 12px; font-weight: 700; margin-right: 6px; }
+    .comment-text { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.5; }
+    .comment-meta {
+      display: flex; gap: 14px; margin-top: 4px;
+      font-size: 11px; color: rgba(255,255,255,0.25);
+    }
+    .comment-meta span { cursor: pointer; transition: color 0.2s; }
+    .comment-meta span:hover { color: rgba(255,255,255,0.6); }
+
+    /* Actions bar */
+    .post-actions {
+      padding: 12px 20px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex; align-items: center; gap: 16px;
+    }
+
+    .post-action-btn {
+      background: none; border: none; color: white;
+      cursor: pointer; padding: 4px;
+      transition: all 0.2s; display: flex; align-items: center;
+    }
+    .post-action-btn:hover { transform: scale(1.15); }
+    .post-action-btn i { width: 24px; height: 24px; }
+    .post-action-btn.liked i { color: #f43f5e; fill: #f43f5e; }
+    .post-action-btn.saved i { color: white; fill: white; }
+    .post-action-spacer { flex: 1; }
+
+    .post-likes {
+      padding: 2px 20px 0;
+      font-size: 13px; font-weight: 700;
+    }
+
+    .post-time {
+      padding: 4px 20px 0;
+      font-size: 11px; color: rgba(255,255,255,0.25);
+      text-transform: uppercase; letter-spacing: 0.5px;
+    }
+
+    /* Comment input */
+    .post-comment-input {
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px 20px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .post-comment-input input {
+      flex: 1; background: none; border: none; outline: none;
+      color: white; font-size: 13px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .post-comment-input input::placeholder { color: rgba(255,255,255,0.25); }
+
+    .post-comment-submit {
+      background: none; border: none;
+      color: #6366f1; font-weight: 700; font-size: 13px;
+      cursor: pointer; opacity: 0.5; transition: opacity 0.2s;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .post-comment-submit:hover { opacity: 1; }
+
+    /* =============== CREATE POST FAB =============== */
+    .create-fab {
+      position: fixed;
+      bottom: 32px; right: 32px;
+      width: 56px; height: 56px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      border: none; color: white;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 8px 32px rgba(99,102,241,0.4);
+      transition: all 0.3s; z-index: 100;
+    }
+    .create-fab:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 12px 40px rgba(99,102,241,0.5); }
+    .create-fab i { width: 26px; height: 26px; }
+
+    /* =============== TOAST =============== */
+    .toast-container {
+      position: fixed; top: 80px; right: 24px; z-index: 3000;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+
+    .toast {
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-size: 13px; font-weight: 600;
+      display: flex; align-items: center; gap: 8px;
+      animation: toastIn 0.4s ease;
+      backdrop-filter: blur(16px);
+    }
+
+    .toast.success { background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.3); color: #6ee7b7; }
+    .toast.info { background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.3); color: #a5b4fc; }
+
+    @keyframes toastIn {
+      from { opacity: 0; transform: translateX(40px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    /* =============== RESPONSIVE =============== */
+    @media (max-width: 1024px) {
+      .feed-grid { grid-template-columns: repeat(3, 1fr); }
+      .post-modal { flex-direction: column; height: 90vh; max-height: none; width: 95vw; }
+      .post-image-side { flex: none; height: 45%; }
+      .post-details-side { flex: 1; border-left: none; border-top: 1px solid rgba(255,255,255,0.06); }
+    }
+
+    @media (max-width: 640px) {
+      header { padding: 14px 20px; }
+      .main-content { padding: 20px 12px 80px; }
+      .page-title { font-size: 26px; }
+      .feed-grid { grid-template-columns: repeat(2, 1fr); gap: 2px; }
+      .post-nav { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BACKGROUND -->
+  <div class="bg-ambient"></div>
+
+  <!-- SIDEBAR OVERLAY -->
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleLeftSidebar()"></div>
+
+  <!-- LEFT SIDEBAR -->
+  <div class="left-sidebar" id="leftSidebar">
+    <button class="sidebar-close-btn" onclick="toggleLeftSidebar()" aria-label="Close menu">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    </button>
+    <div class="sidebar-content">
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Quick Access</div>
+        <a href="index.html" class="sidebar-item"><i data-lucide="home"></i><span>Home</span></a>
+        <a href="itinerary.html" class="sidebar-item"><i data-lucide="plane"></i><span>My Itinerary</span></a>
+        <a href="dashboard.html" class="sidebar-item"><i data-lucide="layout-dashboard"></i><span>Saved Trips</span></a>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Explore</div>
+        <a href="trending.html" class="sidebar-item active"><i data-lucide="trending-up"></i><span>Trending</span></a>
+        <a href="contact.html" class="sidebar-item"><i data-lucide="message-circle"></i><span>Contact Support</span></a>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section" id="sidebarAuthSection">
+        <a href="auth.html" class="sidebar-item primary" id="sidebarAuthButton"><i data-lucide="log-in"></i><span>Sign In</span></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-left">
+      <button class="header-menu-btn" onclick="toggleLeftSidebar()"><i data-lucide="menu"></i> Menu</button>
+    </div>
+    <div class="header-center">
+      <a href="index.html" class="logo"><img src="logo.png" alt="One-Up Travel"></a>
+    </div>
+    <div class="header-right">
+      <a href="auth.html" class="signin-btn" id="authButton">Sign In</a>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <div class="main-content">
+    <div class="page-header">
+      <h1 class="page-title">Explore <span>Trending</span></h1>
+      <p class="page-subtitle">Discover itineraries, destinations, and inspiration shared by the community</p>
+    </div>
+
+    <!-- Filter tabs -->
+    <div class="feed-tabs">
+      <button class="feed-tab active" onclick="filterFeed('all')">🔥 All</button>
+      <button class="feed-tab" onclick="filterFeed('itinerary')">🗺️ Itineraries</button>
+      <button class="feed-tab" onclick="filterFeed('photo')">📸 Photos</button>
+      <button class="feed-tab" onclick="filterFeed('creators')">⭐ Top Creators</button>
+      <button class="feed-tab" onclick="filterFeed('asia')">🌏 Asia</button>
+      <button class="feed-tab" onclick="filterFeed('europe')">🇪🇺 Europe</button>
+      <button class="feed-tab" onclick="filterFeed('americas')">🌎 Americas</button>
+    </div>
+
+    <!-- Feed grid -->
+    <div class="feed-grid" id="feedGrid"></div>
+  </div>
+
+  <!-- POST MODAL -->
+  <div class="post-modal-overlay" id="postModal">
+    <button class="post-modal-close" onclick="closePost()"><i data-lucide="x"></i></button>
+    <button class="post-nav prev" onclick="navPost(-1)"><i data-lucide="chevron-left"></i></button>
+    <button class="post-nav next" onclick="navPost(1)"><i data-lucide="chevron-right"></i></button>
+    <div class="post-modal" id="postContent"></div>
+  </div>
+
+  <!-- CREATE POST FAB -->
+  <button class="create-fab" onclick="showToast('📸 Upload your travel moments — coming soon!','info')">
+    <i data-lucide="plus"></i>
+  </button>
+
+  <!-- TOAST -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script>
+    // ===== LUCIDE =====
+    function initIcons() { try { if(typeof lucide !== 'undefined') lucide.createIcons(); } catch(e){} }
+    initIcons();
+    document.addEventListener('DOMContentLoaded', initIcons);
+    window.addEventListener('load', initIcons);
+
+    // ===== SIDEBAR =====
+    function toggleLeftSidebar() {
+      document.getElementById('leftSidebar').classList.toggle('open');
+      document.getElementById('sidebarOverlay').classList.toggle('active');
+      setTimeout(initIcons, 50);
+    }
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        document.getElementById('leftSidebar').classList.remove('open');
+        document.getElementById('sidebarOverlay').classList.remove('active');
+        closePost();
+      }
+    });
+
+    // ===== TOAST =====
+    function showToast(msg, type = 'info') {
+      const c = document.getElementById('toastContainer');
+      const t = document.createElement('div');
+      t.className = `toast ${type}`;
+      t.textContent = msg;
+      c.appendChild(t);
+      setTimeout(() => { t.style.opacity = '0'; setTimeout(() => t.remove(), 300); }, 3000);
+    }
+
+    // ===== POST DATA =====
+    const posts = [
+      {
+        id: 1, type: 'itinerary', region: 'asia',
+        image: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800&h=800&fit=crop',
+        user: { name: 'Sarah Chen', handle: '@sarahexplores', avatar: 'https://i.pravatar.cc/100?img=1', verified: true, followers: '24.3K' },
+        location: 'Ubud, Bali',
+        caption: '7 days in Bali changed everything. This health retreat itinerary is for anyone who needs a reset 🧘‍♀️🌿 Yoga at sunrise, temple visits at golden hour, and the best smoothie bowls you\'ve ever had. Full itinerary linked — it\'s under $2,500 AUD.',
+        itinerary: { destination: 'Bali, Indonesia', duration: '7 nights', budget: '$2,340 AUD', tags: ['✈️ Direct flight', '🏨 Fivelements', '🧘 Daily yoga', '🛕 Temple tours'] },
+        likes: 2847, comments: [
+          { user: 'travelmatt', avatar: 'https://i.pravatar.cc/100?img=3', text: 'This is exactly what I needed to see. Booking this next month 🙌', time: '2h' },
+          { user: 'nomadnicole', avatar: 'https://i.pravatar.cc/100?img=5', text: 'Fivelements is incredible — did the same retreat last year!', time: '4h' },
+          { user: 'jaketravel', avatar: 'https://i.pravatar.cc/100?img=8', text: 'How was the food? Any vegan options?', time: '5h' },
+        ],
+        time: '6 hours ago'
+      },
+      {
+        id: 2, type: 'photo', region: 'europe',
+        image: 'https://images.unsplash.com/photo-1533105079780-92b9be482077?w=800&h=800&fit=crop',
+        user: { name: 'Marco Rossi', handle: '@marcoworld', avatar: 'https://i.pravatar.cc/100?img=11', verified: true, followers: '89.1K' },
+        location: 'Santorini, Greece',
+        caption: 'Sunset from Oia never gets old. This was our last night — stayed at a cave hotel carved into the cliffside. The whole island feels like a painting. 🇬🇷✨',
+        likes: 12403, comments: [
+          { user: 'emmatrips', avatar: 'https://i.pravatar.cc/100?img=9', text: 'Stop making me jealous 😭 which cave hotel??', time: '1h' },
+          { user: 'lunavibes', avatar: 'https://i.pravatar.cc/100?img=16', text: 'The colours are unreal. Did you edit this or is it really that vibrant?', time: '3h' },
+        ],
+        time: '12 hours ago'
+      },
+      {
+        id: 3, type: 'itinerary', region: 'asia',
+        image: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800&h=800&fit=crop',
+        user: { name: 'Yuki Tanaka', handle: '@yukitravels', avatar: 'https://i.pravatar.cc/100?img=20', verified: true, followers: '156K' },
+        location: 'Tokyo, Japan',
+        caption: 'The ultimate Tokyo itinerary for first-timers 🗼🍣 10 days covering Shibuya, Asakusa, Akihabara, day trips to Hakone and Kamakura. Cherry blossom season is MAGIC. Every meal was incredible.',
+        itinerary: { destination: 'Tokyo, Japan', duration: '10 nights', budget: '$3,800 AUD', tags: ['✈️ ANA flights', '🏨 Shinjuku Granbell', '🍣 Tsukiji tour', '🗻 Mt Fuji day trip'] },
+        likes: 8921, comments: [
+          { user: 'alexdrifts', avatar: 'https://i.pravatar.cc/100?img=12', text: 'This is the best Tokyo guide I\'ve seen. Saved immediately 🔥', time: '30m' },
+          { user: 'miajourney', avatar: 'https://i.pravatar.cc/100?img=23', text: 'Did you use a JR Pass? Was it worth it for 10 days?', time: '2h' },
+          { user: 'benbackpack', avatar: 'https://i.pravatar.cc/100?img=7', text: 'Hakone is so underrated. The open air museum there is amazing.', time: '6h' },
+        ],
+        time: '1 day ago'
+      },
+      {
+        id: 4, type: 'photo', region: 'americas',
+        image: 'https://images.unsplash.com/photo-1506929562872-bb421503ef21?w=800&h=800&fit=crop',
+        user: { name: 'Priya Sharma', handle: '@priyawanders', avatar: 'https://i.pravatar.cc/100?img=25', verified: false, followers: '3.2K' },
+        location: 'Tulum, Mexico',
+        caption: 'Found this hidden cenote off the beaten path in Tulum. No tourists, crystal clear water, just the sounds of the jungle. Sometimes the best moments are the unplanned ones 🌊🌴',
+        likes: 1453, comments: [
+          { user: 'travelgrace', avatar: 'https://i.pravatar.cc/100?img=29', text: 'Drop the location pin please!! 📍', time: '45m' },
+          { user: 'danexplorer', avatar: 'https://i.pravatar.cc/100?img=4', text: 'This looks like a dream. Adding to my list right now.', time: '3h' },
+        ],
+        time: '1 day ago'
+      },
+      {
+        id: 5, type: 'photo', region: 'europe',
+        image: 'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=800&h=800&fit=crop',
+        user: { name: 'Lucas Weber', handle: '@lucasontour', avatar: 'https://i.pravatar.cc/100?img=33', verified: true, followers: '67.4K' },
+        location: 'Amalfi Coast, Italy',
+        caption: 'Positano from the water hits different. We rented a boat for the day and it was the best €150 we spent the entire trip. Pro tip: go late afternoon for golden light and fewer boats 🚤☀️',
+        likes: 6782, comments: [
+          { user: 'sophieabroad', avatar: 'https://i.pravatar.cc/100?img=32', text: 'The Amalfi coast is unmatched. Nothing else comes close.', time: '5h' },
+          { user: 'jamesroams', avatar: 'https://i.pravatar.cc/100?img=14', text: 'Where did you rent the boat from? Did you need a license?', time: '8h' },
+        ],
+        time: '2 days ago'
+      },
+      {
+        id: 6, type: 'itinerary', region: 'asia',
+        image: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=800&h=800&fit=crop',
+        user: { name: 'Aisha Patel', handle: '@aisha.travels', avatar: 'https://i.pravatar.cc/100?img=44', verified: false, followers: '8.7K' },
+        location: 'Chiang Mai, Thailand',
+        caption: 'A slow travel itinerary for Chiang Mai 🐘🛕 2 weeks exploring temples, night markets, cooking classes, and ethical elephant sanctuaries. This trip costs less than a weekend in Sydney!',
+        itinerary: { destination: 'Chiang Mai, Thailand', duration: '14 nights', budget: '$1,650 AUD', tags: ['✈️ Thai Airways', '🏨 Old City guesthouse', '🍜 Cooking class', '🐘 Elephant sanctuary'] },
+        likes: 3291, comments: [
+          { user: 'markbackpacks', avatar: 'https://i.pravatar.cc/100?img=6', text: '$1,650 for 2 weeks?! That\'s insane value. Thailand is next on my list.', time: '1h' },
+          { user: 'claireexplores', avatar: 'https://i.pravatar.cc/100?img=21', text: 'Which elephant sanctuary did you go to? Want to make sure it\'s ethical 🙏', time: '4h' },
+        ],
+        time: '2 days ago'
+      },
+      {
+        id: 7, type: 'photo', region: 'europe',
+        image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=800&fit=crop&q=80',
+        user: { name: 'Emma Liu', handle: '@emmaworldwide', avatar: 'https://i.pravatar.cc/100?img=47', verified: true, followers: '112K' },
+        location: 'Swiss Alps, Switzerland',
+        caption: 'Woke up to this view in Grindelwald. The air is so crisp it feels like breathing for the first time. Switzerland is expensive but some experiences are truly priceless 🏔️❄️',
+        likes: 15240, comments: [
+          { user: 'noahtreks', avatar: 'https://i.pravatar.cc/100?img=52', text: 'Switzerland photos always stop me mid-scroll. Stunning.', time: '2h' },
+          { user: 'livtravels', avatar: 'https://i.pravatar.cc/100?img=38', text: 'How much was accommodation in Grindelwald? I\'ve heard it\'s pricey', time: '7h' },
+        ],
+        time: '3 days ago'
+      },
+      {
+        id: 8, type: 'itinerary', region: 'americas',
+        image: 'https://images.unsplash.com/photo-1518548305-1efcd93b5104?w=800&h=800&fit=crop',
+        user: { name: 'Carlos Mendez', handle: '@carlosroams', avatar: 'https://i.pravatar.cc/100?img=53', verified: true, followers: '45.6K' },
+        location: 'Patagonia, Chile',
+        caption: 'Torres del Paine changed my perspective on what "adventure" means. 10-day itinerary through the W Trek, glacier kayaking, and condor watching. Hard but absolutely life-changing. 🏔️🔥',
+        itinerary: { destination: 'Patagonia, Chile', duration: '10 nights', budget: '$4,200 AUD', tags: ['✈️ LATAM flights', '🏕️ Refugio stays', '🥾 W Trek', '🧊 Glacier kayak'] },
+        likes: 5103, comments: [
+          { user: 'adventurekate', avatar: 'https://i.pravatar.cc/100?img=36', text: 'The W Trek is on my bucket list. How fit do you need to be?', time: '3h' },
+          { user: 'ryantravels', avatar: 'https://i.pravatar.cc/100?img=10', text: 'Did this last March. Best 10 days of my life. Book refugios early!!', time: '1d' },
+        ],
+        time: '3 days ago'
+      },
+      {
+        id: 9, type: 'photo', region: 'asia',
+        image: 'https://images.unsplash.com/photo-1512100356356-de1b84283e18?w=800&h=800&fit=crop',
+        user: { name: 'Liam O\'Brien', handle: '@liamabroad', avatar: 'https://i.pravatar.cc/100?img=57', verified: false, followers: '5.1K' },
+        location: 'Maldives',
+        caption: 'Overwater bungalow life 🏝️ This was our honeymoon and it was worth every cent. Waking up to turquoise water beneath your feet is something everyone should experience at least once.',
+        likes: 4201, comments: [
+          { user: 'jenntravels', avatar: 'https://i.pravatar.cc/100?img=41', text: 'Gorgeous!! Which resort is this?', time: '6h' },
+        ],
+        time: '4 days ago'
+      },
+      {
+        id: 10, type: 'photo', region: 'europe',
+        image: 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=800&h=800&fit=crop',
+        user: { name: 'Nina Karlsson', handle: '@ninagoesplaces', avatar: 'https://i.pravatar.cc/100?img=45', verified: true, followers: '203K' },
+        location: 'Paris, France',
+        caption: 'There\'s a reason everyone falls in love with Paris. Morning coffee by the Seine, afternoon at the Musée d\'Orsay, evening along Rue Cler. The cliché exists because it\'s true 🥐🗼',
+        likes: 21340, comments: [
+          { user: 'tomglobetrots', avatar: 'https://i.pravatar.cc/100?img=15', text: 'Paris in autumn >>> Paris in summer. Fight me.', time: '1h' },
+          { user: 'ameliejourney', avatar: 'https://i.pravatar.cc/100?img=26', text: 'Rue Cler is the best kept secret. So much better than the Champs-Élysées.', time: '5h' },
+          { user: 'backpackben', avatar: 'https://i.pravatar.cc/100?img=18', text: 'What lens did you shoot this on? The tones are perfect', time: '8h' },
+        ],
+        time: '4 days ago'
+      },
+      {
+        id: 11, type: 'itinerary', region: 'europe',
+        image: 'https://images.unsplash.com/photo-1534351590666-13e3e96b5017?w=800&h=800&fit=crop',
+        user: { name: 'Freya Andersen', handle: '@freyaadventures', avatar: 'https://i.pravatar.cc/100?img=48', verified: false, followers: '11.2K' },
+        location: 'Iceland',
+        caption: 'Iceland in winter: Northern Lights, glacier hikes, and hot springs at -10°C. This 6-day itinerary covers the Golden Circle, south coast, and Snæfellsnes. Absolute bucket list destination ❄️🌌',
+        itinerary: { destination: 'Iceland', duration: '6 nights', budget: '$3,100 AUD', tags: ['✈️ Icelandair', '🏨 Reykjavik base', '🌋 Golden Circle', '🌌 Northern Lights'] },
+        likes: 7654, comments: [
+          { user: 'arcticanna', avatar: 'https://i.pravatar.cc/100?img=31', text: 'What month did you go? Trying to time the Northern Lights right', time: '2h' },
+          { user: 'maxwanders', avatar: 'https://i.pravatar.cc/100?img=13', text: 'Did you rent a car or join tours? Worried about driving in winter', time: '9h' },
+        ],
+        time: '5 days ago'
+      },
+      {
+        id: 12, type: 'photo', region: 'americas',
+        image: 'https://images.unsplash.com/photo-1485738422979-f5c462d49f04?w=800&h=800&fit=crop',
+        user: { name: 'Zoe Williams', handle: '@zoeontheroadd', avatar: 'https://i.pravatar.cc/100?img=43', verified: true, followers: '34.8K' },
+        location: 'New York City',
+        caption: 'NYC at night from the Top of the Rock. Central Park lit up below, Empire State in the distance. This city has an energy nothing else compares to 🌃🗽',
+        likes: 9876, comments: [
+          { user: 'citylights_sam', avatar: 'https://i.pravatar.cc/100?img=22', text: 'Top of the Rock > Empire State. Better views, fewer crowds.', time: '4h' },
+          { user: 'wanderlustjess', avatar: 'https://i.pravatar.cc/100?img=37', text: 'I can hear this photo. NYC energy is something else.', time: '1d' },
+        ],
+        time: '5 days ago'
+      },
+    ];
+
+    // ===== RENDER GRID =====
+    let currentFilter = 'all';
+
+    function filterFeed(filter) {
+      currentFilter = filter;
+      document.querySelectorAll('.feed-tab').forEach(t => t.classList.remove('active'));
+      event.target.classList.add('active');
+      renderGrid();
+    }
+
+    function renderGrid() {
+      const grid = document.getElementById('feedGrid');
+      let filtered = posts;
+
+      if (currentFilter === 'itinerary') filtered = posts.filter(p => p.type === 'itinerary');
+      else if (currentFilter === 'photo') filtered = posts.filter(p => p.type === 'photo');
+      else if (currentFilter === 'creators') filtered = posts.filter(p => p.user.verified);
+      else if (currentFilter === 'asia') filtered = posts.filter(p => p.region === 'asia');
+      else if (currentFilter === 'europe') filtered = posts.filter(p => p.region === 'europe');
+      else if (currentFilter === 'americas') filtered = posts.filter(p => p.region === 'americas');
+
+      grid.innerHTML = filtered.map((post, i) => `
+        <div class="feed-card" onclick="openPost(${post.id})">
+          <img src="${post.image}" alt="${post.location}" loading="lazy">
+          ${post.type === 'itinerary' ? '<div class="feed-card-type itinerary">Itinerary</div>' : ''}
+          <div class="feed-card-overlay">
+            <div class="feed-card-stat"><i data-lucide="heart"></i> ${formatNum(post.likes)}</div>
+            <div class="feed-card-stat"><i data-lucide="message-circle"></i> ${post.comments.length}</div>
+          </div>
+        </div>
+      `).join('');
+
+      initIcons();
+    }
+
+    function formatNum(n) {
+      if (n >= 10000) return (n / 1000).toFixed(1) + 'K';
+      if (n >= 1000) return (n / 1000).toFixed(1) + 'K';
+      return n;
+    }
+
+    // ===== OPEN POST MODAL =====
+    let currentPostIndex = 0;
+
+    function openPost(postId) {
+      const post = posts.find(p => p.id === postId);
+      if (!post) return;
+      currentPostIndex = posts.indexOf(post);
+
+      const modal = document.getElementById('postModal');
+      const content = document.getElementById('postContent');
+
+      const itinOverlay = post.type === 'itinerary' && post.itinerary ? `
+        <div class="post-itin-overlay">
+          <div class="itin-dest">${post.itinerary.destination}</div>
+          <div class="itin-meta">
+            <span>📅 ${post.itinerary.duration}</span>
+            <span>💰 ${post.itinerary.budget}</span>
+          </div>
+          <div class="itin-tags">
+            ${post.itinerary.tags.map(t => {
+              let cls = 'activity';
+              if (t.includes('✈️')) cls = 'flight';
+              else if (t.includes('🏨') || t.includes('🏕️')) cls = 'hotel';
+              else if (t.includes('💰')) cls = 'budget';
+              return `<span class="itin-tag ${cls}">${t}</span>`;
+            }).join('')}
+          </div>
+          <button class="post-itin-btn" onclick="event.stopPropagation(); showToast('✨ Opening full itinerary — coming soon!','info')">
+            <i data-lucide="map"></i> View Full Itinerary
+          </button>
+        </div>
+      ` : '';
+
+      content.innerHTML = `
+        <div class="post-image-side">
+          <img src="${post.image}" alt="${post.location}">
+          ${itinOverlay}
+        </div>
+        <div class="post-details-side">
+          <div class="post-header">
+            <img class="post-avatar" src="${post.user.avatar}" alt="${post.user.name}">
+            <div class="post-user-info">
+              <div class="post-username">
+                ${post.user.name}
+                ${post.user.verified ? '<span class="verified-badge"><i data-lucide="check"></i></span>' : ''}
+              </div>
+              <div class="post-location"><i data-lucide="map-pin"></i> ${post.location}</div>
+            </div>
+            <button class="post-follow-btn" onclick="this.textContent='Following';this.style.background='rgba(99,102,241,0.2)';this.style.borderColor='rgba(99,102,241,0.6)';this.style.color='white';">Follow</button>
+          </div>
+
+          <div class="post-comments">
+            <div class="post-caption">
+              <span class="post-caption-user">${post.user.handle}</span>
+              <span class="post-caption-text">${post.caption}</span>
+              <div class="post-caption-time">${post.time}</div>
+            </div>
+
+            ${post.comments.map(c => `
+              <div class="comment-item">
+                <img class="comment-avatar" src="${c.avatar}" alt="${c.user}">
+                <div class="comment-body">
+                  <span class="comment-user">@${c.user}</span>
+                  <span class="comment-text">${c.text}</span>
+                  <div class="comment-meta">
+                    <span>${c.time}</span>
+                    <span>Like</span>
+                    <span>Reply</span>
+                  </div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+
+          <div class="post-actions">
+            <button class="post-action-btn" onclick="toggleLike(this)"><i data-lucide="heart"></i></button>
+            <button class="post-action-btn"><i data-lucide="message-circle"></i></button>
+            <button class="post-action-btn" onclick="showToast('🔗 Link copied to clipboard!','success')"><i data-lucide="send"></i></button>
+            <div class="post-action-spacer"></div>
+            <button class="post-action-btn" onclick="toggleSave(this)"><i data-lucide="bookmark"></i></button>
+          </div>
+
+          <div class="post-likes">${formatNum(post.likes)} likes</div>
+          <div class="post-time">${post.time}</div>
+
+          <div class="post-comment-input">
+            <input type="text" placeholder="Add a comment..." onkeypress="if(event.key==='Enter'){addComment(this)}">
+            <button class="post-comment-submit" onclick="addComment(this.previousElementSibling)">Post</button>
+          </div>
+        </div>
+      `;
+
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      initIcons();
+    }
+
+    function closePost() {
+      document.getElementById('postModal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function navPost(dir) {
+      const filtered = getFilteredPosts();
+      const currentPost = posts[currentPostIndex];
+      const currentFilteredIdx = filtered.indexOf(currentPost);
+      const nextIdx = currentFilteredIdx + dir;
+      if (nextIdx >= 0 && nextIdx < filtered.length) {
+        openPost(filtered[nextIdx].id);
+      }
+    }
+
+    function getFilteredPosts() {
+      if (currentFilter === 'itinerary') return posts.filter(p => p.type === 'itinerary');
+      if (currentFilter === 'photo') return posts.filter(p => p.type === 'photo');
+      if (currentFilter === 'creators') return posts.filter(p => p.user.verified);
+      if (currentFilter === 'asia') return posts.filter(p => p.region === 'asia');
+      if (currentFilter === 'europe') return posts.filter(p => p.region === 'europe');
+      if (currentFilter === 'americas') return posts.filter(p => p.region === 'americas');
+      return posts;
+    }
+
+    // Close modal on overlay click
+    document.getElementById('postModal').addEventListener('click', function(e) {
+      if (e.target === this) closePost();
+    });
+
+    // ===== INTERACTIONS =====
+    function toggleLike(btn) {
+      btn.classList.toggle('liked');
+      if (btn.classList.contains('liked')) showToast('❤️ Liked!', 'success');
+    }
+
+    function toggleSave(btn) {
+      btn.classList.toggle('saved');
+      if (btn.classList.contains('saved')) showToast('🔖 Saved to collection!', 'success');
+    }
+
+    function addComment(input) {
+      const text = input.value.trim();
+      if (!text) return;
+
+      const commentsArea = document.querySelector('.post-comments');
+      const commentHTML = `
+        <div class="comment-item" style="animation: fadeInUp 0.3s ease;">
+          <img class="comment-avatar" src="https://i.pravatar.cc/100?img=60" alt="You">
+          <div class="comment-body">
+            <span class="comment-user">@you</span>
+            <span class="comment-text">${text}</span>
+            <div class="comment-meta">
+              <span>just now</span>
+              <span>Like</span>
+              <span>Reply</span>
+            </div>
+          </div>
+        </div>
+      `;
+      commentsArea.insertAdjacentHTML('beforeend', commentHTML);
+      input.value = '';
+      commentsArea.scrollTop = commentsArea.scrollHeight;
+      showToast('💬 Comment posted!', 'success');
+    }
+
+    // ===== KEYBOARD NAV =====
+    document.addEventListener('keydown', e => {
+      if (!document.getElementById('postModal').classList.contains('open')) return;
+      if (e.key === 'ArrowLeft') navPost(-1);
+      if (e.key === 'ArrowRight') navPost(1);
+    });
+
+    // ===== INIT =====
+    renderGrid();
+  </script>
+
+  <!-- Firebase -->
+  <script type="module" src="firebase-config.js"></script>
+  <script type="module" src="auth-handler.js"></script>
+
+</body>
+</html>
