@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>One-Up Travel — Technical Architecture</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --bg: #0a0a0f;
+      --surface: rgba(255,255,255,0.03);
+      --border: rgba(255,255,255,0.08);
+      --text: rgba(255,255,255,0.85);
+      --text-dim: rgba(255,255,255,0.45);
+      --indigo: #6366f1;
+      --green: #10b981;
+      --amber: #f59e0b;
+      --rose: #f43f5e;
+      --purple: #a855f7;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding: 60px 30px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .doc-header {
+      text-align: center;
+      padding-bottom: 60px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 60px;
+    }
+
+    .doc-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 16px;
+      background: rgba(99,102,241,0.12);
+      border: 1px solid rgba(99,102,241,0.25);
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #a5b4fc;
+      margin-bottom: 24px;
+    }
+
+    .doc-title {
+      font-size: 48px;
+      font-weight: 800;
+      letter-spacing: -2px;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    .doc-title span {
+      background: linear-gradient(135deg, #a5b4fc, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .doc-subtitle {
+      font-size: 18px;
+      color: var(--text-dim);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .doc-meta {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 24px;
+      font-size: 13px;
+      color: var(--text-dim);
+    }
+
+    .doc-meta span { display: flex; align-items: center; gap: 6px; }
+
+    /* Sections */
+    .section {
+      margin-bottom: 64px;
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 16px;
+    }
+
+    .section-label.indigo { background: rgba(99,102,241,0.12); color: #a5b4fc; }
+    .section-label.green { background: rgba(16,185,129,0.12); color: #6ee7b7; }
+    .section-label.amber { background: rgba(245,158,11,0.12); color: #fcd34d; }
+    .section-label.rose { background: rgba(244,63,94,0.12); color: #fda4af; }
+    .section-label.purple { background: rgba(168,85,247,0.12); color: #d8b4fe; }
+
+    h2 {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+    }
+
+    h3 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      margin-top: 32px;
+    }
+
+    p { margin-bottom: 16px; color: var(--text); }
+    p.dim { color: var(--text-dim); }
+
+    /* Cards */
+    .arch-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 16px;
+    }
+
+    .arch-card-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .arch-card-title .emoji { font-size: 20px; }
+
+    .arch-card p { margin-bottom: 8px; font-size: 14px; }
+    .arch-card p:last-child { margin-bottom: 0; }
+
+    /* Flow diagram */
+    .flow-grid {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      align-items: center;
+      gap: 0;
+      margin: 32px 0;
+    }
+
+    .flow-step {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px 20px;
+      text-align: center;
+    }
+
+    .flow-step .emoji { font-size: 28px; margin-bottom: 8px; }
+    .flow-step .label { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+    .flow-step .sub { font-size: 12px; color: var(--text-dim); }
+
+    .flow-arrow {
+      text-align: center;
+      color: rgba(99,102,241,0.5);
+      font-size: 24px;
+      padding: 0 8px;
+    }
+
+    /* Tech stack grid */
+    .stack-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin: 24px 0;
+    }
+
+    .stack-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+    }
+
+    .stack-item-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .stack-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .stack-icon.indigo { background: rgba(99,102,241,0.15); }
+    .stack-icon.green { background: rgba(16,185,129,0.15); }
+    .stack-icon.amber { background: rgba(245,158,11,0.15); }
+    .stack-icon.rose { background: rgba(244,63,94,0.15); }
+    .stack-icon.purple { background: rgba(168,85,247,0.15); }
+
+    .stack-item-name { font-size: 15px; font-weight: 700; }
+    .stack-item-desc { font-size: 13px; color: var(--text-dim); }
+    .stack-item-tech { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #a5b4fc; margin-top: 8px; }
+
+    /* Code blocks */
+    .code-block {
+      background: rgba(0,0,0,0.4);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin: 16px 0;
+      overflow-x: auto;
+    }
+
+    .code-block pre {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #c4b5fd;
+    }
+
+    .code-block .comment { color: rgba(255,255,255,0.3); }
+    .code-block .key { color: #6ee7b7; }
+    .code-block .string { color: #fcd34d; }
+    .code-block .arrow { color: rgba(255,255,255,0.4); }
+
+    /* Table */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 14px;
+    }
+
+    .data-table th {
+      text-align: left;
+      padding: 12px 16px;
+      background: rgba(99,102,241,0.08);
+      border-bottom: 1px solid var(--border);
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #a5b4fc;
+    }
+
+    .data-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      vertical-align: top;
+    }
+
+    .data-table tr:last-child td { border-bottom: none; }
+
+    .status-badge {
+      display: inline-flex;
+      padding: 2px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .status-badge.done { background: rgba(16,185,129,0.15); color: #6ee7b7; }
+    .status-badge.planned { background: rgba(99,102,241,0.15); color: #a5b4fc; }
+    .status-badge.concept { background: rgba(245,158,11,0.15); color: #fcd34d; }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 48px 0;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      body { padding: 30px 20px; }
+      .doc-title { font-size: 32px; }
+      h2 { font-size: 24px; }
+      .flow-grid { grid-template-columns: 1fr; gap: 12px; }
+      .flow-arrow { transform: rotate(90deg); padding: 4px 0; }
+      .doc-meta { flex-direction: column; gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- ===== HEADER ===== -->
+    <div class="doc-header">
+      <div class="doc-badge">📐 Technical Document</div>
+      <h1 class="doc-title">One-Up Travel<br><span>System Architecture</span></h1>
+      <p class="doc-subtitle">A full-stack architecture blueprint for an AI-powered travel planning platform — from user input to booked itinerary.</p>
+      <div class="doc-meta">
+        <span>📅 February 2026</span>
+        <span>🧱 v1.0</span>
+        <span>📄 Portfolio Reference</span>
+      </div>
+    </div>
+
+    <!-- ===== 1. OVERVIEW ===== -->
+    <div class="section">
+      <div class="section-label indigo">01</div>
+      <h2>Platform Overview</h2>
+      <p>One-Up Travel is an AI-powered travel planning platform that turns a natural language request into a fully structured, bookable itinerary. The user describes their ideal trip — destination, dates, budget, travel style — and the platform's AI agent "Lisa" generates a day-by-day plan complete with flights, accommodation, activities, and real-time pricing.</p>
+
+      <p>The system is designed as a modern JAMstack application: a static frontend hosted on Vercel, serverless functions for API orchestration, Firebase for authentication and data persistence, and the Anthropic Claude API as the core intelligence layer.</p>
+
+      <div class="flow-grid">
+        <div class="flow-step">
+          <div class="emoji">💬</div>
+          <div class="label">User Input</div>
+          <div class="sub">Natural language trip request</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">
+          <div class="emoji">🤖</div>
+          <div class="label">Lisa AI Agent</div>
+          <div class="sub">Claude API with travel system prompt</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">
+          <div class="emoji">🗺️</div>
+          <div class="label">Rich Itinerary</div>
+          <div class="sub">Timeline, map, bookings, pricing</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 2. TECH STACK ===== -->
+    <div class="section">
+      <div class="section-label green">02</div>
+      <h2>Technology Stack</h2>
+
+      <div class="stack-grid">
+        <div class="stack-item">
+          <div class="stack-item-header">
+            <div class="stack-icon indigo">🖥️</div>
+            <div>
+              <div class="stack-item-name">Frontend</div>
+              <div class="stack-item-desc">Static HTML/CSS/JS — no framework overhead</div>
+            </div>
+          </div>
+          <div class="stack-item-tech">Vanilla JS · Leaflet.js · Lucide Icons · Google Fonts</div>
+        </div>
+
+        <div class="stack-item">
+          <div class="stack-item-header">
+            <div class="stack-icon green">☁️</div>
+            <div>
+              <div class="stack-item-name">Hosting</div>
+              <div class="stack-item-desc">Edge-deployed with serverless functions</div>
+            </div>
+          </div>
+          <div class="stack-item-tech">Vercel · Edge Network · Serverless API Routes</div>
+        </div>
+
+        <div class="stack-item">
+          <div class="stack-item-header">
+            <div class="stack-icon amber">🧠</div>
+            <div>
+              <div class="stack-item-name">AI Engine</div>
+              <div class="stack-item-desc">Natural language → structured itinerary</div>
+            </div>
+          </div>
+          <div class="stack-item-tech">Anthropic Claude API · Structured JSON output</div>
+        </div>
+
+        <div class="stack-item">
+          <div class="stack-item-header">
+            <div class="stack-icon rose">🔐</div>
+            <div>
+              <div class="stack-item-name">Auth & Database</div>
+              <div class="stack-item-desc">Authentication, trip storage, user prefs</div>
+            </div>
+          </div>
+          <div class="stack-item-tech">Firebase Auth · Cloud Firestore · Google OAuth</div>
+        </div>
+
+        <div class="stack-item">
+          <div class="stack-item-header">
+            <div class="stack-icon purple">🌤️</div>
+            <div>
+              <div class="stack-item-name">External APIs</div>
+              <div class="stack-item-desc">Weather, maps, and location data</div>
+            </div>
+          </div>
+          <div class="stack-item-tech">Open-Meteo · Leaflet + CARTO · Unsplash</div>
+        </div>
+
+        <div class="stack-item">
+          <div class="stack-item-header">
+            <div class="stack-icon green">💰</div>
+            <div>
+              <div class="stack-item-name">Revenue Layer</div>
+              <div class="stack-item-desc">Affiliate booking links on every item</div>
+            </div>
+          </div>
+          <div class="stack-item-tech">Skyscanner · Booking.com · GetYourGuide · Klook</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 3. DATA FLOW ===== -->
+    <div class="section">
+      <div class="section-label amber">03</div>
+      <h2>Core Data Flow</h2>
+      <p>The entire trip planning pipeline works in 4 stages, from user input to rendered itinerary.</p>
+
+      <h3>Stage 1 — User Intent Capture</h3>
+      <div class="arch-card">
+        <div class="arch-card-title"><span class="emoji">💬</span> Input Methods</div>
+        <p>Users can enter trip requests through the main search bar (e.g. "Bali 7 days, health retreat, $2500 budget") or by chatting with Lisa directly. The suggestion buttons (Trending, Inspire Me, Wholesome, Adventure) pre-fill curated prompts to help users who are unsure where to start.</p>
+        <p>The input is passed as-is to the AI layer — no preprocessing or NLP parsing needed, since Claude handles natural language natively.</p>
+      </div>
+
+      <h3>Stage 2 — AI Itinerary Generation</h3>
+      <div class="arch-card">
+        <div class="arch-card-title"><span class="emoji">🤖</span> Claude API Call</div>
+        <p>The user's request is sent to a Vercel serverless function (<code>/api/generate-itinerary</code>) which calls the Anthropic Claude API with a carefully crafted system prompt. The system prompt instructs Claude to act as "Lisa", a travel agent who returns structured JSON.</p>
+        <p>Claude receives: the user's request, current date, preferred currency, and any saved preferences (travel style, dietary needs, accessibility requirements).</p>
+      </div>
+
+      <div class="code-block">
+<pre><span class="comment">// Vercel serverless function: /api/generate-itinerary.js</span>
+
+<span class="key">const</span> response = <span class="key">await</span> fetch(<span class="string">"https://api.anthropic.com/v1/messages"</span>, {
+  <span class="key">method</span>: <span class="string">"POST"</span>,
+  <span class="key">headers</span>: {
+    <span class="string">"Content-Type"</span>: <span class="string">"application/json"</span>,
+    <span class="string">"x-api-key"</span>: process.env.ANTHROPIC_API_KEY,
+    <span class="string">"anthropic-version"</span>: <span class="string">"2023-06-01"</span>
+  },
+  <span class="key">body</span>: JSON.stringify({
+    <span class="key">model</span>: <span class="string">"claude-sonnet-4-20250514"</span>,
+    <span class="key">max_tokens</span>: 4096,
+    <span class="key">system</span>: LISA_SYSTEM_PROMPT,
+    <span class="key">messages</span>: [
+      { <span class="key">role</span>: <span class="string">"user"</span>, <span class="key">content</span>: userTripRequest }
+    ]
+  })
+});</pre>
+      </div>
+
+      <h3>Stage 3 — Structured JSON Response</h3>
+      <div class="arch-card">
+        <div class="arch-card-title"><span class="emoji">📦</span> Itinerary Schema</div>
+        <p>Claude returns a structured JSON object matching a predefined schema. This is enforced through the system prompt which specifies the exact format. The frontend parses this JSON and renders each component — timeline cards, map markers, pricing, weather data.</p>
+      </div>
+
+      <div class="code-block">
+<pre><span class="comment">// Claude returns structured itinerary JSON</span>
+{
+  <span class="key">"destination"</span>: <span class="string">"Bali, Indonesia"</span>,
+  <span class="key">"dates"</span>: { <span class="key">"start"</span>: <span class="string">"2026-03-15"</span>, <span class="key">"end"</span>: <span class="string">"2026-03-22"</span> },
+  <span class="key">"budget"</span>: { <span class="key">"total"</span>: 2500, <span class="key">"currency"</span>: <span class="string">"AUD"</span> },
+  <span class="key">"accommodation"</span>: {
+    <span class="key">"name"</span>: <span class="string">"Fivelements Retreat"</span>,
+    <span class="key">"location"</span>: { <span class="key">"lat"</span>: -8.4634, <span class="key">"lng"</span>: 115.4055 },
+    <span class="key">"pricePerNight"</span>: 185,
+    <span class="key">"bookingUrl"</span>: <span class="string">"https://booking.com/hotel/..."</span>
+  },
+  <span class="key">"days"</span>: [
+    {
+      <span class="key">"day"</span>: 1,
+      <span class="key">"date"</span>: <span class="string">"2026-03-15"</span>,
+      <span class="key">"items"</span>: [
+        {
+          <span class="key">"type"</span>: <span class="string">"flight"</span>,
+          <span class="key">"title"</span>: <span class="string">"Brisbane → Denpasar"</span>,
+          <span class="key">"price"</span>: 450,
+          <span class="key">"bookingUrl"</span>: <span class="string">"https://skyscanner.com/..."</span>,
+          <span class="key">"details"</span>: [...]
+        }
+      ]
+    }
+    <span class="comment">// ... remaining days</span>
+  ]
+}</pre>
+      </div>
+
+      <h3>Stage 4 — Frontend Rendering</h3>
+      <div class="arch-card">
+        <div class="arch-card-title"><span class="emoji">🎨</span> Dynamic UI Population</div>
+        <p>The itinerary page reads the JSON and dynamically builds every UI component: hero gallery images (sourced via Unsplash API using the destination name), collapsible timeline cards, map markers on Leaflet, currency-converted pricing, and affiliate booking links. The countdown timer calculates from the start date, and weather data is fetched from Open-Meteo using the destination coordinates.</p>
+      </div>
+    </div>
+
+    <!-- ===== 4. LISA AI AGENT ===== -->
+    <div class="section">
+      <div class="section-label rose">04</div>
+      <h2>Lisa — AI Agent Architecture</h2>
+      <p>Lisa is the user-facing AI travel agent. She exists in two modes: a scripted demo on the homepage (for first impressions) and a live conversational agent on the itinerary page (for trip refinement).</p>
+
+      <h3>System Prompt Design</h3>
+      <div class="arch-card">
+        <div class="arch-card-title"><span class="emoji">📝</span> Lisa's Personality & Rules</div>
+        <p>Lisa's system prompt defines her personality (friendly, knowledgeable, Australian-casual), her output format (strict JSON schema), and her knowledge domains (destinations, pricing heuristics, seasonal weather, cultural tips). The prompt also includes guardrails: she won't book anything without confirmation, she stays within the stated budget, and she always explains her reasoning.</p>
+      </div>
+
+      <div class="code-block">
+<pre><span class="comment">// Lisa system prompt (simplified)</span>
+<span class="key">const</span> LISA_SYSTEM_PROMPT = `
+You are Lisa, an AI travel agent for One-Up Travel.
+
+<span class="key">Personality</span>: Warm, knowledgeable, enthusiastic.
+Speak like a trusted friend who happens to be a travel expert.
+
+<span class="key">Rules</span>:
+- Always stay within the user's stated budget
+- Include flights, accommodation, and activities
+- Provide specific venue/hotel names (real places)
+- Include lat/lng coordinates for map rendering
+- Suggest booking platforms for each item
+- Consider seasonality, weather, and local events
+- Return valid JSON matching the itinerary schema
+
+<span class="key">Output</span>: Respond ONLY with valid JSON.
+`;</pre>
+      </div>
+
+      <h3>Conversation Flow</h3>
+      <div class="arch-card">
+        <div class="arch-card-title"><span class="emoji">🔄</span> Multi-Turn Refinement</div>
+        <p>After generating the initial itinerary, Lisa can refine it through conversation. The user might say "swap the hotel for something cheaper" or "add a cooking class on day 3" — Lisa modifies the JSON and the frontend re-renders. The full conversation history is maintained in state and sent with each API call to preserve context.</p>
+      </div>
+    </div>
+
+    <!-- ===== 5. AUTHENTICATION & DATA ===== -->
+    <div class="section">
+      <div class="section-label purple">05</div>
+      <h2>Authentication & Data Layer</h2>
+
+      <h3>Firebase Auth</h3>
+      <div class="arch-card">
+        <div class="arch-card-title"><span class="emoji">🔐</span> Authentication Methods</div>
+        <p>Users can sign in via email/password or Google OAuth. Authentication is optional — users can plan trips without an account, but signing in enables saving, sharing, and trip history. Firebase Auth handles session management, token refresh, and secure user identification.</p>
+      </div>
+
+      <h3>Cloud Firestore Schema</h3>
+      <div class="code-block">
+<pre><span class="comment">// Firestore document structure</span>
+
+<span class="key">users</span>/ {userId}
+  ├── <span class="key">email</span>: <span class="string">"user@email.com"</span>
+  ├── <span class="key">displayName</span>: <span class="string">"Alex"</span>
+  ├── <span class="key">currency</span>: <span class="string">"AUD"</span>
+  └── <span class="key">createdAt</span>: timestamp
+
+<span class="key">trips</span>/ {tripId}
+  ├── <span class="key">userId</span>: <span class="string">"uid_abc123"</span>
+  ├── <span class="key">destination</span>: <span class="string">"Bali, Indonesia"</span>
+  ├── <span class="key">dates</span>: { start, end }
+  ├── <span class="key">budget</span>: { total: 2500, currency: <span class="string">"AUD"</span> }
+  ├── <span class="key">itinerary</span>: { <span class="comment">/* full JSON from Claude */</span> }
+  ├── <span class="key">chatHistory</span>: [ <span class="comment">/* Lisa conversation */</span> ]
+  ├── <span class="key">status</span>: <span class="string">"draft"</span> | <span class="string">"confirmed"</span> | <span class="string">"completed"</span>
+  ├── <span class="key">shareToken</span>: <span class="string">"abc-xyz-123"</span>  <span class="comment">// for read-only sharing</span>
+  ├── <span class="key">createdAt</span>: timestamp
+  └── <span class="key">updatedAt</span>: timestamp</pre>
+      </div>
+
+      <h3>Trip Lifecycle</h3>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>State</th>
+            <th>Description</th>
+            <th>User Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Anonymous</strong></td>
+            <td>Trip generated but user not signed in</td>
+            <td>View, modify via Lisa, share link</td>
+          </tr>
+          <tr>
+            <td><strong>Draft</strong></td>
+            <td>Signed-in user saves trip to account</td>
+            <td>Edit, refine, duplicate, delete</td>
+          </tr>
+          <tr>
+            <td><strong>Confirmed</strong></td>
+            <td>User marks trip as booked</td>
+            <td>View countdown, access booking links</td>
+          </tr>
+          <tr>
+            <td><strong>Completed</strong></td>
+            <td>Trip dates have passed</td>
+            <td>View memories, rate, share recap</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ===== 6. REVENUE MODEL ===== -->
+    <div class="section">
+      <div class="section-label amber">06</div>
+      <h2>Revenue Model — Affiliate Integration</h2>
+      <p>One-Up Travel monetises through affiliate commissions on bookings made via the platform. Every flight, hotel, and activity card includes a direct link to a booking partner, with the affiliate tracking ID embedded in the URL.</p>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Partner</th>
+            <th>Category</th>
+            <th>Commission</th>
+            <th>URL Pattern</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Skyscanner</strong></td>
+            <td>Flights</td>
+            <td>Per click / per booking</td>
+            <td><code>skyscanner.com/transport/flights/{from}/{to}/?associateId={ID}</code></td>
+          </tr>
+          <tr>
+            <td><strong>Booking.com</strong></td>
+            <td>Hotels</td>
+            <td>25-40% of commission</td>
+            <td><code>booking.com/hotel/{slug}.html?aid={ID}</code></td>
+          </tr>
+          <tr>
+            <td><strong>GetYourGuide</strong></td>
+            <td>Activities</td>
+            <td>8% of booking value</td>
+            <td><code>getyourguide.com/{activity}?partner_id={ID}</code></td>
+          </tr>
+          <tr>
+            <td><strong>Klook</strong></td>
+            <td>Activities</td>
+            <td>3-5% of booking value</td>
+            <td><code>klook.com/{activity}?aid={ID}</code></td>
+          </tr>
+          <tr>
+            <td><strong>Viator</strong></td>
+            <td>Activities</td>
+            <td>8% of booking value</td>
+            <td><code>viator.com/tours/{activity}?pid={ID}</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="arch-card">
+        <div class="arch-card-title"><span class="emoji">💡</span> Revenue Per Trip Estimate</div>
+        <p>For a typical $2,500 AUD Bali trip: flights (~$15 CPC from Skyscanner), hotel 7 nights at $185/night = ~$52 commission from Booking.com, 3 activities at ~$70 avg = ~$17 from GetYourGuide. <strong>Estimated revenue per trip: $80–$100 AUD.</strong></p>
+      </div>
+    </div>
+
+    <!-- ===== 7. API ARCHITECTURE ===== -->
+    <div class="section">
+      <div class="section-label indigo">07</div>
+      <h2>API Architecture</h2>
+      <p>All API calls are routed through Vercel serverless functions to keep API keys secure on the server side. The frontend never directly calls third-party APIs that require authentication.</p>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Endpoint</th>
+            <th>Method</th>
+            <th>Purpose</th>
+            <th>Calls</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>/api/generate-itinerary</code></td>
+            <td>POST</td>
+            <td>Generate itinerary from user prompt</td>
+            <td>Claude API</td>
+          </tr>
+          <tr>
+            <td><code>/api/refine-itinerary</code></td>
+            <td>POST</td>
+            <td>Modify existing itinerary via Lisa chat</td>
+            <td>Claude API</td>
+          </tr>
+          <tr>
+            <td><code>/api/destination-images</code></td>
+            <td>GET</td>
+            <td>Fetch hero gallery images</td>
+            <td>Unsplash API</td>
+          </tr>
+          <tr>
+            <td><code>/api/currency-rates</code></td>
+            <td>GET</td>
+            <td>Live exchange rates (cached 1hr)</td>
+            <td>ExchangeRate API</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="code-block">
+<pre><span class="comment">// Vercel project structure</span>
+oneuptravel/
+├── <span class="key">public/</span>
+│   ├── index.html        <span class="comment">// Homepage + Lisa demo</span>
+│   ├── itinerary.html    <span class="comment">// Premium itinerary view</span>
+│   ├── dashboard.html    <span class="comment">// Saved trips</span>
+│   ├── auth.html         <span class="comment">// Sign in / Sign up</span>
+│   ├── contact.html      <span class="comment">// Support page</span>
+│   ├── logo.png
+│   ├── firebase-config.js
+│   ├── auth-handler.js
+│   └── trip-saver.js
+├── <span class="key">api/</span>
+│   ├── generate-itinerary.js   <span class="comment">// Claude API → JSON</span>
+│   ├── refine-itinerary.js     <span class="comment">// Multi-turn refinement</span>
+│   ├── destination-images.js   <span class="comment">// Unsplash proxy</span>
+│   └── currency-rates.js       <span class="comment">// Exchange rate cache</span>
+├── vercel.json
+└── package.json</pre>
+      </div>
+    </div>
+
+    <!-- ===== 8. SECURITY ===== -->
+    <div class="section">
+      <div class="section-label rose">08</div>
+      <h2>Security Considerations</h2>
+
+      <div class="stack-grid">
+        <div class="arch-card">
+          <div class="arch-card-title"><span class="emoji">🔑</span> API Key Protection</div>
+          <p>All third-party API keys (Anthropic, Unsplash) are stored as Vercel environment variables. The frontend calls Vercel serverless functions, never external APIs directly.</p>
+        </div>
+
+        <div class="arch-card">
+          <div class="arch-card-title"><span class="emoji">🛡️</span> Rate Limiting</div>
+          <p>Serverless functions enforce per-user rate limits (10 itineraries/hour for free, 50 for authenticated). Firebase UID is used as the rate limit key, falling back to IP for anonymous users.</p>
+        </div>
+
+        <div class="arch-card">
+          <div class="arch-card-title"><span class="emoji">🔒</span> Firestore Rules</div>
+          <p>Users can only read/write their own trip documents. Shared trips are read-only via share token. Admin operations restricted to Firebase Admin SDK in serverless functions.</p>
+        </div>
+
+        <div class="arch-card">
+          <div class="arch-card-title"><span class="emoji">🧹</span> Input Sanitisation</div>
+          <p>User prompts are sanitised before being sent to Claude. The system prompt constrains output format to prevent injection. All rendered HTML uses textContent, never innerHTML from user data.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 9. BUILD STATUS ===== -->
+    <div class="section">
+      <div class="section-label green">09</div>
+      <h2>Implementation Status</h2>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Component</th>
+            <th>Status</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Homepage + animated globe</td>
+            <td><span class="status-badge done">Built</span></td>
+            <td>Canvas globe, Lisa demo chat, search, suggestion buttons</td>
+          </tr>
+          <tr>
+            <td>Premium itinerary page</td>
+            <td><span class="status-badge done">Built</span></td>
+            <td>Timeline, calendar, map, currency, countdown, share</td>
+          </tr>
+          <tr>
+            <td>Auth (email + Google OAuth)</td>
+            <td><span class="status-badge done">Built</span></td>
+            <td>Firebase Auth with full sign-in/sign-up flow</td>
+          </tr>
+          <tr>
+            <td>Dashboard (saved trips)</td>
+            <td><span class="status-badge done">Built</span></td>
+            <td>Card grid with delete, view, and status</td>
+          </tr>
+          <tr>
+            <td>Sidebar & navigation</td>
+            <td><span class="status-badge done">Built</span></td>
+            <td>Standardised across all 5 pages</td>
+          </tr>
+          <tr>
+            <td>Affiliate booking links</td>
+            <td><span class="status-badge done">Built</span></td>
+            <td>URL patterns ready, needs affiliate IDs</td>
+          </tr>
+          <tr>
+            <td>Claude API integration</td>
+            <td><span class="status-badge planned">Planned</span></td>
+            <td>System prompt designed, serverless functions needed</td>
+          </tr>
+          <tr>
+            <td>Lisa live chat agent</td>
+            <td><span class="status-badge planned">Planned</span></td>
+            <td>Homepage demo built, live version needs API wiring</td>
+          </tr>
+          <tr>
+            <td>Dynamic itinerary rendering</td>
+            <td><span class="status-badge planned">Planned</span></td>
+            <td>Currently hardcoded Bali data, needs JSON→UI pipeline</td>
+          </tr>
+          <tr>
+            <td>Destination image API</td>
+            <td><span class="status-badge concept">Concept</span></td>
+            <td>Unsplash integration for dynamic hero galleries</td>
+          </tr>
+          <tr>
+            <td>Live currency rates</td>
+            <td><span class="status-badge concept">Concept</span></td>
+            <td>Currently static rates, needs ExchangeRate API</td>
+          </tr>
+          <tr>
+            <td>Trip sharing (read-only links)</td>
+            <td><span class="status-badge concept">Concept</span></td>
+            <td>Share modal built, needs Firestore share tokens</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ===== 10. SCALING ===== -->
+    <div class="section">
+      <div class="section-label purple">10</div>
+      <h2>Scaling & Future Considerations</h2>
+
+      <div class="stack-grid">
+        <div class="arch-card">
+          <div class="arch-card-title"><span class="emoji">⚡</span> Response Caching</div>
+          <p>Popular destination queries (e.g. "Bali 7 days couple") can be cached in Firestore to avoid redundant Claude API calls. Cache keyed by normalised destination + duration + travel style. Serves instant results for common requests.</p>
+        </div>
+
+        <div class="arch-card">
+          <div class="arch-card-title"><span class="emoji">📱</span> Mobile App (React Native)</div>
+          <p>The JSON-driven architecture means a mobile app would consume the same API endpoints. The itinerary schema, Lisa chat, and Firestore data layer are all platform-agnostic.</p>
+        </div>
+
+        <div class="arch-card">
+          <div class="arch-card-title"><span class="emoji">🔔</span> Trip Notifications</div>
+          <p>Firebase Cloud Messaging for push notifications: trip countdown reminders, price drop alerts on saved flights, weather updates for upcoming trips, and booking confirmation nudges.</p>
+        </div>
+
+        <div class="arch-card">
+          <div class="arch-card-title"><span class="emoji">🤝</span> Collaborative Trips</div>
+          <p>Firestore real-time listeners enable collaborative trip planning. Multiple users can view the same trip document, with Lisa mediating group preferences and budget splitting.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <p class="dim" style="text-align:center; font-size:13px;">One-Up Travel · Technical Architecture v1.0 · February 2026</p>
+
+  </div>
+</body>
+</html>
