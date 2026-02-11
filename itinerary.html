@@ -2226,6 +2226,39 @@
       });
     });
 
+    // Consolidate hotel check-in/check-out into single stays
+    const hotelStays = [];
+    const hotelMap = {};
+    groups.hotel.forEach(item => {
+      const key = item.placeQuery || item.title.replace(/ — Check-(in|out)/, '');
+      if (!hotelMap[key]) {
+        hotelMap[key] = { checkin: null, checkout: null };
+      }
+      if (item.title.toLowerCase().includes('check-in')) {
+        hotelMap[key].checkin = item;
+      } else if (item.title.toLowerCase().includes('check-out')) {
+        hotelMap[key].checkout = item;
+      } else {
+        hotelMap[key].checkin = hotelMap[key].checkin || item;
+      }
+    });
+    Object.values(hotelMap).forEach(stay => {
+      const primary = stay.checkin || stay.checkout;
+      if (!primary) return;
+      const startDay = stay.checkin ? stay.checkin.dayNum : (stay.checkout ? stay.checkout.dayNum : primary.dayNum);
+      const endDay = stay.checkout ? stay.checkout.dayNum : startDay;
+      const title = primary.title.replace(/ — Check-(in|out)/, '');
+      hotelStays.push({
+        ...primary,
+        title: title,
+        dayNum: startDay,
+        dayEnd: endDay > startDay ? endDay : null,
+        sub: primary.sub,
+        price: (stay.checkin ? stay.checkin.price : 0) + (stay.checkout ? stay.checkout.price : 0),
+      });
+    });
+    groups.hotel = hotelStays;
+
     const grandTotal = Object.values(totals).reduce((a, b) => a + b, 0);
     const totalDays = timelineDays.length;
 
@@ -2289,7 +2322,10 @@
             <div class="sum-section-icon ${type}"><i data-lucide="${icon}" style="width:16px;height:16px"></i></div>
             <div>
               <div class="sum-section-title">${title}</div>
-              <div class="sum-section-meta">${items.length} ${items.length === 1 ? 'item' : 'items'} across ${new Set(items.map(i => i.dayIndex)).size} days</div>
+              <div class="sum-section-meta">${type === 'hotel' 
+                ? `${items.length} ${items.length === 1 ? 'property' : 'properties'}`
+                : `${items.length} ${items.length === 1 ? 'item' : 'items'} across ${new Set(items.map(i => i.dayIndex)).size} days`
+              }</div>
             </div>
           </div>
           <div style="display:flex;align-items:center;">
@@ -2305,7 +2341,7 @@
               return `
               <div class="sum-card ${type}" id="${uid}">
                 <div class="sum-card-header" onclick="toggleSumCard('${uid}')">
-                  <div class="sum-row-day">Day ${item.dayNum}</div>
+                  <div class="sum-row-day">${item.dayEnd ? `Day ${item.dayNum}–${item.dayEnd}` : `Day ${item.dayNum}`}</div>
                   <div class="sum-row-info">
                     <div class="sum-row-title">${item.title}</div>
                     <div class="sum-row-sub">${item.sub}</div>
