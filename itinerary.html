@@ -1330,13 +1330,16 @@
     <div class="sidebar-section">
       <div class="sidebar-section-title">Explore</div>
       <a href="/home#trending" class="sidebar-item"><i data-lucide="flame"></i><span>Trending</span></a>
-      <a href="/contact" class="sidebar-item"><i data-lucide="message-circle"></i><span>Contact Support</span></a>
-    </div>
+      </div>
     <div class="sidebar-divider"></div>
     <div class="sidebar-section">
       <div class="sidebar-section-title">Legal &amp; Support</div>
       <a href="/legal" class="sidebar-item"><i data-lucide="shield-check"></i><span>Legal</span></a>
       <a href="/faq" class="sidebar-item"><i data-lucide="help-circle"></i><span>FAQs</span></a>
+      <a href="/contact" class="sidebar-item">
+        <i data-lucide="message-circle"></i>
+        <span>Contact Us</span>
+      </a>
     </div>
     <div class="sidebar-divider"></div>
     <div class="sidebar-section" id="sidebarAuthSection">
@@ -2527,6 +2530,10 @@
   document.addEventListener('DOMContentLoaded', initIcons);
   window.addEventListener('load', initIcons);
 </script>
+
+<!-- Firebase Integration -->
+<script type="module" src="firebase-config.js"></script>
+<script type="module" src="auth-handler.js"></script>
 
 </body>
 </html>
