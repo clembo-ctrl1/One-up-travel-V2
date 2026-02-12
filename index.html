@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>One-Up Travel | AI Travel Planning</title>
 
+  <!-- Early theme detection (prevents flash) -->
+  <script>if(localStorage.getItem('travelWithPurpose')==='true')document.documentElement.classList.add('purpose-theme');</script>
+
   <!-- Lucide Icons CDN -->
   <script src="https://unpkg.com/lucide@latest"></script>
 
@@ -20,6 +23,221 @@
       overflow-x: hidden;
       background: #0a0a0f;
       color: white;
+    }
+
+    /* =============== PURPOSE THEME (Green/Teal) =============== */
+    .purpose-theme body,
+    html.purpose-theme { background: #050e08; }
+
+    /* Background gradient overlays — nature feel */
+    .purpose-theme .bg-gradient-top {
+      background:
+        radial-gradient(ellipse at 50% 60%, rgba(16,185,129,0.07) 0%, transparent 55%),
+        radial-gradient(ellipse at 30% 20%, rgba(20,184,166,0.05) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 80%, rgba(52,211,153,0.04) 0%, transparent 50%) !important;
+    }
+
+    /* Subtle earth-tone vignette */
+    .purpose-theme .bg-vignette {
+      background: radial-gradient(ellipse at center, transparent 40%, rgba(5,14,8,0.6) 100%) !important;
+    }
+
+    /* Hide travel emoji particles in purpose mode */
+    .purpose-theme .travel-particles { opacity: 0 !important; transition: opacity 0.5s; }
+
+    /* Search button */
+    .purpose-theme .search-btn {
+      background: #059669 !important;
+      box-shadow: 0 4px 12px rgba(16,185,129,0.3) !important;
+    }
+    .purpose-theme .search-btn:hover {
+      background: #047857 !important;
+      box-shadow: 0 6px 20px rgba(16,185,129,0.4) !important;
+    }
+
+    /* Search box focus */
+    .purpose-theme .search-box:focus-within {
+      border-color: rgba(16,185,129,0.5) !important;
+      box-shadow: 0 8px 30px rgba(16,185,129,0.15) !important;
+    }
+
+    /* Feature pills hover */
+    .purpose-theme .feature:hover {
+      background: rgba(16,185,129,0.1) !important;
+      border-color: rgba(16,185,129,0.3) !important;
+    }
+
+    /* Sign in button */
+    .purpose-theme .signin-btn {
+      background: #059669 !important;
+    }
+    .purpose-theme .signin-btn:hover {
+      background: #047857 !important;
+      box-shadow: 0 4px 12px rgba(16,185,129,0.3) !important;
+    }
+
+    /* One-Up logo dot */
+    .purpose-theme .logo-dot {
+      background: #10b981 !important;
+      box-shadow: 0 0 12px rgba(16,185,129,0.7), 0 0 24px rgba(16,185,129,0.3) !important;
+    }
+    @keyframes purpose-pulse {
+      0%, 100% { opacity: 1; box-shadow: 0 0 12px rgba(16,185,129,0.7), 0 0 24px rgba(16,185,129,0.3); }
+      50% { opacity: 0.6; box-shadow: 0 0 20px rgba(16,185,129,0.9), 0 0 40px rgba(16,185,129,0.4); }
+    }
+    .purpose-theme .logo-dot { animation: purpose-pulse 3s ease-in-out infinite !important; }
+
+    /* Lisa section label + avatar */
+    .purpose-theme .lisa-section-label {
+      background: rgba(16,185,129,0.15) !important;
+      border-color: rgba(16,185,129,0.25) !important;
+    }
+    .purpose-theme .lisa-section-title span {
+      background: linear-gradient(135deg, #34d399, #14b8a6, #06b6d4) !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+    }
+    .purpose-theme .lisa-avatar {
+      background: linear-gradient(135deg, #10b981, #14b8a6, #06b6d4) !important;
+    }
+
+    /* Lisa send button */
+    .purpose-theme .lisa-chat-send {
+      background: #059669 !important;
+    }
+    .purpose-theme .lisa-chat-send:hover {
+      background: #047857 !important;
+      box-shadow: 0 4px 16px rgba(16,185,129,0.4) !important;
+    }
+    .purpose-theme .lisa-chat-input input:focus {
+      border-color: rgba(16,185,129,0.4) !important;
+    }
+
+    /* Lisa CTA button */
+    .purpose-theme .lisa-cta-btn {
+      background: #059669 !important;
+      box-shadow: 0 4px 20px rgba(16,185,129,0.3) !important;
+    }
+    .purpose-theme .lisa-cta-btn:hover {
+      background: #047857 !important;
+      box-shadow: 0 8px 32px rgba(16,185,129,0.4) !important;
+    }
+
+    /* Headline accent */
+    .purpose-theme .headline-accent {
+      background: linear-gradient(135deg, #34d399, #14b8a6, #06b6d4) !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+    }
+    .purpose-theme .headline-accent::after {
+      background: linear-gradient(135deg, #34d399, #14b8a6, #06b6d4) !important;
+    }
+
+    /* Chat message avatars */
+    .purpose-theme .chat-msg-avatar-lisa {
+      background: linear-gradient(135deg, #10b981, #14b8a6, #06b6d4) !important;
+    }
+
+    /* Sidebar active state */
+    .purpose-theme .sidebar-item:hover,
+    .purpose-theme .sidebar-item.active {
+      background: rgba(16,185,129,0.15) !important;
+      border-color: rgba(16,185,129,0.3) !important;
+    }
+    .purpose-theme .sidebar-item.primary {
+      background: rgba(16,185,129,0.15) !important;
+      border-color: rgba(16,185,129,0.4) !important;
+      color: #6ee7b7 !important;
+    }
+
+    /* Footer links */
+    .purpose-theme .footer-link:hover {
+      color: #34d399 !important;
+    }
+
+    /* Scrollbar */
+    .purpose-theme ::-webkit-scrollbar-thumb {
+      background: rgba(16,185,129,0.3) !important;
+    }
+
+    /* Globe canvas — hue-shift from purple to green/teal */
+    .purpose-theme canvas#globeCanvas {
+      filter: hue-rotate(280deg) saturate(1.15);
+      opacity: 0 !important;
+      transition: opacity 0.8s ease;
+    }
+
+    /* Tree canvas */
+    canvas#treeCanvas {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      transition: opacity 1s ease;
+      pointer-events: none;
+    }
+    .purpose-theme canvas#treeCanvas {
+      opacity: 0.85;
+    }
+
+    /* Nature elements container */
+    .nature-elements {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 1s ease 0.3s;
+    }
+    .purpose-theme .nature-elements { opacity: 1; }
+
+    /* Flying birds */
+    .bird {
+      position: absolute;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+    .purpose-theme .bird { opacity: 1; }
+
+    .bird-1 { width: 40px; top: 15%; animation: birdFly1 18s linear infinite; }
+    .bird-2 { width: 35px; top: 22%; animation: birdFly2 22s linear infinite 3s; }
+    .bird-3 { width: 30px; top: 12%; animation: birdFly3 25s linear infinite 7s; }
+    .bird-4 { width: 25px; top: 28%; animation: birdFly4 20s linear infinite 5s; }
+    .bird-5 { width: 22px; top: 18%; animation: birdFly5 28s linear infinite 12s; }
+
+    .bird svg { width: 100%; height: auto; }
+
+    @keyframes birdFly1 {
+      0% { left: -5%; transform: translateY(0) scaleX(1); }
+      25% { transform: translateY(-15px) scaleX(1); }
+      50% { transform: translateY(5px) scaleX(1); }
+      75% { transform: translateY(-10px) scaleX(1); }
+      100% { left: 105%; transform: translateY(0) scaleX(1); }
+    }
+    @keyframes birdFly2 {
+      0% { left: 105%; transform: translateY(0) scaleX(-1); }
+      25% { transform: translateY(-20px) scaleX(-1); }
+      50% { transform: translateY(8px) scaleX(-1); }
+      75% { transform: translateY(-12px) scaleX(-1); }
+      100% { left: -5%; transform: translateY(0) scaleX(-1); }
+    }
+    @keyframes birdFly3 {
+      0% { left: -8%; transform: translateY(0) scaleX(1); }
+      30% { transform: translateY(-25px) scaleX(1); }
+      60% { transform: translateY(10px) scaleX(1); }
+      100% { left: 108%; transform: translateY(-5px) scaleX(1); }
+    }
+    @keyframes birdFly4 {
+      0% { left: 110%; transform: translateY(0) scaleX(-1); }
+      40% { transform: translateY(-18px) scaleX(-1); }
+      70% { transform: translateY(6px) scaleX(-1); }
+      100% { left: -10%; transform: translateY(-8px) scaleX(-1); }
+    }
+    @keyframes birdFly5 {
+      0% { left: -3%; transform: translateY(0) scaleX(1); }
+      35% { transform: translateY(-22px) scaleX(1); }
+      65% { transform: translateY(12px) scaleX(1); }
+      100% { left: 103%; transform: translateY(-3px) scaleX(1); }
     }
 
     /* =============== ANIMATED GLOBE / VIDEO BACKGROUND =============== */
@@ -297,6 +515,73 @@
     }
     .feature:hover { background: rgba(99, 102, 241, 0.1); border-color: rgba(99, 102, 241, 0.3); color: white; transform: translateY(-2px); }
     .feature:active { transform: translateY(0); }
+
+    /* TRAVEL WITH PURPOSE TOGGLE */
+    .purpose-toggle-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 18px;
+      animation: fadeInUp 0.8s ease 0.65s backwards;
+    }
+    .purpose-toggle-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.6);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      transition: color 0.3s;
+      cursor: pointer;
+      user-select: none;
+    }
+    .purpose-toggle-label.active { color: #34d399; }
+    .purpose-toggle {
+      position: relative;
+      width: 48px;
+      height: 26px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 13px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+    }
+    .purpose-toggle.active {
+      background: rgba(16,185,129,0.25);
+      border-color: rgba(16,185,129,0.5);
+    }
+    .purpose-toggle-dot {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 18px;
+      height: 18px;
+      background: rgba(255,255,255,0.5);
+      border-radius: 50%;
+      transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    .purpose-toggle.active .purpose-toggle-dot {
+      left: 25px;
+      background: #34d399;
+      box-shadow: 0 0 12px rgba(52,211,153,0.5);
+    }
+    .purpose-badge {
+      display: none;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 12px;
+      background: rgba(16,185,129,0.1);
+      border: 1px solid rgba(16,185,129,0.2);
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #34d399;
+      letter-spacing: 0.3px;
+      animation: fadeInUp 0.3s ease;
+    }
+    .purpose-badge.show { display: inline-flex; }
 
     /* =============== LISA CHATBOT PREVIEW =============== */
     .lisa-section {
@@ -781,9 +1066,19 @@
   <!-- ===== ANIMATED BACKGROUND ===== -->
   <div class="bg-canvas-wrap">
     <canvas id="globeCanvas"></canvas>
+    <canvas id="treeCanvas"></canvas>
     <div class="bg-gradient-top"></div>
     <div class="bg-vignette"></div>
     <div class="travel-particles" id="particles"></div>
+
+    <!-- Nature elements (visible only in purpose mode) -->
+    <div class="nature-elements" id="natureElements">
+      <div class="bird bird-1"><svg viewBox="0 0 40 20" fill="none"><path d="M0 10 Q10 0 20 10 Q30 0 40 10" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" fill="none"/></svg></div>
+      <div class="bird bird-2"><svg viewBox="0 0 40 20" fill="none"><path d="M0 10 Q10 0 20 10 Q30 0 40 10" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" fill="none"/></svg></div>
+      <div class="bird bird-3"><svg viewBox="0 0 40 20" fill="none"><path d="M0 10 Q10 0 20 10 Q30 0 40 10" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" fill="none"/></svg></div>
+      <div class="bird bird-4"><svg viewBox="0 0 30 15" fill="none"><path d="M0 7 Q7 0 15 7 Q22 0 30 7" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none"/></svg></div>
+      <div class="bird bird-5"><svg viewBox="0 0 30 15" fill="none"><path d="M0 7 Q7 0 15 7 Q22 0 30 7" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none"/></svg></div>
+    </div>
   </div>
 
   <!-- SIDEBAR OVERLAY -->
@@ -863,6 +1158,21 @@
       </div>
 
       <div class="loading" id="loading">Creating your personalized itinerary...</div>
+
+      <!-- Travel with Purpose Toggle -->
+      <div class="purpose-toggle-wrap">
+        <div class="purpose-toggle-label" id="purposeLabel" onclick="togglePurpose()">
+          <i data-lucide="leaf" style="width:15px;height:15px;"></i>
+          Travel with Purpose
+        </div>
+        <div class="purpose-toggle" id="purposeToggle" onclick="togglePurpose()">
+          <div class="purpose-toggle-dot"></div>
+        </div>
+        <div class="purpose-badge" id="purposeBadge">
+          <i data-lucide="shield-check" style="width:12px;height:12px;"></i>
+          Eco mode on
+        </div>
+      </div>
 
       <div class="features">
         <div class="feature" onclick="suggestTrip('trending')">
@@ -1300,6 +1610,227 @@
       draw();
     })();
 
+    // ===== GROWING TREE (Purpose Mode) =====
+    (function() {
+      const tc = document.getElementById('treeCanvas');
+      const tctx = tc.getContext('2d');
+      let tw, th;
+
+      function resizeTree() {
+        tw = tc.width = window.innerWidth;
+        th = tc.height = window.innerHeight;
+      }
+      resizeTree();
+      window.addEventListener('resize', resizeTree);
+
+      // Tree parameters
+      const maxDepth = 10;
+      let growProgress = 0;
+      let growing = false;
+      let leaves = [];
+      let fallingLeaves = [];
+
+      function startGrow() {
+        growProgress = 0;
+        growing = true;
+        leaves = [];
+        fallingLeaves = [];
+      }
+
+      // Seeded random for consistent tree shape
+      let seed = 42;
+      function seededRandom() {
+        seed = (seed * 16807 + 0) % 2147483647;
+        return (seed - 1) / 2147483646;
+      }
+
+      function drawBranch(x, y, angle, length, depth, maxD) {
+        if (depth > maxD || length < 2) return;
+
+        const endX = x + Math.cos(angle) * length;
+        const endY = y + Math.sin(angle) * length;
+
+        // Thickness
+        const thick = Math.max(1, (maxD - depth) * 2.2);
+
+        // Color: brown trunk → green branches
+        const t = depth / maxD;
+        const r = Math.round(60 + t * 10);
+        const g = Math.round(40 + t * 100);
+        const b = Math.round(20 + t * 20);
+        const alpha = 0.7 + (1 - t) * 0.3;
+
+        tctx.beginPath();
+        tctx.moveTo(x, y);
+        tctx.lineTo(endX, endY);
+        tctx.strokeStyle = `rgba(${r},${g},${b},${alpha})`;
+        tctx.lineWidth = thick;
+        tctx.lineCap = 'round';
+        tctx.stroke();
+
+        // Add leaves at branch tips
+        if (depth >= maxD - 3 && depth >= 5) {
+          const leafSize = 3 + seededRandom() * 8;
+          leaves.push({
+            x: endX + (seededRandom() - 0.5) * 10,
+            y: endY + (seededRandom() - 0.5) * 10,
+            size: leafSize,
+            hue: 100 + seededRandom() * 50, // green to yellow-green
+            brightness: 0.3 + seededRandom() * 0.4,
+            sway: seededRandom() * Math.PI * 2,
+          });
+        }
+
+        // Branch splitting
+        const spread = 0.35 + seededRandom() * 0.25;
+        const shrink = 0.65 + seededRandom() * 0.12;
+        const drift = (seededRandom() - 0.5) * 0.1;
+
+        drawBranch(endX, endY, angle - spread + drift, length * shrink, depth + 1, maxD);
+        drawBranch(endX, endY, angle + spread + drift, length * shrink, depth + 1, maxD);
+
+        // Extra branch on some
+        if (seededRandom() > 0.6 && depth < maxD - 2) {
+          drawBranch(endX, endY, angle + (seededRandom() - 0.5) * 0.8, length * shrink * 0.7, depth + 1, maxD);
+        }
+      }
+
+      function drawTree(time) {
+        tctx.clearRect(0, 0, tw, th);
+
+        // Background glow
+        const glow = tctx.createRadialGradient(tw/2, th*0.55, 20, tw/2, th*0.55, th*0.5);
+        glow.addColorStop(0, 'rgba(16,185,129,0.06)');
+        glow.addColorStop(0.5, 'rgba(20,184,166,0.03)');
+        glow.addColorStop(1, 'transparent');
+        tctx.fillStyle = glow;
+        tctx.fillRect(0, 0, tw, th);
+
+        // Ground
+        const groundY = th * 0.72;
+        const groundGrad = tctx.createLinearGradient(0, groundY - 20, 0, groundY + 60);
+        groundGrad.addColorStop(0, 'rgba(16,185,129,0.02)');
+        groundGrad.addColorStop(0.5, 'rgba(16,185,129,0.06)');
+        groundGrad.addColorStop(1, 'transparent');
+        tctx.fillStyle = groundGrad;
+        tctx.fillRect(0, groundY - 20, tw, 80);
+
+        // Small ground grass line
+        tctx.beginPath();
+        tctx.moveTo(tw * 0.2, groundY);
+        tctx.bezierCurveTo(tw * 0.35, groundY - 3, tw * 0.65, groundY - 3, tw * 0.8, groundY);
+        tctx.strokeStyle = 'rgba(16,185,129,0.15)';
+        tctx.lineWidth = 2;
+        tctx.stroke();
+
+        // Draw tree
+        seed = 42; // Reset seed for consistent shape
+        leaves = [];
+        const currentDepth = Math.min(maxDepth, Math.floor(growProgress * maxDepth));
+        const trunkLen = Math.min(th * 0.12, 90);
+
+        if (currentDepth > 0) {
+          drawBranch(tw/2, groundY, -Math.PI/2, trunkLen, 0, currentDepth);
+        }
+
+        // Draw leaves with sway
+        leaves.forEach(leaf => {
+          const sway = Math.sin(time * 0.001 + leaf.sway) * 2;
+          const pulse = 0.85 + Math.sin(time * 0.002 + leaf.sway) * 0.15;
+
+          // Leaf glow
+          const lg = tctx.createRadialGradient(leaf.x + sway, leaf.y, 0, leaf.x + sway, leaf.y, leaf.size * 2);
+          lg.addColorStop(0, `hsla(${leaf.hue}, 70%, 45%, ${leaf.brightness * pulse})`);
+          lg.addColorStop(1, 'transparent');
+          tctx.fillStyle = lg;
+          tctx.beginPath();
+          tctx.arc(leaf.x + sway, leaf.y, leaf.size * 2, 0, Math.PI * 2);
+          tctx.fill();
+
+          // Leaf dot
+          tctx.fillStyle = `hsla(${leaf.hue}, 80%, 50%, ${(leaf.brightness + 0.2) * pulse})`;
+          tctx.beginPath();
+          tctx.arc(leaf.x + sway, leaf.y, leaf.size * 0.6, 0, Math.PI * 2);
+          tctx.fill();
+        });
+
+        // Falling leaves
+        if (growProgress >= 1) {
+          if (fallingLeaves.length < 8 && Math.random() > 0.97) {
+            fallingLeaves.push({
+              x: tw * 0.3 + Math.random() * tw * 0.4,
+              y: groundY - th * 0.15 - Math.random() * th * 0.2,
+              vx: (Math.random() - 0.5) * 0.5,
+              vy: 0.3 + Math.random() * 0.3,
+              rot: Math.random() * Math.PI * 2,
+              rotSpeed: (Math.random() - 0.5) * 0.03,
+              size: 3 + Math.random() * 3,
+              hue: 100 + Math.random() * 50,
+              life: 1,
+            });
+          }
+          fallingLeaves.forEach((fl, i) => {
+            fl.x += fl.vx + Math.sin(time * 0.002 + i) * 0.3;
+            fl.y += fl.vy;
+            fl.rot += fl.rotSpeed;
+            fl.life -= 0.003;
+
+            if (fl.life > 0) {
+              tctx.save();
+              tctx.translate(fl.x, fl.y);
+              tctx.rotate(fl.rot);
+              tctx.fillStyle = `hsla(${fl.hue}, 70%, 45%, ${fl.life * 0.6})`;
+              tctx.beginPath();
+              tctx.ellipse(0, 0, fl.size, fl.size * 0.5, 0, 0, Math.PI * 2);
+              tctx.fill();
+              tctx.restore();
+            }
+          });
+          fallingLeaves = fallingLeaves.filter(fl => fl.life > 0 && fl.y < groundY + 50);
+        }
+
+        // Firefly particles around tree
+        if (growProgress > 0.5) {
+          for (let i = 0; i < 12; i++) {
+            const angle = time * 0.0003 + i * (Math.PI * 2 / 12);
+            const dist = 60 + Math.sin(time * 0.001 + i * 2) * 40;
+            const fx = tw/2 + Math.cos(angle) * dist;
+            const fy = groundY - th * 0.15 + Math.sin(angle * 1.5) * dist * 0.6;
+            const flicker = 0.2 + Math.sin(time * 0.003 + i * 3) * 0.15;
+
+            tctx.fillStyle = `rgba(52, 211, 153, ${flicker})`;
+            tctx.beginPath();
+            tctx.arc(fx, fy, 1.5, 0, Math.PI * 2);
+            tctx.fill();
+          }
+        }
+      }
+
+      let treeTime = 0;
+      function animateTree() {
+        treeTime += 16;
+
+        // Only grow when purpose mode is active
+        if (document.documentElement.classList.contains('purpose-theme')) {
+          if (growProgress < 1) {
+            growProgress += 0.008;
+            if (growProgress > 1) growProgress = 1;
+          }
+          drawTree(treeTime);
+        }
+
+        requestAnimationFrame(animateTree);
+      }
+      animateTree();
+
+      // Expose for toggle
+      window.updateGlobeTheme = function(isPurpose) {
+        if (isPurpose) {
+          growProgress = 0; // Reset to grow again
+        }
+      };
+    })();
+
     // ===== TRAVEL PARTICLES =====
     (function() {
       const container = document.getElementById('particles');
@@ -1421,6 +1952,41 @@
     })();
 
     // ===== ORIGINAL TRIP FUNCTIONS =====
+    // Travel with Purpose toggle
+    let purposeMode = localStorage.getItem('travelWithPurpose') === 'true';
+
+    function togglePurpose() {
+      purposeMode = !purposeMode;
+      localStorage.setItem('travelWithPurpose', purposeMode);
+      const toggle = document.getElementById('purposeToggle');
+      const label = document.getElementById('purposeLabel');
+      const badge = document.getElementById('purposeBadge');
+
+      toggle.classList.toggle('active', purposeMode);
+      label.classList.toggle('active', purposeMode);
+      badge.classList.toggle('show', purposeMode);
+
+      // Apply/remove theme
+      document.documentElement.classList.toggle('purpose-theme', purposeMode);
+
+      // Update globe colors
+      if (typeof updateGlobeTheme === 'function') updateGlobeTheme(purposeMode);
+
+      // Update search placeholder to reflect mode
+      const input = document.getElementById('tripInput');
+      input.placeholder = purposeMode
+        ? 'Plan an eco-friendly trip to...'
+        : 'Enter your destination and duration';
+    }
+
+    // Restore toggle state on load
+    if (purposeMode) {
+      document.getElementById('purposeToggle').classList.add('active');
+      document.getElementById('purposeLabel').classList.add('active');
+      document.getElementById('purposeBadge').classList.add('show');
+      document.getElementById('tripInput').placeholder = 'Plan an eco-friendly trip to...';
+    }
+
     function handleEnter(event) {
       if (event.key === 'Enter') planTrip();
     }
@@ -1446,6 +2012,7 @@
       submitBtn.disabled = true;
       submitBtn.textContent = 'Planning...';
       localStorage.setItem('currentTrip', input);
+      localStorage.setItem('travelWithPurpose', purposeMode);
 
       setTimeout(() => { window.location.href = '/itinerary'; }, 1800);
     }
