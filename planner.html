@@ -200,23 +200,25 @@
     /* ═══ CENTERED CHAT MODE (initial) ═══ */
     .chat-centered {
       display: flex; flex-direction: column;
-      max-width: 680px; width: 100%; margin: 0 auto;
+      max-width: 720px; width: 100%; margin: 0 auto;
       height: calc(100vh - 109px); position: relative; z-index: 1;
-      padding: 0;
+      background: rgba(10,10,15,0.3); backdrop-filter: blur(20px);
+      border-left: 1px solid var(--border); border-right: 1px solid var(--border);
     }
     .chat-centered .chat-header-bar {
-      padding: 20px 24px; border-bottom: 1px solid var(--border);
+      padding: 20px 28px; border-bottom: 1px solid var(--border);
       display: flex; align-items: center; gap: 14;
-      background: rgba(10,10,15,0.3);
+      background: rgba(10,10,15,0.4); flex-shrink: 0;
     }
     .chat-centered .chat-messages {
-      flex: 1; overflow-y: auto; padding: 24px 20px;
-      display: flex; flex-direction: column; gap: 18px;
+      flex: 1; overflow-y: auto; padding: 28px 24px;
+      display: flex; flex-direction: column; gap: 20px; min-height: 0;
     }
     .chat-centered .chat-input-wrap {
-      padding: 18px 20px; border-top: 1px solid var(--border);
-      display: flex; gap: 10px; background: rgba(10,10,15,0.3);
+      padding: 20px 24px; border-top: 1px solid var(--border);
+      display: flex; gap: 12px; background: rgba(10,10,15,0.4); flex-shrink: 0;
     }
+    .chat-centered .msg-bubble { font-size: 15px; line-height: 1.7; }
 
     /* ═══ THREE COLUMNS (after Lisa provides results) ═══ */
     .columns {
@@ -230,10 +232,11 @@
     .chat-col {
       border-right: 1px solid var(--border); display: flex; flex-direction: column;
       background: rgba(10,10,15,0.5); backdrop-filter: blur(20px);
+      min-height: 0; overflow: hidden;
     }
     .chat-header-bar {
       padding: 16px 20px; border-bottom: 1px solid var(--border);
-      display: flex; align-items: center; gap: 12;
+      display: flex; align-items: center; gap: 14; flex-shrink: 0;
     }
     .lisa-avatar {
       width: 42px; height: 42px; border-radius: 50%; background: var(--lisa-gradient);
@@ -249,7 +252,7 @@
     .lisa-name { font-weight: 700; font-size: 15px; }
     .lisa-status { font-size: 12px; color: var(--green-light); display: flex; align-items: center; gap: 5; }
     .status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); display: inline-block; animation: statusPulse 2s ease infinite; }
-    .chat-messages { flex: 1; overflow-y: auto; padding: 20px 18px; display: flex; flex-direction: column; gap: 16px; }
+    .chat-messages { flex: 1; overflow-y: auto; padding: 20px 18px; display: flex; flex-direction: column; gap: 16px; min-height: 0; }
     .msg { display: flex; animation: msgIn 0.4s ease; }
     .msg.user { justify-content: flex-end; }
     .msg-avatar {
@@ -271,7 +274,7 @@
     .typing-dot:nth-child(1) { animation: dotBounce 1.2s ease 0s infinite; }
     .typing-dot:nth-child(2) { animation: dotBounce 1.2s ease 0.15s infinite; }
     .typing-dot:nth-child(3) { animation: dotBounce 1.2s ease 0.3s infinite; }
-    .chat-input-wrap { padding: 16px 18px; border-top: 1px solid var(--border); display: flex; gap: 10px; background: rgba(10,10,15,0.3); }
+    .chat-input-wrap { padding: 16px 18px; border-top: 1px solid var(--border); display: flex; gap: 10px; background: rgba(10,10,15,0.3); flex-shrink: 0; }
     .chat-input {
       flex: 1; background: rgba(255,255,255,0.06); border: 1.5px solid var(--border);
       border-radius: 24px; padding: 12px 20px; font-size: 14.5px; color: #fff;
@@ -470,6 +473,9 @@
     .purpose-theme .stepper { background: rgba(5,14,8,0.6); }
     .purpose-theme .chat-col { background: rgba(5,14,8,0.5); }
     .purpose-theme .right-col { background: rgba(5,14,8,0.5); }
+    .purpose-theme .chat-centered { background: transparent; }
+    .purpose-theme .chat-centered .chat-header-bar { background: rgba(5,14,8,0.3); }
+    .purpose-theme .chat-centered .chat-input-wrap { background: rgba(5,14,8,0.3); }
     .purpose-theme .submit-overlay { background: #050e08; }
     .purpose-theme .submit-overlay-bg { background: radial-gradient(circle at 50% 40%, rgba(16,185,129,0.12) 0%, transparent 60%); }
 
@@ -947,29 +953,35 @@ function transitionToColumns() {
   viewMode = 'columns';
 
   // Copy chat history to column chat
-  const colArea = document.getElementById('chatMessages');
+  var colArea = document.getElementById('chatMessages');
   renderChatHistoryTo(colArea);
 
   // Hide centered, show columns
   document.getElementById('chatCentered').style.display = 'none';
   document.getElementById('mainColumns').classList.add('active');
 
-  // Focus column input
+  // Handle eco mode height
+  if (ecoMode) {
+    document.getElementById('mainColumns').style.height = 'calc(100vh - 149px)';
+  }
+
+  // Focus column input and ensure scroll
   setTimeout(function() {
     document.getElementById('chatInput').focus();
-  }, 300);
+    colArea.scrollTop = colArea.scrollHeight;
+  }, 100);
 }
 
 function renderChatHistoryTo(area) {
   area.innerHTML = '';
   chatHistory.forEach(function(m) {
     if (m.from === 'lisa') {
-      area.innerHTML += '<div class="msg lisa"><div class="msg-avatar">L</div><div class="msg-bubble">' + formatLisaMessage(m.text) + '</div></div>';
+      area.innerHTML += '<div class="msg lisa"><div class="msg-avatar" style="background:var(--lisa-gradient);color:#fff;font-weight:800;font-size:13px;border-radius:50%">L</div><div class="msg-bubble">' + formatLisaMessage(m.text) + '</div></div>';
     } else {
-      area.innerHTML += '<div class="msg user"><div class="msg-bubble">' + escapeHtml(m.text) + '</div><div class="msg-avatar"></div></div>';
+      area.innerHTML += '<div class="msg user"><div class="msg-bubble">' + escapeHtml(m.text) + '</div><div class="msg-avatar" style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.08)"></div></div>';
     }
   });
-  area.scrollTop = area.scrollHeight;
+  setTimeout(function() { area.scrollTop = area.scrollHeight; }, 50);
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -1263,23 +1275,16 @@ function applyEcoMode() {
   var sItem = document.getElementById('sidebarEcoToggle');
   if (sItem) { if(ecoMode) sItem.classList.add('active'); else sItem.classList.remove('active'); }
 
-  // Adjust columns height for eco banner
-  const cols = document.getElementById('mainColumns');
-  if (ecoMode) {
-    cols.style.height = 'calc(100vh - 149px)';
-  } else if (!document.getElementById('draftBanner').classList.contains('show')) {
-    cols.style.height = '';
+  // Adjust heights for eco banner
+  var bannerHeight = ecoMode ? 40 : 0;
+  var centeredChat = document.getElementById('chatCentered');
+  var cols = document.getElementById('mainColumns');
+  
+  if (viewMode === 'centered' && centeredChat) {
+    centeredChat.style.height = ecoMode ? 'calc(100vh - 149px)' : 'calc(100vh - 109px)';
   }
-
-  // Update Lisa's greeting style
-  const itinSub = document.getElementById('itinSubtitle');
-  if (ecoMode && itinSub) {
-    const currentTrip = localStorage.getItem('currentTrip') || '';
-    if (currentTrip && currentTrip !== 'Editing saved trip') {
-      itinSub.textContent = `🌿 Eco-friendly options curated by Lisa for "${currentTrip}".`;
-    } else {
-      itinSub.textContent = '🌿 Eco-friendly itineraries curated by Lisa. Click to explore or add to your plan.';
-    }
+  if (viewMode === 'columns' && cols) {
+    cols.style.height = ecoMode ? 'calc(100vh - 149px)' : '';
   }
 }
 
