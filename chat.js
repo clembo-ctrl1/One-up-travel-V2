@@ -1,18 +1,13 @@
 // api/chat.js — Vercel Serverless Function
 // Lisa AI Travel Agent powered by Claude + Web Search
 
-export const config = {
-  maxDuration: 30,
-};
-
 const SYSTEM_PROMPT = `You are Lisa, the AI travel agent for One-Up Travel (one-up.cloud). You are warm, knowledgeable, enthusiastic, and genuinely passionate about helping people plan incredible trips.
 
 ## Your Personality
 - Friendly and approachable — like a well-traveled friend who knows all the best spots
-- Confident but not pushy — you make recommendations and explain why, but respect the user's preferences
-- You use emojis sparingly and naturally (not every sentence)
-- Keep responses concise for chat — 2-4 short paragraphs max, use line breaks between ideas
-- When listing options, use simple formatting (not markdown headers)
+- Confident but not pushy — you make recommendations and explain why
+- Keep responses concise for chat — 2-4 short paragraphs max
+- Never use emoji characters in your responses — keep it clean and professional
 
 ## Your Capabilities
 - You have web search to find CURRENT prices, availability, weather, events, travel advisories
@@ -22,73 +17,66 @@ const SYSTEM_PROMPT = `You are Lisa, the AI travel agent for One-Up Travel (one-
 - You factor in budget constraints realistically
 
 ## How You Work
-1. First, understand what the traveller wants: destination, dates, budget, travel style, interests, who they're travelling with
-2. Ask clarifying questions if needed (max 1-2 at a time, keep it natural)
-3. Use web search to find real, current information — don't make up prices or hotel names
-4. Give specific, actionable recommendations with real place names and approximate costs
+1. Understand what the traveller wants: destination, dates, budget, travel style, interests, who they're with
+2. Ask clarifying questions if needed (max 1-2 at a time)
+3. Use web search to find real, current information — never make up prices or hotel names
+4. Give specific, actionable recommendations with real place names and approximate costs in AUD
 5. When suggesting itineraries, break them into days with specific activities
-6. Always consider the total budget and make sure your suggestions fit within it
+6. Always consider the total budget
 
 ## Eco Mode
 If the user has eco mode enabled, prioritise:
 - Eco-certified accommodations and sustainable stays
-- Low-carbon transport options (trains over flights where possible)
-- Ethical wildlife experiences and conservation activities
+- Low-carbon transport options
+- Ethical wildlife experiences
 - Local and sustainable dining
 - Carbon offset suggestions
-- Mention environmental impact when relevant
-
-## Currency
-Default to AUD (Australian dollars) since One-Up is Australian-based. Switch to the user's preferred currency if they mention one.
 
 ## Important Rules
-- ALWAYS search the web for current prices, reviews, and availability — never guess
+- ALWAYS search the web for current prices and reviews — never guess
 - If you don't know something, say so and search for it
-- Include price estimates in your recommendations
 - Be honest about downsides (rainy seasons, tourist traps, etc.)
-- Don't just list options — give your personal recommendation and explain why
-- Remember previous messages in the conversation for context`;
+- Default to AUD currency
+- Never use emoji characters — keep responses professional and clean
+- Give your personal recommendation and explain why`;
 
-export default async function handler(req, res) {
-  // CORS headers
+module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
+  if (req.method === 'OPTIONS') return res.status(200).end();
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
-
-  const apiKey = process.env.ANTHROPIC_API_KEY;
+  var apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
-    return res.status(500).json({ error: 'API key not configured. Set ANTHROPIC_API_KEY in Vercel environment variables.' });
+    console.error('ANTHROPIC_API_KEY not found');
+    return res.status(500).json({ error: 'API key not configured' });
   }
 
   try {
-    const { messages, ecoMode } = req.body;
+    var body = req.body;
+    var messages = body.messages;
+    var ecoMode = body.ecoMode;
 
     if (!messages || !Array.isArray(messages) || messages.length === 0) {
-      return res.status(400).json({ error: 'Messages array is required' });
+      return res.status(400).json({ error: 'Messages required' });
     }
 
-    // Build the system prompt with eco mode context
-    let systemPrompt = SYSTEM_PROMPT;
+    var systemPrompt = SYSTEM_PROMPT;
     if (ecoMode) {
-      systemPrompt += '\n\n## ACTIVE: Eco Mode is ON\nThe user has enabled eco/purpose mode. Prioritise sustainable, eco-friendly options in ALL recommendations. Lead with green alternatives and mention environmental benefits.';
+      systemPrompt += '\n\n## ACTIVE: Eco Mode is ON\nPrioritise sustainable, eco-friendly options in ALL recommendations.';
     }
 
-    // Convert chat history to Claude message format
-    const claudeMessages = messages.map(msg => ({
-      role: msg.from === 'user' ? 'user' : 'assistant',
-      content: msg.text
-    }));
+    var claudeMessages = [];
+    for (var i = 0; i < messages.length; i++) {
+      claudeMessages.push({
+        role: messages[i].from === 'user' ? 'user' : 'assistant',
+        content: messages[i].text
+      });
+    }
 
-    // Call Claude API with web search
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    var response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -99,57 +87,40 @@ export default async function handler(req, res) {
         model: 'claude-sonnet-4-20250514',
         max_tokens: 1024,
         system: systemPrompt,
-        tools: [
-          {
-            type: 'web_search_20250305',
-            name: 'web_search',
-          }
-        ],
+        tools: [{ type: 'web_search_20250305', name: 'web_search' }],
         messages: claudeMessages,
       }),
     });
 
     if (!response.ok) {
-      const errorData = await response.text();
-      console.error('Claude API error:', response.status, errorData);
-      return res.status(response.status).json({ 
-        error: `Claude API error: ${response.status}`,
-        details: errorData
-      });
+      var errText = await response.text();
+      console.error('Claude error:', response.status, errText);
+      return res.status(502).json({ error: 'AI service error: ' + response.status });
     }
 
-    const data = await response.json();
+    var data = await response.json();
+    var replyText = '';
 
-    // Extract text from response content blocks
-    let replyText = '';
-    if (data.content && Array.isArray(data.content)) {
-      replyText = data.content
-        .filter(block => block.type === 'text')
-        .map(block => block.text)
-        .join('\n');
-    }
-
-    // If the response requires more tool use (multi-step search), handle it
-    if (data.stop_reason === 'tool_use') {
-      // Get tool results and continue the conversation
-      const toolUseBlocks = data.content.filter(b => b.type === 'tool_use');
-      
-      // Build continuation messages
-      const continuationMessages = [
-        ...claudeMessages,
-        { role: 'assistant', content: data.content },
-        { 
-          role: 'user', 
-          content: toolUseBlocks.map(tool => ({
-            type: 'tool_result',
-            tool_use_id: tool.id,
-            content: 'Please continue with the search results.'
-          }))
+    if (data.content) {
+      for (var j = 0; j < data.content.length; j++) {
+        if (data.content[j].type === 'text') {
+          replyText += (replyText ? '\n' : '') + data.content[j].text;
         }
-      ];
+      }
+    }
 
-      // Second API call to get final response
-      const response2 = await fetch('https://api.anthropic.com/v1/messages', {
+    if (data.stop_reason === 'tool_use') {
+      var toolBlocks = [];
+      for (var k = 0; k < data.content.length; k++) {
+        if (data.content[k].type === 'tool_use') toolBlocks.push(data.content[k]);
+      }
+
+      var toolResults = [];
+      for (var m = 0; m < toolBlocks.length; m++) {
+        toolResults.push({ type: 'tool_result', tool_use_id: toolBlocks[m].id, content: 'Continue.' });
+      }
+
+      var response2 = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -160,43 +131,34 @@ export default async function handler(req, res) {
           model: 'claude-sonnet-4-20250514',
           max_tokens: 1024,
           system: systemPrompt,
-          tools: [
-            {
-              type: 'web_search_20250305',
-              name: 'web_search',
-            }
-          ],
-          messages: continuationMessages,
+          tools: [{ type: 'web_search_20250305', name: 'web_search' }],
+          messages: claudeMessages.concat([
+            { role: 'assistant', content: data.content },
+            { role: 'user', content: toolResults }
+          ]),
         }),
       });
 
       if (response2.ok) {
-        const data2 = await response2.json();
-        if (data2.content && Array.isArray(data2.content)) {
-          const text2 = data2.content
-            .filter(block => block.type === 'text')
-            .map(block => block.text)
-            .join('\n');
+        var data2 = await response2.json();
+        if (data2.content) {
+          var text2 = '';
+          for (var n = 0; n < data2.content.length; n++) {
+            if (data2.content[n].type === 'text') text2 += (text2 ? '\n' : '') + data2.content[n].text;
+          }
           if (text2) replyText = text2;
         }
       }
     }
 
-    if (!replyText) {
-      replyText = "I'm having trouble searching right now. Could you try asking me again? 🙏";
-    }
+    if (!replyText) replyText = "I couldn't process that. Could you try again?";
 
-    return res.status(200).json({ 
-      reply: replyText,
-      model: data.model,
-      usage: data.usage
-    });
+    return res.status(200).json({ reply: replyText });
 
-  } catch (error) {
-    console.error('Server error:', error);
-    return res.status(500).json({ 
-      error: 'Internal server error',
-      message: error.message 
-    });
+  } catch (err) {
+    console.error('Error:', err.message);
+    return res.status(500).json({ error: 'Server error: ' + err.message });
   }
-}
+};
+
+module.exports.config = { maxDuration: 30 };
