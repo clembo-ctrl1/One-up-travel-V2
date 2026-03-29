@@ -33,7 +33,7 @@
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background: var(--bg); color: var(--text);
-      overflow: hidden; height: 100vh;
+      overflow-x: hidden; min-height: 100vh;
     }
 
     ::-webkit-scrollbar { width: 5px; }
@@ -266,7 +266,7 @@
     .msg.lisa .msg-bubble { background: rgba(255,255,255,0.06); border: 1px solid var(--border); border-radius: 18px 18px 18px 6px; }
     .msg.user .msg-bubble { background: var(--primary); border-radius: 18px 18px 6px 18px; box-shadow: 0 2px 12px var(--primary-glow); }
     .typing-dots {
-      padding: 12px 18px; border-radius: 16px 16px 16px 4px;
+      padding: 12px 18px; border-radius: 18px 18px 18px 6px;
       background: rgba(255,255,255,0.05); border: 1px solid var(--border);
       display: flex; gap: 4; align-items: center;
     }
@@ -274,6 +274,24 @@
     .typing-dot:nth-child(1) { animation: dotBounce 1.2s ease 0s infinite; }
     .typing-dot:nth-child(2) { animation: dotBounce 1.2s ease 0.15s infinite; }
     .typing-dot:nth-child(3) { animation: dotBounce 1.2s ease 0.3s infinite; }
+
+    /* Search status messages */
+    .search-status {
+      padding: 14px 20px; border-radius: 18px 18px 18px 6px;
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+      display: flex; align-items: center; gap: 12px; min-width: 220px;
+    }
+    .search-spinner {
+      width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.1);
+      border-top-color: #a5b4fc; border-radius: 50%;
+      animation: spin 0.8s linear infinite; flex-shrink: 0;
+    }
+    .purpose-theme .search-spinner { border-top-color: #6ee7b7; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .search-status-text {
+      font-size: 13px; color: var(--text-muted); font-weight: 500;
+      animation: fadeUp 0.3s ease;
+    }
     .chat-input-wrap { padding: 16px 18px; border-top: 1px solid var(--border); display: flex; gap: 10px; background: rgba(10,10,15,0.3); flex-shrink: 0; }
     .chat-input {
       flex: 1; background: rgba(255,255,255,0.06); border: 1.5px solid var(--border);
@@ -1168,10 +1186,32 @@ async function sendMessage() {
   const area = chat.area;
   area.innerHTML += '<div class="msg user"><div class="msg-bubble">' + escapeHtml(text) + '</div><div class="msg-avatar"></div></div>';
 
-  // Show typing indicator
+  // Show search status indicator
   isLisaTyping = true;
-  area.innerHTML += '<div id="typing" style="display:flex;gap:8px;animation:msgIn 0.3s ease"><div class="msg-avatar" style="background:var(--lisa-gradient);color:#fff;font-weight:800;font-size:12px;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0">L</div><div class="typing-dots"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></div></div>';
+  area.innerHTML += '<div id="typing" style="display:flex;gap:10px;animation:msgIn 0.3s ease"><div class="msg-avatar" style="background:var(--lisa-gradient);color:#fff;font-weight:800;font-size:12px;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0">L</div><div class="search-status"><div class="search-spinner"></div><div class="search-status-text" id="searchStatusText">Thinking...</div></div></div>';
   area.scrollTop = area.scrollHeight;
+
+  // Cycle through search status messages
+  var statusMessages = [
+    'Thinking...',
+    'Searching the web...',
+    'Scanning flight options...',
+    'Checking hotel availability...',
+    'Reading traveler reviews...',
+    'Comparing prices...',
+    'Building recommendations...'
+  ];
+  var statusIdx = 0;
+  var statusInterval = setInterval(function() {
+    statusIdx++;
+    var el = document.getElementById('searchStatusText');
+    if (el && statusIdx < statusMessages.length) {
+      el.style.animation = 'none';
+      el.offsetHeight; // force reflow
+      el.style.animation = 'fadeUp 0.3s ease';
+      el.textContent = statusMessages[statusIdx];
+    }
+  }, 2500);
 
   try {
     const ecoMode = localStorage.getItem('travelWithPurpose') === 'true';
@@ -1185,9 +1225,10 @@ async function sendMessage() {
 
     const data = await response.json();
 
-    // Remove typing
+    // Remove typing + clear status
     var typingEl = document.getElementById('typing');
     if (typingEl) typingEl.remove();
+    clearInterval(statusInterval);
     isLisaTyping = false;
 
     if (!response.ok) throw new Error(data.error || 'API request failed');
@@ -1222,6 +1263,7 @@ async function sendMessage() {
     console.error('Chat error:', error);
     var typingEl2 = document.getElementById('typing');
     if (typingEl2) typingEl2.remove();
+    clearInterval(statusInterval);
     isLisaTyping = false;
 
     const fallback = "I'm having trouble connecting right now. Please try again in a moment.";
@@ -1693,6 +1735,46 @@ window.addEventListener('load', () => { if (typeof lucide !== 'undefined') lucid
     } catch (err) { console.error('Save error:', err); alert('Error saving. Please try again.'); }
   };
 </script>
+
+<!-- ═══ FOOTER ═══ -->
+<footer style="border-top:1px solid rgba(255,255,255,0.06);padding:60px 30px 40px;max-width:1100px;margin:0 auto;width:100%;">
+  <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px;" class="footer-grid">
+    <div>
+      <a href="/home" style="display:inline-block;margin-bottom:16px;"><img src="logo.png" alt="One-Up Travel" style="height:36px;"></a>
+      <p style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.7;max-width:280px;">AI-powered travel planning. Let Lisa build your perfect itinerary with real hotels, flights, and activities.</p>
+      <div style="display:flex;gap:12px;margin-top:20px;">
+        <a href="https://instagram.com/oneuptravel" target="_blank" rel="noopener" style="width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.5);transition:all 0.3s;text-decoration:none;" onmouseover="this.style.background='rgba(99,102,241,0.15)';this.style.borderColor='rgba(99,102,241,0.4)';this.style.color='#a5b4fc'" onmouseout="this.style.background='rgba(255,255,255,0.05)';this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='rgba(255,255,255,0.5)'"><i data-lucide="instagram" style="width:16px;height:16px;"></i></a>
+        <a href="https://linkedin.com/company/oneuptravel" target="_blank" rel="noopener" style="width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.5);transition:all 0.3s;text-decoration:none;" onmouseover="this.style.background='rgba(99,102,241,0.15)';this.style.borderColor='rgba(99,102,241,0.4)';this.style.color='#a5b4fc'" onmouseout="this.style.background='rgba(255,255,255,0.05)';this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='rgba(255,255,255,0.5)'"><i data-lucide="linkedin" style="width:16px;height:16px;"></i></a>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,0.35);font-weight:600;margin-bottom:16px;">Product</div>
+      <a href="/home" style="display:block;font-size:14px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Home</a>
+      <a href="/itinerary" style="display:block;font-size:14px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">My Itinerary</a>
+      <a href="/dashboard" style="display:block;font-size:14px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Saved Trips</a>
+    </div>
+    <div>
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,0.35);font-weight:600;margin-bottom:16px;">Support</div>
+      <a href="/faq" style="display:block;font-size:14px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">FAQs</a>
+      <a href="/contact" style="display:block;font-size:14px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Contact Us</a>
+      <a href="mailto:Clem@one-up.cloud" style="display:block;font-size:14px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Clem@one-up.cloud</a>
+    </div>
+    <div>
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,0.35);font-weight:600;margin-bottom:16px;">Legal</div>
+      <a href="/legal#terms" style="display:block;font-size:14px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Terms of Service</a>
+      <a href="/legal#privacy" style="display:block;font-size:14px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Privacy Policy</a>
+      <a href="/legal#cookies" style="display:block;font-size:14px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Cookie Policy</a>
+    </div>
+  </div>
+  <div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+    <p style="font-size:12px;color:rgba(255,255,255,0.3);">&copy; 2026 One-Up Travel Pty Ltd. All rights reserved.</p>
+    <p style="font-size:12px;color:rgba(255,255,255,0.3);">Brisbane, Queensland, Australia</p>
+  </div>
+</footer>
+<style>
+  @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 32px !important; } }
+  @media (max-width: 480px) { .footer-grid { grid-template-columns: 1fr !important; } }
+</style>
 
 </body>
 </html>
