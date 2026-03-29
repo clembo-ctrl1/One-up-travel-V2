@@ -105,13 +105,13 @@ When ready, search the web for CURRENT real prices, then include:
 ~~~RESULTS~~~
 {
   "flights": [
-    {"airline":"Jetstar","route":"Brisbane to Denpasar","duration":"6h 15m","price":"$449","type":"Direct","frequency":"Daily","class":"Economy","bookUrl":"https://www.jetstar.com"}
+    {"airline":"Jetstar","route":"Brisbane to Denpasar","duration":"6h 15m","price":"$449","type":"Direct","frequency":"Daily","class":"Economy","bookUrl":"https://www.jetstar.com/au/en/booking/search?origin=BNE&destination=DPS&depart=2025-09-15&return=2025-09-22&adults=2"}
   ],
   "hotels": [
-    {"name":"Hotel Name","location":"Area","rating":4.8,"pricePerNight":"$195","totalPrice":"$1,365","stars":5,"highlights":["Pool","Spa","Free breakfast"],"bookUrl":"https://www.booking.com"}
+    {"name":"Hotel Name","location":"Area","rating":4.8,"pricePerNight":"$195","totalPrice":"$1,365","stars":5,"highlights":["Pool","Spa","Free breakfast"],"bookUrl":"https://www.booking.com/searchresults.html?ss=Ubud%20Bali&checkin=2025-09-15&checkout=2025-09-22&group_adults=2&no_rooms=1"}
   ],
   "activities": [
-    {"name":"Activity Name","provider":"GetYourGuide","duration":"8 hours","price":"$65 pp","rating":4.7,"bookUrl":"https://www.getyourguide.com"}
+    {"name":"Activity Name","provider":"GetYourGuide","duration":"8 hours","price":"$65 pp","rating":4.7,"bookUrl":"https://www.getyourguide.com/s/?q=Mount%20Batur%20sunrise%20trek%20Bali"}
   ]
 }
 ~~~RESULTS~~~
@@ -119,7 +119,24 @@ When ready, search the web for CURRENT real prices, then include:
 RULES for results:
 - ALWAYS search the web first for real current prices
 - Prices in AUD
-- Real booking URLs (Skyscanner, Booking.com, Hotels.com, GetYourGuide, Viator, airline sites)
+- CRITICAL: bookUrl must be DEEP LINKS with search parameters pre-filled, NOT homepages. Use these formats:
+
+FLIGHT deep links (substitute real dates, airports, guest count from conversation):
+- Skyscanner: https://www.skyscanner.com.au/transport/flights/bne/dps/YYMMDD/YYMMDD/?adults=N&cabinclass=economy
+- Google Flights: https://www.google.com/travel/flights?q=flights+from+CITY+to+CITY+MONTH+DAY
+- Jetstar: https://www.jetstar.com/au/en/booking/search?origin=BNE&destination=DPS&depart=YYYY-MM-DD&return=YYYY-MM-DD&adults=N
+- Virgin Australia: https://www.virginaustralia.com/au/en/book/flights/#/search?origin=BNE&destination=DPS&date=YYYY-MM-DD&return=YYYY-MM-DD&adults=N
+
+HOTEL deep links (substitute destination, dates, guests):
+- Booking.com: https://www.booking.com/searchresults.html?ss=DESTINATION&checkin=YYYY-MM-DD&checkout=YYYY-MM-DD&group_adults=N&no_rooms=1
+- Hotels.com: https://www.hotels.com/search.do?q-destination=DESTINATION&q-check-in=YYYY-MM-DD&q-check-out=YYYY-MM-DD&q-rooms=1&q-room-0-adults=N
+
+ACTIVITY deep links (substitute activity and destination):
+- GetYourGuide: https://www.getyourguide.com/s/?q=ACTIVITY+DESTINATION
+- Viator: https://www.viator.com/searchResults/all?text=ACTIVITY+DESTINATION
+
+Always use the actual dates, airports, destination names, and guest counts from the conversation. NEVER link to a homepage.
+
 - 2-4 options per category sorted by best value
 - Include your personal pick and why in the chat text
 - Only include categories you have real data for
