@@ -1,4 +1,4 @@
-/ api/chat.js — Lisa AI Travel Agent for One-Up Travel
+// api/chat.js — Lisa AI Travel Agent for One-Up Travel
 
 var SYSTEM_PROMPT = [
   "You are Lisa, the AI travel agent for One-Up Travel (one-up.cloud). You are a premium, personalised travel agent.",
