@@ -197,11 +197,33 @@
     .draft-btn.resume { background: var(--primary); color: #fff; }
     .draft-btn.discard { background: rgba(255,255,255,0.06); color: var(--text-muted); border: 1px solid var(--border); }
 
-    /* ═══ THREE COLUMNS ═══ */
+    /* ═══ CENTERED CHAT MODE (initial) ═══ */
+    .chat-centered {
+      display: flex; flex-direction: column;
+      max-width: 680px; width: 100%; margin: 0 auto;
+      height: calc(100vh - 109px); position: relative; z-index: 1;
+      padding: 0;
+    }
+    .chat-centered .chat-header-bar {
+      padding: 20px 24px; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 14;
+      background: rgba(10,10,15,0.3);
+    }
+    .chat-centered .chat-messages {
+      flex: 1; overflow-y: auto; padding: 24px 20px;
+      display: flex; flex-direction: column; gap: 18px;
+    }
+    .chat-centered .chat-input-wrap {
+      padding: 18px 20px; border-top: 1px solid var(--border);
+      display: flex; gap: 10px; background: rgba(10,10,15,0.3);
+    }
+
+    /* ═══ THREE COLUMNS (after Lisa provides results) ═══ */
     .columns {
-      display: grid; grid-template-columns: 380px 1fr 340px;
+      display: none; grid-template-columns: 380px 1fr 340px;
       height: calc(100vh - 109px); position: relative; z-index: 1;
     }
+    .columns.active { display: grid; }
     .columns.with-draft { height: calc(100vh - 149px); }
 
     /* ═══ LEFT CHAT ═══ */
@@ -426,15 +448,16 @@
     .btn-save:hover { transform: translateY(-2px); }
 
     /* ═══ RESPONSIVE ═══ */
-    @media (max-width: 1100px) { .columns { grid-template-columns: 340px 1fr 300px; } }
+    @media (max-width: 1100px) { .columns.active { grid-template-columns: 340px 1fr 300px; } }
     @media (max-width: 900px) {
-      .columns { grid-template-columns: 1fr; height: auto; }
+      .columns.active { grid-template-columns: 1fr; height: auto; }
       .chat-col { height: 50vh; border-right: none; border-bottom: 1px solid var(--border); }
       .right-col { border-left: none; border-top: 1px solid var(--border); }
       body { overflow: auto; }
       .stepper { flex-wrap: wrap; gap: 4px; padding: 10px 16px; }
       .step-connector { width: 24px; }
       .header-center { display: none; }
+      .chat-centered { max-width: 100%; }
     }
     /* ═══ ECO / PURPOSE THEME ═══ */
     html.purpose-theme { background: #050e08; }
@@ -716,7 +739,23 @@
   </div>
 </div>
 
-<!-- ═══ THREE COLUMN LAYOUT ═══ -->
+<!-- ═══ CENTERED CHAT (initial view) ═══ -->
+<div class="chat-centered" id="chatCentered">
+  <div class="chat-header-bar">
+    <div class="lisa-avatar"><span>L</span></div>
+    <div>
+      <div class="lisa-name">Lisa</div>
+      <div class="lisa-status"><span class="status-dot"></span> Online — your AI travel agent</div>
+    </div>
+  </div>
+  <div class="chat-messages" id="chatMessagesCentered"></div>
+  <div class="chat-input-wrap">
+    <input class="chat-input" id="chatInputCentered" placeholder="Tell Lisa where you want to go..." onkeydown="if(event.key==='Enter')sendMessage()">
+    <button class="chat-send" onclick="sendMessage()">↑</button>
+  </div>
+</div>
+
+<!-- ═══ THREE COLUMN LAYOUT (shown after Lisa responds) ═══ -->
 <div class="columns" id="mainColumns">
 
   <!-- LEFT: Chat with Lisa -->
@@ -767,12 +806,8 @@
 // ══════════════════════════════════════════════════════════════
 // DATA
 // ══════════════════════════════════════════════════════════════
-const itineraries = [
-  { id:1, title:"Golden Coast Explorer", days:7, location:"Queensland, Australia", placesQuery:"Great Barrier Reef Queensland Australia", fallbackImg:"https://images.unsplash.com/photo-1587139223877-04cb899fa3e8?w=600&h=300&fit=crop", img:"", highlights:["Great Barrier Reef Snorkeling","Daintree Rainforest","Whitehaven Beach"], rating:4.9, price:"$2,450", priceNum:2450, match:96 },
-  { id:2, title:"Outback & Beyond", days:10, location:"Northern Territory", placesQuery:"Uluru Ayers Rock Australia", fallbackImg:"https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?w=600&h=300&fit=crop", img:"", highlights:["Uluru Sunset","Kings Canyon","Kakadu National Park"], rating:4.8, price:"$3,100", priceNum:3100, match:89 },
-  { id:3, title:"Sydney to Melbourne Drive", days:5, location:"NSW to VIC", placesQuery:"Sydney Opera House Australia", fallbackImg:"https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=600&h=300&fit=crop", img:"", highlights:["Royal National Park","Jervis Bay","Great Ocean Road"], rating:4.7, price:"$1,800", priceNum:1800, match:84 },
-  { id:4, title:"Tropical North Escape", days:6, location:"Far North Queensland", placesQuery:"Port Douglas Beach Queensland", fallbackImg:"https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?w=600&h=300&fit=crop", img:"", highlights:["Port Douglas","Mossman Gorge","Kuranda Village"], rating:4.9, price:"$2,200", priceNum:2200, match:92 },
-];
+const itineraries = [];
+// Itineraries will be populated by Lisa's AI recommendations
 
 const budgetSplits = [
   { pct:0.35, color:"#6366f1", label:"Flights" },
@@ -865,8 +900,12 @@ function resumeDraft() {
   addedItineraries = draft.addedItineraries || [];
   chatHistory = draft.chatHistory || [];
   hasChatted = draft.hasChatted || false;
-  // Restore chat
-  renderChatHistory();
+  // If there's chat history, go straight to columns view
+  if (chatHistory.length > 1) {
+    transitionToColumns();
+  } else {
+    renderChatHistoryTo(document.getElementById('chatMessagesCentered'));
+  }
   renderItineraries();
   updateSummary();
   updateBudget();
@@ -885,14 +924,49 @@ function hideDraftBanner() {
   document.getElementById('mainColumns').classList.remove('with-draft');
 }
 
-function renderChatHistory() {
-  const area = document.getElementById('chatMessages');
+// ══════════════════════════════════════════════════════════════
+// VIEW STATE — centered chat vs 3-column layout
+// ══════════════════════════════════════════════════════════════
+let viewMode = 'centered'; // 'centered' or 'columns'
+
+function getActiveChat() {
+  if (viewMode === 'centered') {
+    return {
+      area: document.getElementById('chatMessagesCentered'),
+      input: document.getElementById('chatInputCentered')
+    };
+  }
+  return {
+    area: document.getElementById('chatMessages'),
+    input: document.getElementById('chatInput')
+  };
+}
+
+function transitionToColumns() {
+  if (viewMode === 'columns') return;
+  viewMode = 'columns';
+
+  // Copy chat history to column chat
+  const colArea = document.getElementById('chatMessages');
+  renderChatHistoryTo(colArea);
+
+  // Hide centered, show columns
+  document.getElementById('chatCentered').style.display = 'none';
+  document.getElementById('mainColumns').classList.add('active');
+
+  // Focus column input
+  setTimeout(function() {
+    document.getElementById('chatInput').focus();
+  }, 300);
+}
+
+function renderChatHistoryTo(area) {
   area.innerHTML = '';
-  chatHistory.forEach(m => {
+  chatHistory.forEach(function(m) {
     if (m.from === 'lisa') {
-      area.innerHTML += `<div class="msg lisa"><div class="msg-avatar">L</div><div class="msg-bubble">${formatLisaMessage(m.text)}</div></div>`;
+      area.innerHTML += '<div class="msg lisa"><div class="msg-avatar">L</div><div class="msg-bubble">' + formatLisaMessage(m.text) + '</div></div>';
     } else {
-      area.innerHTML += `<div class="msg user"><div class="msg-bubble">${escapeHtml(m.text)}</div><div class="msg-avatar">👤</div></div>`;
+      area.innerHTML += '<div class="msg user"><div class="msg-bubble">' + escapeHtml(m.text) + '</div><div class="msg-avatar"></div></div>';
     }
   });
   area.scrollTop = area.scrollHeight;
@@ -904,93 +978,95 @@ function renderChatHistory() {
 function checkHomepageHandoff() {
   const currentTrip = localStorage.getItem('currentTrip');
   const ecoMode = localStorage.getItem('travelWithPurpose') === 'true';
-  
+
   if (currentTrip && currentTrip !== 'Editing saved trip' && chatHistory.length === 0) {
-    // Static greeting (instant, no API wait)
-    const ecoNote = ecoMode ? " I see you've got eco mode on — I'll prioritise sustainable options! 🌿" : "";
-    const greeting = `Hey there! I see you're interested in "${currentTrip}" — great choice! ✨${ecoNote}\n\nTell me a bit more so I can find the perfect trip for you:\n• What's your budget?\n• How many people are travelling?\n• What kind of vibe — adventure, relaxation, culture, foodie?\n\nOr just tell me anything and I'll work with it!`;
+    const ecoNote = ecoMode ? " I see you've got eco mode on -- I'll prioritise sustainable options." : "";
+    const greeting = "Hey there! I see you're interested in \"" + currentTrip + "\" -- great choice!" + ecoNote + "\n\nTell me a bit more so I can plan the perfect trip:\n\nWhat's your budget? How many people are travelling? What kind of experience are you after -- adventure, relaxation, culture, foodie?\n\nOr just tell me anything and I'll work with it.";
     chatHistory.push({ from: 'lisa', text: greeting });
-    document.getElementById('itinSubtitle').textContent = `Curated by Lisa for "${currentTrip}". Click to explore or add to your plan.`;
+    document.getElementById('itinSubtitle').textContent = 'Lisa will suggest itineraries here as you chat.';
   } else if (chatHistory.length === 0) {
-    chatHistory.push({ from: 'lisa', text: "Hey there! I'm Lisa, your personal AI travel agent ✨\n\nTell me about your dream trip — where do you want to go, what's your budget, and what kind of experience are you after?\n\nI'll search the web for the best options, real prices, and current availability to build your perfect itinerary." });
+    chatHistory.push({ from: 'lisa', text: "Hey there! I'm Lisa, your AI travel agent.\n\nTell me about your dream trip -- where do you want to go, what's your budget, and what kind of experience are you after?\n\nI'll search the web for the best options with real prices and current availability." });
   }
-  renderChatHistory();
+
+  // Render to centered chat
+  renderChatHistoryTo(document.getElementById('chatMessagesCentered'));
 }
 
 // ══════════════════════════════════════════════════════════════
 // CHAT — powered by Claude AI + Web Search
 // ══════════════════════════════════════════════════════════════
 let isLisaTyping = false;
+let lisaResponseCount = 0;
 
 async function sendMessage() {
-  const input = document.getElementById('chatInput');
-  const text = input.value.trim();
+  const chat = getActiveChat();
+  const text = chat.input.value.trim();
   if (!text || isLisaTyping) return;
-  input.value = '';
+  chat.input.value = '';
   hasChatted = true;
   updateStepper();
   chatHistory.push({ from: 'user', text });
 
-  const area = document.getElementById('chatMessages');
-  area.innerHTML += `<div class="msg user"><div class="msg-bubble">${escapeHtml(text)}</div><div class="msg-avatar">👤</div></div>`;
-  
+  const area = chat.area;
+  area.innerHTML += '<div class="msg user"><div class="msg-bubble">' + escapeHtml(text) + '</div><div class="msg-avatar"></div></div>';
+
   // Show typing indicator
   isLisaTyping = true;
-  area.innerHTML += `<div id="typing" style="display:flex;gap:8px;animation:msgIn 0.3s ease"><div class="msg-avatar" style="background:var(--lisa-gradient);color:#fff;font-weight:800;font-size:12px;width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">L</div><div class="typing-dots"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></div></div>`;
+  area.innerHTML += '<div id="typing" style="display:flex;gap:8px;animation:msgIn 0.3s ease"><div class="msg-avatar" style="background:var(--lisa-gradient);color:#fff;font-weight:800;font-size:12px;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0">L</div><div class="typing-dots"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></div></div>';
   area.scrollTop = area.scrollHeight;
 
   try {
     const ecoMode = localStorage.getItem('travelWithPurpose') === 'true';
-    
-    // Build messages for API — include conversation context
-    const apiMessages = chatHistory.filter(m => m.from === 'user' || m.from === 'lisa');
+    const apiMessages = chatHistory.filter(function(m) { return m.from === 'user' || m.from === 'lisa'; });
 
     const response = await fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages: apiMessages, ecoMode }),
+      body: JSON.stringify({ messages: apiMessages, ecoMode: ecoMode }),
     });
 
     const data = await response.json();
 
-    // Remove typing indicator
-    const typingEl = document.getElementById('typing');
+    // Remove typing
+    var typingEl = document.getElementById('typing');
     if (typingEl) typingEl.remove();
     isLisaTyping = false;
 
-    if (!response.ok) {
-      throw new Error(data.error || 'API request failed');
-    }
+    if (!response.ok) throw new Error(data.error || 'API request failed');
 
     const reply = data.reply || "Sorry, I couldn't process that. Try again?";
     chatHistory.push({ from: 'lisa', text: reply });
+    lisaResponseCount++;
 
-    // Render Lisa's response with formatted text
-    area.innerHTML += `<div class="msg lisa"><div class="msg-avatar" style="background:var(--lisa-gradient);color:#fff;font-weight:800;font-size:12px">L</div><div class="msg-bubble">${formatLisaMessage(reply)}</div></div>`;
+    area.innerHTML += '<div class="msg lisa"><div class="msg-avatar" style="background:var(--lisa-gradient);color:#fff;font-weight:800;font-size:12px;border-radius:50%">L</div><div class="msg-bubble">' + formatLisaMessage(reply) + '</div></div>';
     area.scrollTop = area.scrollHeight;
     saveDraft();
 
+    // Transition to columns after Lisa's first real AI response
+    if (lisaResponseCount >= 1 && viewMode === 'centered') {
+      setTimeout(function() { transitionToColumns(); }, 800);
+    }
+
   } catch (error) {
     console.error('Chat error:', error);
-    const typingEl = document.getElementById('typing');
-    if (typingEl) typingEl.remove();
+    var typingEl2 = document.getElementById('typing');
+    if (typingEl2) typingEl2.remove();
     isLisaTyping = false;
 
-    // Fallback response
-    const fallback = "I'm having a bit of trouble connecting right now. Try sending your message again in a moment! 🙏";
+    const fallback = "I'm having trouble connecting right now. Please try again in a moment.";
     chatHistory.push({ from: 'lisa', text: fallback });
-    area.innerHTML += `<div class="msg lisa"><div class="msg-avatar" style="background:var(--lisa-gradient);color:#fff;font-weight:800;font-size:12px">L</div><div class="msg-bubble">${fallback}</div></div>`;
+    area.innerHTML += '<div class="msg lisa"><div class="msg-avatar" style="background:var(--lisa-gradient);color:#fff;font-weight:800;font-size:12px;border-radius:50%">L</div><div class="msg-bubble">' + fallback + '</div></div>';
     area.scrollTop = area.scrollHeight;
   }
 }
 
-// Format Lisa's response — convert markdown-style formatting to HTML
+// Format Lisa's response
 function formatLisaMessage(text) {
   return text
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
     .replace(/\n\n/g, '<br><br>')
     .replace(/\n/g, '<br>')
-    .replace(/^- (.*)/gm, '• $1');
+    .replace(/^- (.*)/gm, '&bull; $1');
 }
 
 function escapeHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
@@ -1020,14 +1096,24 @@ function updateStepper() {
 // ══════════════════════════════════════════════════════════════
 function renderItineraries() {
   const grid = document.getElementById('itinGrid');
+  if (itineraries.length === 0) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:60px 20px">
+      <div style="font-size:40px;margin-bottom:16px;opacity:0.3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.4"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>
+      </div>
+      <div style="font-size:16px;font-weight:600;color:rgba(255,255,255,0.5);margin-bottom:8px">No itineraries yet</div>
+      <div style="font-size:13px;color:rgba(255,255,255,0.3);line-height:1.6;max-width:300px;margin:0 auto">Chat with Lisa and she'll search the web for real hotels, flights, and activities tailored to your trip.</div>
+    </div>`;
+    return;
+  }
   grid.innerHTML = itineraries.map(it => {
     const isAdded = addedItineraries.includes(it.id);
     const isSelected = selectedItinerary === it.id;
     return `<div class="itin-card ${isSelected?'selected':''} ${isAdded?'added':''}" onclick="toggleSelect(${it.id})">
-      <div style="overflow:hidden;height:120px"><img class="itin-img" src="${it.img || it.fallbackImg}" alt="${it.title}" loading="lazy"></div>
-      <div class="itin-top"><div class="itin-top-row"><div><div class="itin-title">${it.title}</div><div class="itin-location">${it.location}</div></div><span class="match-badge ${it.match>=90?'match-high':'match-mid'}">${it.match}%</span></div>${it.highlights.map(h=>`<div class="itin-highlight">${h}</div>`).join('')}</div>
-      <div class="itin-footer"><div class="itin-meta"><span>${it.days} days</span><span>${it.rating}</span><span class="itin-price">${it.price}</span></div><button class="add-btn ${isAdded?'added':''}" onclick="event.stopPropagation();toggleAdd(${it.id})">${isAdded?'Added':'+ Add'}</button></div>
-      ${isSelected?`<div class="itin-expanded"><p>A curated ${it.days}-day adventure through ${it.location} featuring hand-picked experiences, local dining, and flexible scheduling. Lisa can customize any part for you.</p><div class="itin-tags"><span class="itin-tag" style="background:rgba(99,102,241,0.15);border:1px solid rgba(165,180,252,0.2);color:#a5b4fc">Adventure</span><span class="itin-tag" style="background:rgba(16,185,129,0.15);border:1px solid rgba(110,231,183,0.2);color:#6ee7b7">Nature</span><span class="itin-tag" style="background:rgba(168,85,247,0.15);border:1px solid rgba(192,132,252,0.2);color:#c084fc">Culture</span></div></div>`:''}</div>`;
+      ${it.img || it.fallbackImg ? `<div style="overflow:hidden;height:120px"><img class="itin-img" src="${it.img || it.fallbackImg}" alt="${it.title}" loading="lazy"></div>` : ''}
+      <div class="itin-top"><div class="itin-top-row"><div><div class="itin-title">${it.title}</div><div class="itin-location">${it.location}</div></div>${it.match ? `<span class="match-badge ${it.match>=90?'match-high':'match-mid'}">${it.match}%</span>` : ''}</div>${it.highlights ? it.highlights.map(h=>`<div class="itin-highlight">${h}</div>`).join('') : ''}</div>
+      <div class="itin-footer"><div class="itin-meta">${it.days ? `<span>${it.days} days</span>` : ''}${it.rating ? `<span>${it.rating}</span>` : ''}<span class="itin-price">${it.price || ''}</span></div><button class="add-btn ${isAdded?'added':''}" onclick="event.stopPropagation();toggleAdd(${it.id})">${isAdded?'Added':'+ Add'}</button></div>
+      ${isSelected?`<div class="itin-expanded"><p>A curated adventure featuring hand-picked experiences, local dining, and flexible scheduling. Lisa can customize any part for you.</p></div>`:''}</div>`;
   }).join('');
 }
 
@@ -1240,14 +1326,7 @@ function loadGooglePlacesPhotos() {
 // ══════════════════════════════════════════════════════════════
 checkForDraft();
 checkHomepageHandoff();
-
-// Set fallback images first for instant render
-itineraries.forEach(function(it) { if (!it.img) it.img = it.fallbackImg; });
 renderItineraries();
-
-// Then load real Google Places photos (replaces fallbacks when ready)
-loadGooglePlacesPhotos();
-
 renderSocial();
 renderTimeline();
 renderWeather();
