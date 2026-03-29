@@ -986,7 +986,7 @@
         <div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,0.35);font-weight:600;margin-bottom:16px;">Support</div>
         <a href="/faq" style="display:block;font-size:14px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">FAQs</a>
         <a href="/contact" style="display:block;font-size:14px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Contact Us</a>
-        <a href="mailto:Clem@one-up.cloud" style="display:block;font-size:14px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Clem@one-up.cloud</a>
+        <a href="/cdn-cgi/l/email-protection#8bc8e7eee6cbe4e5eea6fefba5e8e7e4feef" style="display:block;font-size:14px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'"><span class="__cf_email__" data-cfemail="70331c151d301f1e155d05005e131c1f0514">[email&#160;protected]</span></a>
       </div>
 
       <!-- Legal -->
@@ -1019,7 +1019,7 @@
     }
   </style>
 
-  <script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     // ===== SAFE LUCIDE =====
     function initIcons() { try { if(typeof lucide!=='undefined') lucide.createIcons(); } catch(e){} }
     initIcons();
@@ -1447,7 +1447,9 @@
       submitBtn.textContent = 'Planning...';
       localStorage.setItem('currentTrip', input);
 
-      setTimeout(() => { window.location.href = '/itinerary'; }, 1800);
+      setTimeout(function() {
+        window.location.href = '/planner';
+      }, 1500);
     }
   </script>
 
