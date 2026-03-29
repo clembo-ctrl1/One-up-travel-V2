@@ -290,6 +290,32 @@
     }
     .chat-send:hover { background: var(--primary-hover); }
 
+    /* Quick-reply chips */
+    .quick-replies {
+      display: flex; flex-wrap: wrap; gap: 8px; padding: 0 18px 14px;
+      animation: fadeUp 0.3s ease;
+    }
+    .chat-centered .quick-replies { padding: 0 24px 16px; }
+    .quick-chip {
+      background: rgba(255,255,255,0.04); border: 1.5px solid rgba(99,102,241,0.3);
+      color: #a5b4fc; padding: 10px 18px; border-radius: 24px;
+      font-size: 13.5px; font-weight: 500; cursor: pointer; font-family: inherit;
+      transition: all 0.25s; white-space: nowrap;
+    }
+    .quick-chip:hover {
+      background: rgba(99,102,241,0.12); border-color: rgba(99,102,241,0.5);
+      color: #fff; transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(99,102,241,0.15);
+    }
+    .quick-chip:active { transform: translateY(0); }
+    .purpose-theme .quick-chip {
+      border-color: rgba(16,185,129,0.3); color: #6ee7b7;
+    }
+    .purpose-theme .quick-chip:hover {
+      background: rgba(16,185,129,0.12); border-color: rgba(16,185,129,0.5); color: #fff;
+      box-shadow: 0 4px 16px rgba(16,185,129,0.15);
+    }
+
     /* ═══ MIDDLE: ITINERARIES ═══ */
     .itin-col { overflow-y: auto; padding: 32px 28px; }
     .itin-heading { font-size: 24px; font-weight: 800; margin-bottom: 6px; background: var(--headline-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
@@ -449,6 +475,114 @@
     .btn-secondary:hover { background: rgba(255,255,255,0.1); color: #fff; }
     .btn-save { background: var(--green); color: #fff; box-shadow: 0 4px 12px rgba(16,185,129,0.3); }
     .btn-save:hover { transform: translateY(-2px); }
+
+    /* ═══ COLLAPSIBLE PANELS ═══ */
+    .panel-toggle {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 24px; height: 48px; border-radius: 0 8px 8px 0;
+      background: rgba(255,255,255,0.06); border: 1px solid var(--border);
+      border-left: none; color: var(--text-muted); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; z-index: 20; transition: all 0.2s;
+    }
+    .panel-toggle:hover { background: rgba(99,102,241,0.15); color: #a5b4fc; }
+    .panel-toggle.left { right: -24px; }
+    .panel-toggle.right { left: -24px; border-radius: 8px 0 0 8px; border: 1px solid var(--border); border-right: none; }
+    .columns.chat-collapsed { grid-template-columns: 0px 1fr 340px; }
+    .columns.chat-collapsed .chat-col { display: none; }
+    .columns.right-collapsed { grid-template-columns: 380px 1fr 0px; }
+    .columns.right-collapsed .right-col { display: none; }
+    .columns.chat-collapsed.right-collapsed { grid-template-columns: 0px 1fr 0px; }
+    .chat-col { position: relative; }
+    .right-col { position: relative; }
+
+    /* Expand buttons when collapsed */
+    .expand-chat-btn, .expand-right-btn {
+      position: fixed; top: 50%; transform: translateY(-50%); z-index: 25;
+      width: 36px; height: 72px; border-radius: 0 12px 12px 0;
+      background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.3);
+      border-left: none; color: #a5b4fc; cursor: pointer;
+      display: none; align-items: center; justify-content: center;
+      font-size: 16px; backdrop-filter: blur(20px); transition: all 0.2s;
+    }
+    .expand-chat-btn { left: 0; }
+    .expand-right-btn { right: 0; border-radius: 12px 0 0 12px; border: 1px solid rgba(99,102,241,0.3); border-right: none; }
+    .expand-chat-btn:hover, .expand-right-btn:hover { background: rgba(99,102,241,0.25); }
+    .columns.chat-collapsed ~ .expand-chat-btn { display: flex; }
+    .columns.right-collapsed ~ .expand-right-btn { display: flex; }
+
+    /* ═══ PREMIUM RESULT CARDS ═══ */
+    .results-section { margin-bottom: 28px; animation: fadeUp 0.4s ease; }
+    .results-section-title {
+      font-size: 13px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1.5px; color: var(--text-dim); margin-bottom: 14px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .results-section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .results-section-count {
+      font-size: 11px; background: rgba(99,102,241,0.15); color: #a5b4fc;
+      padding: 2px 8px; border-radius: 10px; font-weight: 600;
+    }
+
+    .result-card {
+      background: var(--card); backdrop-filter: blur(20px);
+      border: 1px solid var(--border); border-radius: 14px;
+      padding: 18px 20px; margin-bottom: 12px;
+      transition: all 0.3s; cursor: default;
+    }
+    .result-card:hover { background: var(--card-hover); border-color: var(--border-hover); transform: translateY(-1px); box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+
+    /* Flight card */
+    .flight-card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .flight-airline { font-size: 16px; font-weight: 700; }
+    .flight-price { font-size: 20px; font-weight: 800; color: var(--green-bright); }
+    .flight-price-label { font-size: 11px; color: var(--text-dim); font-weight: 400; }
+    .flight-route { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .flight-endpoint { text-align: center; }
+    .flight-code { font-size: 18px; font-weight: 700; letter-spacing: 1px; }
+    .flight-city { font-size: 11px; color: var(--text-muted); }
+    .flight-line { flex: 1; display: flex; align-items: center; gap: 0; position: relative; }
+    .flight-line-bar { flex: 1; height: 2px; background: var(--border); }
+    .flight-line-icon { color: var(--text-dim); font-size: 11px; padding: 0 4px; }
+    .flight-meta { display: flex; gap: 16px; font-size: 12px; color: var(--text-muted); margin-bottom: 14px; }
+    .flight-meta-item { display: flex; align-items: center; gap: 5px; }
+    .flight-book {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 10px 20px; border-radius: 10px; font-size: 13px; font-weight: 600;
+      background: var(--primary); color: #fff; text-decoration: none;
+      transition: all 0.2s; border: none; cursor: pointer;
+      box-shadow: 0 2px 8px var(--primary-glow);
+    }
+    .flight-book:hover { background: var(--primary-hover); transform: translateY(-1px); }
+    .flight-badge {
+      font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 6px;
+      background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.3);
+      color: var(--green-light);
+    }
+
+    /* Hotel card */
+    .hotel-card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+    .hotel-name { font-size: 16px; font-weight: 700; margin-bottom: 2px; }
+    .hotel-location { font-size: 12px; color: var(--text-muted); }
+    .hotel-price-wrap { text-align: right; }
+    .hotel-price-night { font-size: 18px; font-weight: 800; color: var(--green-bright); }
+    .hotel-price-total { font-size: 11px; color: var(--text-dim); }
+    .hotel-rating { display: flex; align-items: center; gap: 6px; margin-bottom: 10px; }
+    .hotel-stars { color: #f59e0b; font-size: 13px; letter-spacing: 1px; }
+    .hotel-score { font-size: 12px; font-weight: 700; background: rgba(99,102,241,0.15); color: #a5b4fc; padding: 2px 8px; border-radius: 6px; }
+    .hotel-highlights { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+    .hotel-highlight-tag {
+      font-size: 11px; padding: 4px 10px; border-radius: 6px;
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+
+    /* Activity card */
+    .activity-card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+    .activity-name { font-size: 15px; font-weight: 700; flex: 1; }
+    .activity-price { font-size: 18px; font-weight: 800; color: var(--green-bright); }
+    .activity-provider { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; }
+    .activity-meta { display: flex; gap: 16px; font-size: 12px; color: var(--text-muted); margin-bottom: 12px; }
 
     /* ═══ RESPONSIVE ═══ */
     @media (max-width: 1100px) { .columns.active { grid-template-columns: 340px 1fr 300px; } }
@@ -765,12 +899,13 @@
 <div class="columns" id="mainColumns">
 
   <!-- LEFT: Chat with Lisa -->
-  <div class="chat-col">
+  <div class="chat-col" id="chatCol">
+    <button class="panel-toggle left" onclick="toggleChatPanel()" title="Collapse chat">◀</button>
     <div class="chat-header-bar">
       <div class="lisa-avatar"><span>L</span></div>
       <div>
         <div class="lisa-name">Lisa</div>
-        <div class="lisa-status"><span class="status-dot"></span> Online — your travel curator</div>
+        <div class="lisa-status"><span class="status-dot"></span> Online — your AI travel agent</div>
       </div>
     </div>
     <div class="chat-messages" id="chatMessages"></div>
@@ -780,15 +915,17 @@
     </div>
   </div>
 
-  <!-- MIDDLE: Suggested Itineraries -->
-  <div class="itin-col">
-    <h2 class="itin-heading">Suggested Itineraries</h2>
-    <p class="itin-sub" id="itinSubtitle">Curated by Lisa based on your preferences. Click to explore or add to your plan.</p>
+  <!-- MIDDLE: Results from Lisa -->
+  <div class="itin-col" id="itinCol">
+    <h2 class="itin-heading">Trip Results</h2>
+    <p class="itin-sub" id="itinSubtitle">Lisa will populate recommendations here as you chat.</p>
+    <div id="resultsArea"></div>
     <div class="itin-grid" id="itinGrid"></div>
   </div>
 
   <!-- RIGHT: Tabs -->
-  <div class="right-col">
+  <div class="right-col" id="rightCol">
+    <button class="panel-toggle right" onclick="toggleRightPanel()" title="Collapse panel">▶</button>
     <div class="tab-nav">
       <button class="tab-btn active" onclick="switchTab('summary',this)">Summary</button>
       <button class="tab-btn" onclick="switchTab('budget',this)">Budget</button>
@@ -807,6 +944,10 @@
     </div>
   </div>
 </div>
+
+<!-- Expand buttons (visible when panels are collapsed) -->
+<button class="expand-chat-btn" id="expandChatBtn" onclick="toggleChatPanel()">▶</button>
+<button class="expand-right-btn" id="expandRightBtn" onclick="toggleRightPanel()">◀</button>
 
 <script>
 // ══════════════════════════════════════════════════════════════
@@ -992,15 +1133,14 @@ function checkHomepageHandoff() {
   const ecoMode = localStorage.getItem('travelWithPurpose') === 'true';
 
   if (currentTrip && currentTrip !== 'Editing saved trip' && chatHistory.length === 0) {
-    const ecoNote = ecoMode ? " I see you've got eco mode on -- I'll prioritise sustainable options." : "";
-    const greeting = "Hey there! I see you're interested in \"" + currentTrip + "\" -- great choice!" + ecoNote + "\n\nTell me a bit more so I can plan the perfect trip:\n\nWhat's your budget? How many people are travelling? What kind of experience are you after -- adventure, relaxation, culture, foodie?\n\nOr just tell me anything and I'll work with it.";
+    const ecoNote = ecoMode ? " I notice you've got eco mode on -- I'll make sure we find sustainable options throughout." : "";
+    const greeting = "Hey, welcome to One-Up. I'm Lisa, your personal travel agent." + ecoNote + "\n\nI see you're looking at \"" + currentTrip + "\" -- great taste. To start putting this together for you, when are you thinking of going and who's coming along?";
     chatHistory.push({ from: 'lisa', text: greeting });
-    document.getElementById('itinSubtitle').textContent = 'Lisa will suggest itineraries here as you chat.';
+    document.getElementById('itinSubtitle').textContent = 'Lisa will populate results here once she has your preferences.';
   } else if (chatHistory.length === 0) {
-    chatHistory.push({ from: 'lisa', text: "Hey there! I'm Lisa, your AI travel agent.\n\nTell me about your dream trip -- where do you want to go, what's your budget, and what kind of experience are you after?\n\nI'll search the web for the best options with real prices and current availability." });
+    chatHistory.push({ from: 'lisa', text: "Hey, I'm Lisa -- your personal travel agent at One-Up.\n\nTell me where you're dreaming of going, and I'll take it from there. I'll handle flights, hotels, activities, dining -- the whole trip. Where are we heading?" });
   }
 
-  // Render to centered chat
   renderChatHistoryTo(document.getElementById('chatMessagesCentered'));
 }
 
@@ -1015,6 +1155,7 @@ async function sendMessage() {
   const text = chat.input.value.trim();
   if (!text || isLisaTyping) return;
   chat.input.value = '';
+  clearQuickReplies();
   hasChatted = true;
   updateStepper();
   chatHistory.push({ from: 'user', text });
@@ -1054,9 +1195,22 @@ async function sendMessage() {
     area.scrollTop = area.scrollHeight;
     saveDraft();
 
-    // Transition to columns after Lisa's first real AI response
-    if (lisaResponseCount >= 1 && viewMode === 'centered') {
-      setTimeout(function() { transitionToColumns(); }, 800);
+    // Render quick-reply option chips
+    clearQuickReplies();
+    if (data.options && Array.isArray(data.options) && data.options.length > 0) {
+      renderQuickReplies(data.options);
+    }
+
+    // Render structured results (flights, hotels, activities) in middle panel
+    if (data.results) {
+      // Only now transition to columns — when Lisa has real results to show
+      if (viewMode === 'centered') {
+        transitionToColumns();
+        // Small delay so columns are visible before rendering results
+        setTimeout(function() { renderResults(data.results); }, 300);
+      } else {
+        renderResults(data.results);
+      }
     }
 
   } catch (error) {
@@ -1082,6 +1236,143 @@ function formatLisaMessage(text) {
 }
 
 function escapeHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+// ══════════════════════════════════════════════════════════════
+// QUICK-REPLY CHIPS
+// ══════════════════════════════════════════════════════════════
+function renderQuickReplies(options) {
+  var chat = getActiveChat();
+  // Insert chips container before the input wrap
+  var inputWrap = chat.area.parentElement.querySelector('.chat-input-wrap');
+  var existing = chat.area.parentElement.querySelector('.quick-replies');
+  if (existing) existing.remove();
+
+  var chipsDiv = document.createElement('div');
+  chipsDiv.className = 'quick-replies';
+
+  options.forEach(function(opt) {
+    var chip = document.createElement('button');
+    chip.className = 'quick-chip';
+    chip.textContent = opt;
+    chip.onclick = function() { selectQuickReply(opt); };
+    chipsDiv.appendChild(chip);
+  });
+
+  inputWrap.parentElement.insertBefore(chipsDiv, inputWrap);
+  chat.area.scrollTop = chat.area.scrollHeight;
+}
+
+function clearQuickReplies() {
+  document.querySelectorAll('.quick-replies').forEach(function(el) { el.remove(); });
+}
+
+function selectQuickReply(text) {
+  // Set the input value and send
+  var chat = getActiveChat();
+  chat.input.value = text;
+  clearQuickReplies();
+  sendMessage();
+}
+
+// ══════════════════════════════════════════════════════════════
+// COLLAPSIBLE PANELS
+// ══════════════════════════════════════════════════════════════
+function toggleChatPanel() {
+  var cols = document.getElementById('mainColumns');
+  cols.classList.toggle('chat-collapsed');
+  var btn = document.getElementById('expandChatBtn');
+  btn.style.display = cols.classList.contains('chat-collapsed') ? 'flex' : 'none';
+}
+
+function toggleRightPanel() {
+  var cols = document.getElementById('mainColumns');
+  cols.classList.toggle('right-collapsed');
+  var btn = document.getElementById('expandRightBtn');
+  btn.style.display = cols.classList.contains('right-collapsed') ? 'flex' : 'none';
+}
+
+// ══════════════════════════════════════════════════════════════
+// RENDER STRUCTURED RESULTS (flights, hotels, activities)
+// ══════════════════════════════════════════════════════════════
+function renderResults(data) {
+  if (!data) return;
+  var area = document.getElementById('resultsArea');
+  var html = '';
+
+  // Flights
+  if (data.flights && data.flights.length > 0) {
+    html += '<div class="results-section">';
+    html += '<div class="results-section-title">Flights <span class="results-section-count">' + data.flights.length + ' options</span></div>';
+    data.flights.forEach(function(f, i) {
+      var badge = i === 0 ? '<span class="flight-badge">Best Value</span>' : '';
+      html += '<div class="result-card">';
+      html += '<div class="flight-card-top"><div><div class="flight-airline">' + f.airline + '</div>' + badge + '</div><div><div class="flight-price">' + f.price + ' <span class="flight-price-label">per person</span></div></div></div>';
+      html += '<div class="flight-route"><div class="flight-endpoint"><div class="flight-code">' + (f.route.split(' to ')[0] || f.route).substring(0,20) + '</div></div><div class="flight-line"><div class="flight-line-bar"></div><div class="flight-line-icon">✈</div><div class="flight-line-bar"></div></div><div class="flight-endpoint"><div class="flight-code">' + (f.route.split(' to ')[1] || '').substring(0,20) + '</div></div></div>';
+      html += '<div class="flight-meta">';
+      if (f.duration) html += '<div class="flight-meta-item">⏱ ' + f.duration + '</div>';
+      if (f.type) html += '<div class="flight-meta-item">✈ ' + f.type + '</div>';
+      if (f.frequency) html += '<div class="flight-meta-item">📅 ' + f.frequency + '</div>';
+      html += '</div>';
+      html += '<a href="' + (f.bookUrl || 'https://www.skyscanner.com.au') + '" target="_blank" rel="noopener" class="flight-book">View on ' + getDomain(f.bookUrl) + ' →</a>';
+      html += '</div>';
+    });
+    html += '</div>';
+  }
+
+  // Hotels
+  if (data.hotels && data.hotels.length > 0) {
+    html += '<div class="results-section">';
+    html += '<div class="results-section-title">Accommodation <span class="results-section-count">' + data.hotels.length + ' options</span></div>';
+    data.hotels.forEach(function(h) {
+      html += '<div class="result-card">';
+      html += '<div class="hotel-card-top"><div><div class="hotel-name">' + h.name + '</div><div class="hotel-location">' + (h.location || '') + '</div></div><div class="hotel-price-wrap"><div class="hotel-price-night">' + h.pricePerNight + '<span class="flight-price-label">/night</span></div>' + (h.totalPrice ? '<div class="hotel-price-total">Total: ' + h.totalPrice + '</div>' : '') + '</div></div>';
+      html += '<div class="hotel-rating">';
+      if (h.stars) { var stars = ''; for (var s = 0; s < h.stars; s++) stars += '★'; html += '<span class="hotel-stars">' + stars + '</span>'; }
+      if (h.rating) html += '<span class="hotel-score">' + h.rating + '</span>';
+      html += '</div>';
+      if (h.highlights && h.highlights.length) {
+        html += '<div class="hotel-highlights">';
+        h.highlights.forEach(function(hl) { html += '<span class="hotel-highlight-tag">' + hl + '</span>'; });
+        html += '</div>';
+      }
+      html += '<a href="' + (h.bookUrl || 'https://www.booking.com') + '" target="_blank" rel="noopener" class="flight-book">View on ' + getDomain(h.bookUrl) + ' →</a>';
+      html += '</div>';
+    });
+    html += '</div>';
+  }
+
+  // Activities
+  if (data.activities && data.activities.length > 0) {
+    html += '<div class="results-section">';
+    html += '<div class="results-section-title">Activities & Experiences <span class="results-section-count">' + data.activities.length + ' options</span></div>';
+    data.activities.forEach(function(a) {
+      html += '<div class="result-card">';
+      html += '<div class="activity-card-top"><div class="activity-name">' + a.name + '</div><div class="activity-price">' + a.price + '</div></div>';
+      if (a.provider) html += '<div class="activity-provider">via ' + a.provider + '</div>';
+      html += '<div class="activity-meta">';
+      if (a.duration) html += '<div class="flight-meta-item">⏱ ' + a.duration + '</div>';
+      if (a.rating) html += '<div class="flight-meta-item">★ ' + a.rating + '</div>';
+      html += '</div>';
+      html += '<a href="' + (a.bookUrl || 'https://www.getyourguide.com') + '" target="_blank" rel="noopener" class="flight-book">View on ' + getDomain(a.bookUrl) + ' →</a>';
+      html += '</div>';
+    });
+    html += '</div>';
+  }
+
+  if (html) {
+    area.innerHTML = html;
+    document.getElementById('itinSubtitle').textContent = 'Real-time results from Lisa — click to book.';
+  }
+}
+
+function getDomain(url) {
+  if (!url) return 'Booking Site';
+  try {
+    var hostname = new URL(url).hostname.replace('www.', '');
+    // Capitalize first letter
+    return hostname.charAt(0).toUpperCase() + hostname.slice(1);
+  } catch(e) { return 'Booking Site'; }
+}
 
 // ══════════════════════════════════════════════════════════════
 // STEPPER
