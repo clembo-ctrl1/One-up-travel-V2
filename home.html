@@ -773,6 +773,18 @@
       .lisa-reco-card { min-width: unset; }
       .scroll-hint { display: none; }
     }
+
+    /* ═══ ECO / PURPOSE THEME ═══ */
+    html.purpose-theme { background: #050e08 !important; }
+    .purpose-theme body { background: #050e08 !important; }
+    .purpose-theme header, .purpose-theme .header { background: rgba(5,14,8,0.85) !important; }
+    .purpose-theme .left-sidebar { background: rgba(5,14,8,0.97) !important; }
+    .purpose-theme .signin-btn, .purpose-theme .signin-btn-header { background: #059669 !important; box-shadow: 0 2px 8px rgba(16,185,129,0.25) !important; }
+    .purpose-theme .signin-btn:hover { background: #047857 !important; }
+    .purpose-theme .sidebar-item:hover, .purpose-theme .sidebar-item.active { background: rgba(16,185,129,0.15) !important; border-color: rgba(16,185,129,0.3) !important; }
+    .purpose-theme .sidebar-item.primary { background: rgba(16,185,129,0.15) !important; border-color: rgba(16,185,129,0.4) !important; color: #6ee7b7 !important; }
+    .purpose-theme #sidebarEcoToggle { background: rgba(16,185,129,0.15); border-color: rgba(16,185,129,0.4); color: #6ee7b7; }
+    .purpose-theme ::-webkit-scrollbar-thumb { background: rgba(16,185,129,0.3) !important; }
   </style>
 </head>
 
@@ -805,6 +817,11 @@
       <div class="sidebar-section">
         <div class="sidebar-section-title">Explore</div>
         <a href="/trending" class="sidebar-item"><i data-lucide="trending-up"></i><span>Trending</span></a>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Experience</div>
+        <a href="#" class="sidebar-item" id="sidebarEcoToggle" onclick="event.preventDefault();toggleSidebarEco()"><i data-lucide="leaf"></i><span id="sidebarEcoLabel">Eco Mode: Off</span></a>
       </div>
       <div class="sidebar-divider"></div>
       <div class="sidebar-section">
@@ -1457,5 +1474,26 @@
   <script type="module" src="firebase-config.js"></script>
   <script type="module" src="auth-handler.js"></script>
 
+<script>
+    // ═══ ECO MODE (sidebar toggle) ═══
+    function toggleSidebarEco() {
+      var isEco = localStorage.getItem('travelWithPurpose') === 'true';
+      var newState = !isEco;
+      localStorage.setItem('travelWithPurpose', String(newState));
+      document.documentElement.classList.toggle('purpose-theme', newState);
+      updateSidebarEcoLabel(newState);
+    }
+    function updateSidebarEcoLabel(isOn) {
+      var label = document.getElementById('sidebarEcoLabel');
+      if (label) label.textContent = isOn ? 'Eco Mode: On' : 'Eco Mode: Off';
+      var item = document.getElementById('sidebarEcoToggle');
+      if (item) { if(isOn) item.classList.add('active'); else item.classList.remove('active'); }
+    }
+    (function() {
+      var isEco = localStorage.getItem('travelWithPurpose') === 'true';
+      if (isEco) document.documentElement.classList.add('purpose-theme');
+      setTimeout(function(){ updateSidebarEcoLabel(isEco); }, 50);
+    })();
+</script>
 </body>
 </html>

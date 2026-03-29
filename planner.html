@@ -594,6 +594,11 @@
     </div>
     <div class="sidebar-divider"></div>
     <div class="sidebar-section">
+      <div class="sidebar-section-title">Experience</div>
+      <a href="#" class="sidebar-item" id="sidebarEcoToggle" onclick="event.preventDefault();toggleSidebarEco()"><i data-lucide="leaf"></i><span id="sidebarEcoLabel">Eco Mode: Off</span></a>
+    </div>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section">
       <div class="sidebar-section-title">Legal & Support</div>
       <a href="/legal" class="sidebar-item"><i data-lucide="shield-check"></i><span>Legal</span></a>
       <a href="/faq" class="sidebar-item"><i data-lucide="help-circle"></i><span>FAQs</span></a>
@@ -1070,6 +1075,12 @@ function applyEcoMode() {
   document.getElementById('ecoLabel').textContent = ecoMode ? 'Eco On' : 'Eco Mode';
   document.getElementById('ecoBanner').classList.toggle('show', ecoMode);
 
+  // Sync sidebar label
+  var sLabel = document.getElementById('sidebarEcoLabel');
+  if (sLabel) sLabel.textContent = ecoMode ? 'Eco Mode: On' : 'Eco Mode: Off';
+  var sItem = document.getElementById('sidebarEcoToggle');
+  if (sItem) { if(ecoMode) sItem.classList.add('active'); else sItem.classList.remove('active'); }
+
   // Adjust columns height for eco banner
   const cols = document.getElementById('mainColumns');
   if (ecoMode) {
@@ -1092,6 +1103,9 @@ function applyEcoMode() {
 
 // Apply on load
 if (ecoMode) applyEcoMode();
+
+// Sidebar eco toggle — syncs with header toggle
+function toggleSidebarEco() { toggleEcoMode(); }
 
 // ══════════════════════════════════════════════════════════════
 // INIT

@@ -377,6 +377,18 @@
       .faq-hero h1 { font-size: 28px; }
       .signin-btn { display: none; }
     }
+
+    /* ═══ ECO / PURPOSE THEME ═══ */
+    html.purpose-theme { background: #050e08 !important; }
+    .purpose-theme body { background: #050e08 !important; }
+    .purpose-theme header, .purpose-theme .header { background: rgba(5,14,8,0.85) !important; }
+    .purpose-theme .left-sidebar { background: rgba(5,14,8,0.97) !important; }
+    .purpose-theme .signin-btn { background: #059669 !important; box-shadow: 0 2px 8px rgba(16,185,129,0.25) !important; }
+    .purpose-theme .signin-btn:hover { background: #047857 !important; }
+    .purpose-theme .sidebar-item:hover, .purpose-theme .sidebar-item.active { background: rgba(16,185,129,0.15) !important; border-color: rgba(16,185,129,0.3) !important; }
+    .purpose-theme .sidebar-item.primary { background: rgba(16,185,129,0.15) !important; border-color: rgba(16,185,129,0.4) !important; color: #6ee7b7 !important; }
+    .purpose-theme #sidebarEcoToggle { background: rgba(16,185,129,0.15); border-color: rgba(16,185,129,0.4); color: #6ee7b7; }
+    .purpose-theme ::-webkit-scrollbar-thumb { background: rgba(16,185,129,0.3) !important; }
   </style>
 </head>
 
@@ -418,6 +430,11 @@
         </a>
         </div>
 
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Experience</div>
+        <a href="#" class="sidebar-item" id="sidebarEcoToggle" onclick="event.preventDefault();toggleSidebarEco()"><i data-lucide="leaf"></i><span id="sidebarEcoLabel">Eco Mode: Off</span></a>
+      </div>
       <div class="sidebar-divider"></div>
 
       <div class="sidebar-section">
@@ -571,7 +588,7 @@
           </div>
           <div class="faq-answer">
             <div class="faq-answer-inner">
-              You can request account deletion by contacting us at <a href="/cdn-cgi/l/email-protection#76351a131b361918135b030658151a190312"><span class="__cf_email__" data-cfemail="c685aaa3ab86a9a8a3ebb3b6e8a5aaa9b3a2">[email&#160;protected]</span></a>. We'll delete your account and all associated data within 30 days. See our <a href="/legal#privacy">Privacy Policy</a> for more details on your data rights.
+              You can request account deletion by contacting us at <a href="mailto:Clem@one-up.cloud">Clem@one-up.cloud</a>. We'll delete your account and all associated data within 30 days. See our <a href="/legal#privacy">Privacy Policy</a> for more details on your data rights.
             </div>
           </div>
         </div>
@@ -595,7 +612,7 @@
           </div>
           <div class="faq-answer">
             <div class="faq-answer-inner">
-              You can reach us through our <a href="/contact">Contact page</a> or email us directly at <a href="/cdn-cgi/l/email-protection#8ac9e6efe7cae5e4efa7fffaa4e9e6e5ffee"><span class="__cf_email__" data-cfemail="92d1fef7ffd2fdfcf7bfe7e2bcf1fefde7f6">[email&#160;protected]</span></a>. We aim to respond within 24 hours.
+              You can reach us through our <a href="/contact">Contact page</a> or email us directly at <a href="mailto:Clem@one-up.cloud">Clem@one-up.cloud</a>. We aim to respond within 24 hours.
             </div>
           </div>
         </div>
@@ -616,13 +633,13 @@
       <p style="margin-top: 8px;">
         <a href="/home">Home</a> &nbsp;&middot;&nbsp;
         <a href="/legal">Legal</a> &nbsp;&middot;&nbsp;
-        <a href="/cdn-cgi/l/email-protection#88cbe4ede5c8e7e6eda5fdf8a6ebe4e7fdec"><span class="__cf_email__" data-cfemail="43002f262e032c2d266e36336d202f2c3627">[email&#160;protected]</span></a>
+        <a href="mailto:Clem@one-up.cloud">Clem@one-up.cloud</a>
       </p>
     </div>
 
   </div>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  <script>
     function toggleFAQ(el) {
       const item = el.parentElement;
       const answer = item.querySelector('.faq-answer');
@@ -671,4 +688,44 @@
 
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
-        document.getElementById('leftSidebar').classList.remove('o
+        document.getElementById('leftSidebar').classList.remove('open');
+        document.getElementById('sidebarOverlay').classList.remove('active');
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    });
+    window.addEventListener('load', function() {
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    });
+  </script>
+
+  <script type="module" src="firebase-config.js"></script>
+  <script type="module" src="auth-handler.js"></script>
+
+
+<script>
+    function toggleSidebarEco() {
+      var isEco = localStorage.getItem('travelWithPurpose') === 'true';
+      var newState = !isEco;
+      localStorage.setItem('travelWithPurpose', String(newState));
+      document.documentElement.classList.toggle('purpose-theme', newState);
+      var label = document.getElementById('sidebarEcoLabel');
+      if (label) label.textContent = newState ? 'Eco Mode: On' : 'Eco Mode: Off';
+      var item = document.getElementById('sidebarEcoToggle');
+      if (item) { if(newState) item.classList.add('active'); else item.classList.remove('active'); }
+    }
+    (function() {
+      var isEco = localStorage.getItem('travelWithPurpose') === 'true';
+      if (isEco) document.documentElement.classList.add('purpose-theme');
+      setTimeout(function(){
+        var label = document.getElementById('sidebarEcoLabel');
+        if (label) label.textContent = isEco ? 'Eco Mode: On' : 'Eco Mode: Off';
+        var item = document.getElementById('sidebarEcoToggle');
+        if (item && isEco) item.classList.add('active');
+      }, 100);
+    })();
+</script>
+</body>
+</html>

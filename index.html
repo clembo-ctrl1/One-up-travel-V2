@@ -1109,6 +1109,11 @@
       </div>
       <div class="sidebar-divider"></div>
       <div class="sidebar-section">
+        <div class="sidebar-section-title">Experience</div>
+        <a href="#" class="sidebar-item" id="sidebarEcoToggle" onclick="event.preventDefault();toggleSidebarEco()"><i data-lucide="leaf"></i><span id="sidebarEcoLabel">Eco Mode: Off</span></a>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section">
         <div class="sidebar-section-title">Legal &amp; Support</div>
         <a href="/legal" class="sidebar-item"><i data-lucide="shield-check"></i><span>Legal</span></a>
         <a href="/faq" class="sidebar-item"><i data-lucide="help-circle"></i><span>FAQs</span></a>
@@ -1975,6 +1980,12 @@
       // Apply/remove theme
       document.documentElement.classList.toggle('purpose-theme', purposeMode);
 
+      // Ensure toggle wrap stays visible
+      if (purposeMode) {
+        document.querySelector('.purpose-toggle-wrap').style.opacity = '1';
+        document.querySelector('.purpose-toggle-wrap').style.transform = 'translateY(0)';
+      }
+
       // Update globe colors
       if (typeof updateGlobeTheme === 'function') updateGlobeTheme(purposeMode);
 
@@ -1983,6 +1994,12 @@
       input.placeholder = purposeMode
         ? 'Plan an eco-friendly trip to...'
         : 'Enter your destination and duration';
+
+      // Sync sidebar label
+      var sLabel = document.getElementById('sidebarEcoLabel');
+      if (sLabel) sLabel.textContent = purposeMode ? 'Eco Mode: On' : 'Eco Mode: Off';
+      var sItem = document.getElementById('sidebarEcoToggle');
+      if (sItem) { if(purposeMode) sItem.classList.add('active'); else sItem.classList.remove('active'); }
     }
 
     // Restore toggle state on load
@@ -1992,10 +2009,25 @@
       document.getElementById('purposeLabel').classList.add('active');
       document.getElementById('purposeBadge').classList.add('show');
       document.getElementById('tripInput').placeholder = 'Plan an eco-friendly trip to...';
-      // Ensure toggle stays visible after theme applies
       document.querySelector('.purpose-toggle-wrap').style.opacity = '1';
       document.querySelector('.purpose-toggle-wrap').style.transform = 'translateY(0)';
       if (typeof updateGlobeTheme === 'function') updateGlobeTheme(true);
+    }
+    // Sync sidebar eco label on load
+    setTimeout(function() {
+      var el = document.getElementById('sidebarEcoLabel');
+      if (el) el.textContent = purposeMode ? 'Eco Mode: On' : 'Eco Mode: Off';
+      var item = document.getElementById('sidebarEcoToggle');
+      if (item && purposeMode) item.classList.add('active');
+    }, 100);
+
+    // Sidebar eco toggle — syncs with main toggle
+    function toggleSidebarEco() {
+      togglePurpose();
+      var el = document.getElementById('sidebarEcoLabel');
+      if (el) el.textContent = purposeMode ? 'Eco Mode: On' : 'Eco Mode: Off';
+      var item = document.getElementById('sidebarEcoToggle');
+      if (item) { if(purposeMode) item.classList.add('active'); else item.classList.remove('active'); }
     }
 
     function handleEnter(event) {
