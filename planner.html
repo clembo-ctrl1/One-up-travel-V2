@@ -308,6 +308,11 @@
       box-shadow: 0 4px 16px rgba(99,102,241,0.15);
     }
     .quick-chip:active { transform: translateY(0); }
+    .quick-chip.other-chip {
+      background: transparent; border-style: dashed;
+      color: var(--text-muted); font-style: italic;
+    }
+    .quick-chip.other-chip:hover { color: #fff; border-style: solid; }
     .purpose-theme .quick-chip {
       border-color: rgba(16,185,129,0.3); color: #6ee7b7;
     }
@@ -1252,8 +1257,8 @@ function renderQuickReplies(options) {
 
   options.forEach(function(opt) {
     var chip = document.createElement('button');
-    chip.className = 'quick-chip';
-    chip.textContent = opt;
+    chip.className = 'quick-chip' + (opt === 'Other' ? ' other-chip' : '');
+    chip.textContent = opt === 'Other' ? 'Other (type your own)' : opt;
     chip.onclick = function() { selectQuickReply(opt); };
     chipsDiv.appendChild(chip);
   });
@@ -1267,6 +1272,14 @@ function clearQuickReplies() {
 }
 
 function selectQuickReply(text) {
+  if (text === 'Other') {
+    // Focus the input so user can type their own answer
+    clearQuickReplies();
+    var chat = getActiveChat();
+    chat.input.focus();
+    chat.input.placeholder = 'Type your answer...';
+    return;
+  }
   // Set the input value and send
   var chat = getActiveChat();
   chat.input.value = text;
