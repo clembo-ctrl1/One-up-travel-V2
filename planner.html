@@ -431,6 +431,126 @@
       .step-connector { width: 24px; }
       .header-center { display: none; }
     }
+    /* ═══ ECO / PURPOSE THEME ═══ */
+    html.purpose-theme { background: #050e08; }
+    .purpose-theme body { background: #050e08; }
+    .purpose-theme .bg-gradients {
+      background: radial-gradient(ellipse at 20% 20%, rgba(16,185,129,0.08) 0%, transparent 55%),
+                  radial-gradient(ellipse at 80% 80%, rgba(20,184,166,0.05) 0%, transparent 50%) !important;
+    }
+    .purpose-theme .header { background: rgba(5,14,8,0.85); }
+    .purpose-theme .stepper { background: rgba(5,14,8,0.6); }
+    .purpose-theme .chat-col { background: rgba(5,14,8,0.5); }
+    .purpose-theme .right-col { background: rgba(5,14,8,0.5); }
+    .purpose-theme .submit-overlay { background: #050e08; }
+    .purpose-theme .submit-overlay-bg { background: radial-gradient(circle at 50% 40%, rgba(16,185,129,0.12) 0%, transparent 60%); }
+
+    /* Primary color swap: indigo → green */
+    .purpose-theme .submit-btn.active,
+    .purpose-theme .chat-send,
+    .purpose-theme .btn-primary {
+      background: #059669 !important; box-shadow: 0 4px 16px rgba(16,185,129,0.25) !important;
+    }
+    .purpose-theme .submit-btn.active:hover,
+    .purpose-theme .chat-send:hover,
+    .purpose-theme .btn-primary:hover { background: #047857 !important; }
+    .purpose-theme .signin-btn { background: #059669 !important; box-shadow: 0 2px 8px rgba(16,185,129,0.25) !important; }
+    .purpose-theme .signin-btn:hover { background: #047857 !important; }
+
+    /* Lisa avatar */
+    .purpose-theme .lisa-avatar { background: linear-gradient(135deg, #10b981, #14b8a6, #06b6d4) !important; box-shadow: 0 4px 16px rgba(16,185,129,0.25) !important; }
+    .purpose-theme .msg.lisa .msg-avatar { background: linear-gradient(135deg, #10b981, #14b8a6, #06b6d4) !important; }
+    .purpose-theme .msg.user .msg-bubble { background: #059669 !important; box-shadow: 0 2px 12px rgba(16,185,129,0.25) !important; }
+
+    /* Chat input */
+    .purpose-theme .chat-input:focus { border-color: rgba(16,185,129,0.5) !important; box-shadow: 0 0 20px rgba(16,185,129,0.1) !important; }
+
+    /* Headlines */
+    .purpose-theme .itin-heading { background: linear-gradient(135deg, #34d399, #14b8a6, #06b6d4) !important; -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important; }
+    .purpose-theme .submit-title { background: linear-gradient(135deg, #34d399, #14b8a6, #06b6d4) !important; -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important; }
+
+    /* Logo mark */
+    .purpose-theme .logo-mark { background: linear-gradient(135deg, #10b981, #14b8a6, #06b6d4) !important; box-shadow: 0 4px 16px rgba(16,185,129,0.25) !important; }
+
+    /* Stepper */
+    .purpose-theme .step.active .step-num { border-color: #059669 !important; background: #059669 !important; box-shadow: 0 0 16px rgba(16,185,129,0.25) !important; }
+    .purpose-theme .step.active .step-label { color: #6ee7b7 !important; }
+
+    /* Pulse animation override */
+    @keyframes eco-pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(16,185,129,0.4); } 50% { box-shadow: 0 0 0 8px rgba(16,185,129,0); } }
+    .purpose-theme .submit-btn.active { animation: eco-pulse 2s infinite !important; }
+
+    /* Tabs */
+    .purpose-theme .tab-btn.active { color: #6ee7b7 !important; border-bottom-color: #059669 !important; }
+    .purpose-theme .tab-nav { background: rgba(5,14,8,0.9) !important; }
+
+    /* Cards */
+    .purpose-theme .itin-card.selected { border-color: rgba(16,185,129,0.5) !important; box-shadow: 0 0 30px rgba(16,185,129,0.12), inset 0 0 30px rgba(16,185,129,0.04) !important; }
+    .purpose-theme .itin-card:hover { box-shadow: 0 8px 32px rgba(5,14,8,0.5) !important; }
+    .purpose-theme .itin-highlight::before { color: #10b981 !important; }
+    .purpose-theme .match-high { background: rgba(16,185,129,0.15) !important; border-color: rgba(16,185,129,0.35) !important; color: #6ee7b7 !important; }
+    .purpose-theme .match-mid { background: rgba(20,184,166,0.15) !important; border-color: rgba(20,184,166,0.35) !important; color: #5eead4 !important; }
+
+    /* Buttons */
+    .purpose-theme .add-btn { color: #6ee7b7 !important; border-color: rgba(16,185,129,0.4) !important; }
+    .purpose-theme .add-btn:hover { background: rgba(16,185,129,0.1) !important; border-color: rgba(16,185,129,0.6) !important; }
+    .purpose-theme .add-btn.added { background: #059669 !important; }
+    .purpose-theme .selected-badge { background: rgba(16,185,129,0.15) !important; border-color: rgba(16,185,129,0.3) !important; color: #6ee7b7 !important; }
+
+    /* Expanded card */
+    .purpose-theme .itin-expanded { background: rgba(16,185,129,0.04) !important; }
+
+    /* Summary accent */
+    .purpose-theme .summary-value[style*="a5b4fc"] { color: #6ee7b7 !important; }
+
+    /* Budget donut */
+    .purpose-theme .donut-segment:first-child { stroke: #059669 !important; }
+
+    /* Timeline */
+    .purpose-theme .timeline-line { background: linear-gradient(to bottom, #059669, rgba(16,185,129,0.15)) !important; }
+    .purpose-theme .timeline-dot { border-color: #059669 !important; }
+    .purpose-theme .timeline-dot.first { background: #059669 !important; box-shadow: 0 0 12px rgba(16,185,129,0.25) !important; }
+    .purpose-theme .timeline-day { color: #6ee7b7 !important; }
+
+    /* Sidebar */
+    .purpose-theme .left-sidebar { background: rgba(5,14,8,0.97) !important; }
+    .purpose-theme .sidebar-item:hover, .purpose-theme .sidebar-item.active { background: rgba(16,185,129,0.15) !important; border-color: rgba(16,185,129,0.3) !important; }
+    .purpose-theme .sidebar-item.primary { background: rgba(16,185,129,0.15) !important; border-color: rgba(16,185,129,0.4) !important; color: #6ee7b7 !important; }
+
+    /* Filter buttons */
+    .purpose-theme .filter-btn.active { background: rgba(16,185,129,0.15) !important; color: #6ee7b7 !important; border-color: rgba(16,185,129,0.3) !important; }
+
+    /* Scrollbar */
+    .purpose-theme ::-webkit-scrollbar-thumb { background: rgba(16,185,129,0.3) !important; }
+
+    /* Eco banner */
+    .eco-banner {
+      display: none; padding: 10px 28px; align-items: center; justify-content: center; gap: 12px;
+      background: linear-gradient(90deg, rgba(16,185,129,0.08), rgba(20,184,166,0.08), rgba(6,182,212,0.08));
+      border-bottom: 1px solid rgba(16,185,129,0.15);
+      animation: fadeUp 0.4s ease; position: relative; z-index: 98;
+    }
+    .eco-banner.show { display: flex; }
+    .eco-banner-text { font-size: 13px; color: #6ee7b7; display: flex; align-items: center; gap: 8px; }
+    .eco-banner-stat { font-size: 12px; color: #34d399; font-weight: 700; background: rgba(16,185,129,0.1); padding: 3px 10px; border-radius: 20px; border: 1px solid rgba(16,185,129,0.2); }
+
+    /* Eco toggle in header */
+    .eco-toggle-wrap { display: flex; align-items: center; gap: 8px; }
+    .eco-toggle-btn {
+      display: flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.06); border: 1px solid var(--border);
+      color: var(--text-muted); padding: 7px 14px; border-radius: 20px;
+      font-size: 12px; font-weight: 500; cursor: pointer; font-family: inherit;
+      transition: all 0.3s;
+    }
+    .eco-toggle-btn:hover { background: rgba(16,185,129,0.1); border-color: rgba(16,185,129,0.3); color: #6ee7b7; }
+    .eco-toggle-btn.active { background: rgba(16,185,129,0.15); border-color: rgba(16,185,129,0.4); color: #6ee7b7; }
+    .eco-toggle-btn svg { width: 14px; height: 14px; }
+
+    /* Draft banner eco */
+    .purpose-theme .draft-banner { background: rgba(16,185,129,0.08) !important; border-color: rgba(16,185,129,0.15) !important; }
+    .purpose-theme .draft-banner-text { color: #6ee7b7 !important; }
+    .purpose-theme .draft-btn.resume { background: #059669 !important; }
   </style>
 </head>
 <body>
@@ -495,6 +615,12 @@
     <a href="/home" class="logo"><img src="logo.png" alt="One-Up Travel"></a>
   </div>
   <div class="header-right">
+    <div class="eco-toggle-wrap">
+      <button class="eco-toggle-btn" id="ecoToggle" onclick="toggleEcoMode()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.9C15.5 4.9 17 3.5 19 2c1 2 2 4.5 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+        <span id="ecoLabel">Eco Mode</span>
+      </button>
+    </div>
     <span class="selected-badge" id="selectedBadge"></span>
     <button class="submit-btn" id="submitBtn" onclick="handleSubmit()">Submit Itinerary →</button>
     <a href="/auth" class="signin-btn" id="authButton">Sign In</a>
@@ -510,6 +636,16 @@
   <div class="step" data-step="3"><div class="step-num">3</div><div class="step-label">Review & Customize</div></div>
   <div class="step-connector" id="conn3"><div class="step-connector-fill"></div></div>
   <div class="step" data-step="4"><div class="step-num">4</div><div class="step-label">Submit</div></div>
+</div>
+
+<!-- ═══ ECO BANNER ═══ -->
+<div class="eco-banner" id="ecoBanner">
+  <div class="eco-banner-text">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.9C15.5 4.9 17 3.5 19 2c1 2 2 4.5 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+    Travel with Purpose — eco-friendly itineraries prioritised
+  </div>
+  <span class="eco-banner-stat">🌱 Carbon offset included</span>
+  <span class="eco-banner-stat">♻️ Eco-certified stays</span>
 </div>
 
 <!-- ═══ DRAFT BANNER ═══ -->
@@ -916,6 +1052,46 @@ function saveToAccount() {
 // AUTO-SAVE on tab close
 // ══════════════════════════════════════════════════════════════
 window.addEventListener('beforeunload', () => { if (addedItineraries.length > 0) saveDraft(); });
+
+// ══════════════════════════════════════════════════════════════
+// ECO / PURPOSE MODE
+// ══════════════════════════════════════════════════════════════
+let ecoMode = localStorage.getItem('travelWithPurpose') === 'true';
+
+function toggleEcoMode() {
+  ecoMode = !ecoMode;
+  localStorage.setItem('travelWithPurpose', ecoMode);
+  applyEcoMode();
+}
+
+function applyEcoMode() {
+  document.documentElement.classList.toggle('purpose-theme', ecoMode);
+  document.getElementById('ecoToggle').classList.toggle('active', ecoMode);
+  document.getElementById('ecoLabel').textContent = ecoMode ? 'Eco On' : 'Eco Mode';
+  document.getElementById('ecoBanner').classList.toggle('show', ecoMode);
+
+  // Adjust columns height for eco banner
+  const cols = document.getElementById('mainColumns');
+  if (ecoMode) {
+    cols.style.height = 'calc(100vh - 149px)';
+  } else if (!document.getElementById('draftBanner').classList.contains('show')) {
+    cols.style.height = '';
+  }
+
+  // Update Lisa's greeting style
+  const itinSub = document.getElementById('itinSubtitle');
+  if (ecoMode && itinSub) {
+    const currentTrip = localStorage.getItem('currentTrip') || '';
+    if (currentTrip && currentTrip !== 'Editing saved trip') {
+      itinSub.textContent = `🌿 Eco-friendly options curated by Lisa for "${currentTrip}".`;
+    } else {
+      itinSub.textContent = '🌿 Eco-friendly itineraries curated by Lisa. Click to explore or add to your plan.';
+    }
+  }
+}
+
+// Apply on load
+if (ecoMode) applyEcoMode();
 
 // ══════════════════════════════════════════════════════════════
 // INIT

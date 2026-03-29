@@ -926,14 +926,10 @@
     // VIEW TRIP DETAILS
     // ========================================
     window.viewTrip = function(tripId) {
-      // Store trip ID and redirect to itinerary page
       localStorage.setItem('viewingTripId', tripId);
       window.location.href = 'itinerary.html';
     }
 
-    // ========================================
-    // EDIT TRIP — load back into planner
-    // ========================================
     window.editTrip = function(tripId) {
       localStorage.setItem('editTripId', tripId);
       localStorage.setItem('currentTrip', 'Editing saved trip');

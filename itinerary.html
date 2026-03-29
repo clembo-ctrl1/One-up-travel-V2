@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Premium Itinerary Concept | One-Up Travel</title>
+
+  <!-- Early theme detection -->
+  <script>if(localStorage.getItem('travelWithPurpose')==='true')document.documentElement.classList.add('purpose-theme');</script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
   <link rel="dns-prefetch" href="https://images.unsplash.com">
@@ -33,6 +36,89 @@
       --font: 'Plus Jakarta Sans', -apple-system, sans-serif;
       --mono: 'Space Mono', monospace;
     }
+
+    /* =============== PURPOSE THEME (Green/Teal) =============== */
+    html.purpose-theme {
+      --indigo: #059669;
+      --indigo-glow: rgba(16,185,129,0.15);
+      --violet: #14b8a6;
+      --bg: #060f0d;
+    }
+    html.purpose-theme body { background: var(--bg); }
+
+    /* Tab buttons */
+    .purpose-theme .tab-btn.active {
+      background: #059669 !important;
+      box-shadow: 0 2px 12px rgba(16,185,129,0.3) !important;
+    }
+
+    /* Timeline filter active */
+    .purpose-theme .tl-filter.active {
+      background: #059669 !important;
+      box-shadow: 0 2px 10px rgba(16,185,129,0.25) !important;
+    }
+
+    /* Sidebar active */
+    .purpose-theme .sidebar-item.active,
+    .purpose-theme .sidebar-item.primary {
+      background: rgba(16,185,129,0.15) !important;
+      border-color: rgba(16,185,129,0.3) !important;
+      color: #6ee7b7 !important;
+    }
+
+    /* CTA buttons */
+    .purpose-theme .cta-btn.primary {
+      background: linear-gradient(135deg, #059669, #0d9488) !important;
+      box-shadow: 0 4px 20px rgba(16,185,129,0.3) !important;
+    }
+
+    /* Sign in button */
+    .purpose-theme .signin-btn {
+      background: #059669 !important;
+    }
+
+    /* Logo dot */
+    .purpose-theme .logo-dot {
+      background: #10b981 !important;
+      box-shadow: 0 0 12px rgba(16,185,129,0.7), 0 0 24px rgba(16,185,129,0.3) !important;
+    }
+
+    /* Map filters */
+    .purpose-theme .map-filter.active {
+      background: #059669 !important;
+      box-shadow: 0 2px 10px rgba(16,185,129,0.25) !important;
+    }
+
+    /* Summary overview card hover glow */
+    .purpose-theme .sum-overview-card:hover {
+      border-color: rgba(16,185,129,0.3) !important;
+      box-shadow: 0 4px 20px rgba(16,185,129,0.1) !important;
+    }
+
+    /* Currency button active */
+    .purpose-theme .curr-btn.active {
+      background: #059669 !important;
+      box-shadow: 0 2px 10px rgba(16,185,129,0.25) !important;
+    }
+
+    /* Header gradient line */
+    .purpose-theme .itin-header::after {
+      background: linear-gradient(90deg, transparent, #10b981, #14b8a6, transparent) !important;
+    }
+
+    /* Link colors */
+    .purpose-theme a[style*="color:#a5b4fc"],
+    .purpose-theme a[style*="color: #a5b4fc"] {
+      color: #6ee7b7 !important;
+    }
+
+    /* Share modal button */
+    .purpose-theme .share-link-copy {
+      background: #059669 !important;
+    }
+
+    /* Toast success inherits green already, but ensure accent */
+    .purpose-theme .toast-bar { background: #059669 !important; }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -293,6 +379,7 @@
     .view-panel { display: none; animation: fadeInUp 0.4s ease; }
     .view-panel.active { display: block; }
     @keyframes fadeInUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
     /* =============== TIMELINE — MINI RAIL + SINGLE DAY VIEW =============== */
     .tl-container {
@@ -1291,6 +1378,211 @@
       .sum-rating-bar { flex-direction: column; gap: 6px; align-items: flex-start; }
       .sum-card-actions { flex-direction: column; }
     }
+
+    /* ===== ECO IMPACT STYLES ===== */
+    .eco-hero {
+      background: linear-gradient(135deg, rgba(16,185,129,0.08), rgba(52,211,153,0.04));
+      border: 1px solid rgba(16,185,129,0.15);
+      border-radius: var(--radius);
+      padding: 28px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .eco-hero-icon {
+      width: 56px; height: 56px; border-radius: 16px;
+      background: rgba(16,185,129,0.12);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px;
+    }
+    .eco-hero-title { font-size: 20px; font-weight: 800; color: var(--text); margin-bottom: 6px; }
+    .eco-hero-sub { font-size: 13px; color: var(--text-2); line-height: 1.6; max-width: 500px; margin: 0 auto; }
+
+    .eco-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    @media (max-width: 640px) { .eco-grid { grid-template-columns: 1fr; } }
+
+    .eco-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+    }
+    .eco-card-title {
+      font-size: 13px; font-weight: 700; color: var(--text-2);
+      text-transform: uppercase; letter-spacing: 1px;
+      margin-bottom: 16px;
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    .eco-total-num {
+      font-size: 42px; font-weight: 800; line-height: 1;
+      margin-bottom: 4px;
+    }
+    .eco-total-unit { font-size: 14px; color: var(--text-2); margin-bottom: 16px; }
+
+    .eco-bar-row {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 12px;
+    }
+    .eco-bar-label {
+      font-size: 12px; color: var(--text-2); width: 80px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .eco-bar-track {
+      flex: 1; height: 28px; background: rgba(255,255,255,0.04);
+      border-radius: 8px; overflow: hidden; position: relative;
+    }
+    .eco-bar-fill {
+      height: 100%; border-radius: 8px;
+      display: flex; align-items: center; justify-content: flex-end;
+      padding-right: 10px; font-size: 11px; font-weight: 700; color: white;
+      transition: width 0.8s cubic-bezier(0.4,0,0.2,1);
+    }
+    .eco-bar-value {
+      font-size: 12px; color: var(--text-2); width: 65px; text-align: right;
+      font-family: var(--mono);
+    }
+
+    .eco-donut-wrap {
+      display: flex; align-items: center; justify-content: center;
+      gap: 24px; flex-wrap: wrap;
+    }
+    .eco-donut-canvas {
+      position: relative; width: 160px; height: 160px;
+    }
+    .eco-donut-center {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      text-align: center;
+    }
+    .eco-donut-center-num { font-size: 28px; font-weight: 800; color: var(--text); }
+    .eco-donut-center-label { font-size: 10px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.5px; }
+    .eco-legend { display: flex; flex-direction: column; gap: 10px; }
+    .eco-legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-2); }
+    .eco-legend-dot { width: 10px; height: 10px; border-radius: 3px; }
+
+    .eco-compare {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+    .eco-compare-title {
+      font-size: 13px; font-weight: 700; color: var(--text-2);
+      text-transform: uppercase; letter-spacing: 1px;
+      margin-bottom: 16px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .eco-compare-row {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .eco-compare-row:last-child { border-bottom: none; }
+    .eco-compare-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .eco-compare-info { flex: 1; }
+    .eco-compare-name { font-size: 13px; font-weight: 600; color: var(--text); }
+    .eco-compare-desc { font-size: 11px; color: var(--text-3); }
+    .eco-compare-val { font-size: 14px; font-weight: 700; font-family: var(--mono); }
+
+    .eco-tips {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+    .eco-tip {
+      display: flex; gap: 14px; padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .eco-tip:last-child { border-bottom: none; }
+    .eco-tip-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: rgba(16,185,129,0.1);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .eco-tip-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+    .eco-tip-desc { font-size: 12px; color: var(--text-3); line-height: 1.5; }
+
+    .eco-offset {
+      background: linear-gradient(135deg, rgba(16,185,129,0.06), rgba(52,211,153,0.03));
+      border: 1px solid rgba(16,185,129,0.15);
+      border-radius: var(--radius);
+      padding: 28px;
+    }
+    .eco-offset-header { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+    .eco-offset-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: rgba(16,185,129,0.12);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .eco-offset-title { font-size: 18px; font-weight: 800; color: var(--text); margin-bottom: 4px; }
+    .eco-offset-desc { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+
+    .eco-offset-options { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+    .eco-offset-option {
+      display: flex; align-items: center; gap: 14px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .eco-offset-option:hover { border-color: rgba(16,185,129,0.3); background: rgba(16,185,129,0.04); }
+    .eco-offset-option.selected { border-color: var(--green); background: rgba(16,185,129,0.08); }
+
+    .eco-checkbox {
+      width: 22px; height: 22px; border-radius: 6px;
+      border: 2px solid rgba(255,255,255,0.2);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; transition: all 0.2s;
+    }
+    .eco-offset-option.selected .eco-checkbox {
+      background: var(--green); border-color: var(--green);
+    }
+    .eco-offset-opt-info { flex: 1; }
+    .eco-offset-opt-name { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+    .eco-offset-opt-desc { font-size: 11px; color: var(--text-3); }
+    .eco-offset-opt-price { font-size: 16px; font-weight: 700; color: var(--green); font-family: var(--mono); }
+
+    .eco-offset-total {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 16px 20px;
+      background: rgba(16,185,129,0.08);
+      border-radius: 12px;
+      margin-bottom: 16px;
+    }
+    .eco-offset-total-label { font-size: 14px; font-weight: 600; color: var(--text); }
+    .eco-offset-total-val { font-size: 22px; font-weight: 800; color: var(--green); font-family: var(--mono); }
+
+    .eco-offset-btn {
+      width: 100%; padding: 14px;
+      background: var(--green); color: white;
+      border: none; border-radius: 12px;
+      font-size: 14px; font-weight: 700;
+      font-family: var(--font);
+      cursor: pointer; transition: all 0.2s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .eco-offset-btn:hover { background: #0d9668; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(16,185,129,0.3); }
+
+    .eco-badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 3px 10px; border-radius: 20px;
+      font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+    }
   </style>
 </head>
 <body>
@@ -1422,6 +1714,7 @@
     <button class="tab-btn" onclick="switchView('timeline', this)"><i data-lucide="route"></i> Timeline</button>
     <button class="tab-btn" onclick="switchView('calendar', this)"><i data-lucide="calendar-range"></i> Calendar</button>
     <button class="tab-btn" onclick="switchView('insights', this)"><i data-lucide="map"></i> Map & Insights</button>
+    <button class="tab-btn" onclick="switchView('eco', this)"><i data-lucide="leaf"></i> Eco Impact</button>
   </div>
 
   <!-- ========== SUMMARY VIEW ========== -->
@@ -1477,6 +1770,13 @@
     <div class="nearby-section">
       <div class="nearby-title">Recommended Near Your Hotel</div>
       <div id="nearbyList"></div>
+    </div>
+  </div>
+
+  <!-- ========== ECO IMPACT VIEW ========== -->
+  <div id="ecoView" class="view-panel">
+    <div id="ecoContent">
+      <!-- Built by JS -->
     </div>
   </div>
 
@@ -2208,6 +2508,7 @@
 
   // ===== SUMMARY VIEW =====
   let summaryBuilt = false;
+  let ecoBuilt = false;
 
   function buildSummary() {
     if (summaryBuilt) return;
@@ -2288,6 +2589,9 @@
         </div>
       </div>
 
+      <!-- Compact Carbon & Donate -->
+      <div id="ecoCompactCard"></div>
+
       ${buildSummarySection('flight', 'plane-takeoff', 'Flights', groups.flight, totals.flight)}
       ${buildSummarySection('hotel', 'bed-double', 'Hotels & Accommodation', groups.hotel, totals.hotel)}
       ${buildSummarySection('activity', 'sparkles', 'Activities & Tours', groups.activity, totals.activity)}
@@ -2300,6 +2604,9 @@
 
     initIcons();
     if (currentCurrency !== 'AUD') changeCurrency(currentCurrency);
+
+    // Build compact eco card in summary
+    buildEcoCompact(grandTotal);
 
     // Preload first photo of each item for instant expand
     timelineDays.forEach(day => {
@@ -2515,6 +2822,749 @@
     btn.classList.add('active');
     if (view === 'insights' && !mapInit) { setTimeout(()=>{initMap();mapInit=true;},150); }
     if (view === 'summary') buildSummary();
+    if (view === 'eco' && !ecoBuilt) { buildEco(); ecoBuilt = true; }
+    initIcons();
+  }
+
+  // ===== CARBON CALCULATOR ENGINE =====
+  const CarbonCalc = {
+    // Major airport coordinates — Lisa can provide exact coords via API, these are fallbacks
+    airports: {
+      'brisbane':     { lat: -27.3842, lng: 153.1175, code: 'BNE' },
+      'sydney':       { lat: -33.9461, lng: 151.1772, code: 'SYD' },
+      'melbourne':    { lat: -37.6690, lng: 144.8410, code: 'MEL' },
+      'perth':        { lat: -31.9385, lng: 115.9672, code: 'PER' },
+      'auckland':     { lat: -37.0082, lng: 174.7850, code: 'AKL' },
+      'denpasar':     { lat: -8.7482,  lng: 115.1672, code: 'DPS' },
+      'bali':         { lat: -8.7482,  lng: 115.1672, code: 'DPS' },
+      'singapore':    { lat: 1.3644,   lng: 103.9915, code: 'SIN' },
+      'bangkok':      { lat: 13.6900,  lng: 100.7501, code: 'BKK' },
+      'tokyo':        { lat: 35.7720,  lng: 140.3929, code: 'NRT' },
+      'osaka':        { lat: 34.4320,  lng: 135.2304, code: 'KIX' },
+      'hong kong':    { lat: 22.3080,  lng: 113.9185, code: 'HKG' },
+      'dubai':        { lat: 25.2532,  lng: 55.3657,  code: 'DXB' },
+      'london':       { lat: 51.4700,  lng: -0.4543,  code: 'LHR' },
+      'paris':        { lat: 49.0097,  lng: 2.5479,   code: 'CDG' },
+      'rome':         { lat: 41.8003,  lng: 12.2389,  code: 'FCO' },
+      'new york':     { lat: 40.6413,  lng: -73.7781, code: 'JFK' },
+      'los angeles':  { lat: 33.9416,  lng: -118.4085, code: 'LAX' },
+      'san francisco':{ lat: 37.6213,  lng: -122.3790, code: 'SFO' },
+      'honolulu':     { lat: 21.3245,  lng: -157.9251, code: 'HNL' },
+      'fiji':         { lat: -17.7553, lng: 177.4436, code: 'NAN' },
+      'phuket':       { lat: 8.1132,   lng: 98.3169,  code: 'HKT' },
+      'hanoi':        { lat: 21.2187,  lng: 105.8040, code: 'HAN' },
+      'ho chi minh':  { lat: 10.8188,  lng: 106.6520, code: 'SGN' },
+      'kuala lumpur': { lat: 2.7456,   lng: 101.7099, code: 'KUL' },
+      'seoul':        { lat: 37.4602,  lng: 126.4407, code: 'ICN' },
+      'taipei':       { lat: 25.0797,  lng: 121.2342, code: 'TPE' },
+      'mumbai':       { lat: 19.0896,  lng: 72.8656,  code: 'BOM' },
+      'delhi':        { lat: 28.5562,  lng: 77.1000,  code: 'DEL' },
+      'istanbul':     { lat: 41.2608,  lng: 28.7418,  code: 'IST' },
+      'barcelona':    { lat: 41.2974,  lng: 2.0833,   code: 'BCN' },
+      'amsterdam':    { lat: 52.3105,  lng: 4.7683,   code: 'AMS' },
+      'athens':       { lat: 37.9364,  lng: 23.9445,  code: 'ATH' },
+      'cairo':        { lat: 30.1219,  lng: 31.4056,  code: 'CAI' },
+      'johannesburg': { lat: -26.1367, lng: 28.2460,  code: 'JNB' },
+      'vancouver':    { lat: 49.1947,  lng: -123.1788, code: 'YVR' },
+      'cancun':       { lat: 21.0365,  lng: -86.8771, code: 'CUN' },
+    },
+
+    // Haversine formula — distance between two lat/lng points in km
+    haversine(lat1, lng1, lat2, lng2) {
+      const R = 6371;
+      const dLat = (lat2 - lat1) * Math.PI / 180;
+      const dLng = (lng2 - lng1) * Math.PI / 180;
+      const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(lat1 * Math.PI/180) * Math.cos(lat2 * Math.PI/180) *
+                Math.sin(dLng/2) * Math.sin(dLng/2);
+      return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    },
+
+    // Parse city names from flight title "Brisbane → Denpasar"
+    parseCities(title) {
+      const parts = title.split(/→|➝|➜|->|–|—|to /i).map(s => s.trim().toLowerCase());
+      return parts.length >= 2 ? { from: parts[0], to: parts[1] } : null;
+    },
+
+    // Look up airport coords — tries exact match, then partial match
+    findAirport(cityName) {
+      const name = cityName.toLowerCase().replace(/\s*(airport|intl|international|domestic)\s*/gi, '').trim();
+      // Exact match
+      if (this.airports[name]) return this.airports[name];
+      // Partial match
+      for (const [key, val] of Object.entries(this.airports)) {
+        if (name.includes(key) || key.includes(name)) return val;
+      }
+      return null;
+    },
+
+    // Emission factors (kg CO₂ per passenger per km)
+    // Source: UK DEFRA 2023 / ICAO methodology
+    // Short haul (<1500km): higher per-km due to takeoff/landing
+    // Medium haul (1500-4000km): most efficient cruise ratio
+    // Long haul (>4000km): slightly higher due to fuel weight
+    getFlightFactor(distanceKm, cabinClass) {
+      let baseFactor;
+      if (distanceKm < 1500) baseFactor = 0.156;       // short haul
+      else if (distanceKm < 4000) baseFactor = 0.131;   // medium haul
+      else baseFactor = 0.115;                           // long haul
+
+      // Cabin class multipliers (larger seat = larger share of fuel)
+      const classMultiplier = {
+        'economy': 1.0,
+        'premium': 1.6,
+        'premium economy': 1.6,
+        'business': 2.9,
+        'first': 4.0,
+      };
+
+      const cls = (cabinClass || 'economy').toLowerCase();
+      const mult = classMultiplier[cls] || 1.0;
+
+      return baseFactor * mult;
+    },
+
+    // Calculate single flight emissions
+    calcFlight(item) {
+      const cities = this.parseCities(item.title);
+      if (!cities) return { co2: 450, distance: null, method: 'fallback' }; // fallback
+
+      const origin = this.findAirport(cities.from);
+      const dest = this.findAirport(cities.to);
+
+      // If item has explicit coords (from Lisa API), use those
+      const fromLat = item.originLat || (origin ? origin.lat : null);
+      const fromLng = item.originLng || (origin ? origin.lng : null);
+      const toLat = item.destLat || (dest ? dest.lat : null);
+      const toLng = item.destLng || (dest ? dest.lng : null);
+
+      if (fromLat && fromLng && toLat && toLng) {
+        const distance = this.haversine(fromLat, fromLng, toLat, toLng);
+        // Parse cabin class from subtitle
+        const cabinMatch = (item.sub || '').match(/first|business|premium economy|premium|economy/i);
+        const cabin = cabinMatch ? cabinMatch[0] : 'economy';
+        const factor = this.getFlightFactor(distance, cabin);
+        const co2 = Math.round(distance * factor);
+
+        return {
+          co2,
+          distance: Math.round(distance),
+          cabin,
+          factor: factor.toFixed(3),
+          method: item.originLat ? 'exact' : 'lookup',
+          route: `${cities.from} → ${cities.to}`,
+        };
+      }
+
+      // Last resort: estimate from duration if available
+      const durationDetail = (item.details || []).find(d => d.label === 'Duration');
+      if (durationDetail) {
+        const match = durationDetail.value.match(/(\d+)h\s*(\d+)?/);
+        if (match) {
+          const hours = parseInt(match[1]) + (parseInt(match[2] || 0) / 60);
+          const estDistance = hours * 800; // avg cruise speed ~800km/h
+          const factor = this.getFlightFactor(estDistance, 'economy');
+          return {
+            co2: Math.round(estDistance * factor),
+            distance: Math.round(estDistance),
+            method: 'duration',
+            route: `${cities.from} → ${cities.to}`,
+          };
+        }
+      }
+
+      return { co2: 450, distance: null, method: 'fallback' };
+    },
+
+    // Hotel emissions per night
+    // Base: ~21 kg/night average. Eco-certified: ~14 kg/night. Luxury resort: ~30 kg/night.
+    // Lisa can provide: item.ecoRating (1-5), item.hotelStars, item.ecoCertified
+    calcHotelPerNight(item) {
+      // If Lisa provides eco data
+      if (item.ecoCertified) return 14;
+      if (item.ecoRating) return Math.max(10, 30 - (item.ecoRating * 4)); // 5-star eco = 10kg
+
+      // Estimate from star rating / price
+      const pricePerNight = item.price ? item.price / Math.max(1, (item.dayEnd || 1) - (item.dayNum || 0)) : 150;
+      if (pricePerNight > 300) return 30;    // luxury
+      if (pricePerNight > 150) return 21;    // mid-range
+      return 16;                              // budget
+    },
+
+    // Activity emissions
+    // Lisa can provide: item.activityType, item.transportIncluded
+    calcActivity(item) {
+      const title = (item.title || '').toLowerCase();
+      const sub = (item.sub || '').toLowerCase();
+
+      // Motorised activities
+      if (/scooter|atv|jet ski|speedboat|motorboat|helicopter|seaplane/i.test(title + sub)) return 25;
+      if (/boat|cruise|ferry|snorkeling trip/i.test(title + sub)) return 15;
+      if (/diving|surf/i.test(title + sub)) return 12;
+      // Driving tours
+      if (/tour.*drive|safari|road trip|transfer/i.test(title + sub)) return 18;
+      // Standard guided tours with transport
+      if (/tour|excursion/i.test(title + sub)) return 10;
+      // Walking/low-impact
+      if (/walk|hike|trek|yoga|spa|temple|museum|gallery|market|cooking|class/i.test(title + sub)) return 3;
+      // Food tours
+      if (/food|restaurant|dining|tasting/i.test(title + sub)) return 4;
+
+      // Lisa can provide exact: item.carbonKg
+      if (item.carbonKg) return item.carbonKg;
+
+      return 8; // default
+    },
+
+    // Local transport per day — Lisa can provide: item.transportMode
+    calcDailyTransport(day) {
+      // If day has explicit transport mode
+      if (day.transportMode === 'walking') return 0;
+      if (day.transportMode === 'bicycle') return 0;
+      if (day.transportMode === 'public') return 4;
+      if (day.transportMode === 'taxi') return 15;
+      if (day.transportMode === 'rental') return 20;
+
+      // Estimate from activities — free days likely less transport
+      const hasActivities = day.items.some(i => i.tag === 'activity');
+      const hasTransfer = day.items.some(i => /transfer|airport|pickup/i.test(i.title || ''));
+      if (hasTransfer) return 18;
+      if (!hasActivities) return 5; // rest day
+      return 12; // default active day
+    },
+
+    // Full trip calculation
+    calcTrip(days) {
+      const result = {
+        flights: [],
+        hotelNights: 0,
+        hotelCO2: 0,
+        activities: [],
+        transportCO2: 0,
+        transportDays: 0,
+        totalCO2: 0,
+        breakdown: {},
+        methods: [],
+      };
+
+      const hotelDays = new Set();
+
+      days.forEach(day => {
+        // Transport for this day
+        const dayCO2 = this.calcDailyTransport(day);
+        result.transportCO2 += dayCO2;
+        result.transportDays++;
+
+        day.items.forEach(item => {
+          if (item.tag === 'flight') {
+            const f = this.calcFlight(item);
+            result.flights.push({ ...f, title: item.title });
+            if (!result.methods.includes(f.method)) result.methods.push(f.method);
+          }
+          else if (item.tag === 'hotel') {
+            // Count unique hotel nights (avoid double-counting check-in/out)
+            const key = item.placeQuery || item.title;
+            if (!hotelDays.has(key)) {
+              hotelDays.add(key);
+              const nights = Math.max(1, (item.dayEnd || day.day) - day.day);
+              const perNight = this.calcHotelPerNight(item);
+              result.hotelNights += nights;
+              result.hotelCO2 += perNight * nights;
+            }
+          }
+          else if (item.tag === 'activity') {
+            const co2 = this.calcActivity(item);
+            result.activities.push({ co2, title: item.title });
+          }
+        });
+      });
+
+      const flightTotal = result.flights.reduce((s, f) => s + f.co2, 0);
+      const activityTotal = result.activities.reduce((s, a) => s + a.co2, 0);
+
+      result.breakdown = {
+        flights: flightTotal,
+        hotels: result.hotelCO2,
+        activities: activityTotal,
+        transport: result.transportCO2,
+      };
+      result.totalCO2 = flightTotal + result.hotelCO2 + activityTotal + result.transportCO2;
+
+      return result;
+    },
+  };
+
+  // ===== LUXURY DETECTION ENGINE =====
+  const LuxuryDetect = {
+    // Keywords that signal luxury travel
+    flightKeywords: /first\s*class|business\s*class|premium\s*economy|premium|lie[\s-]flat|lounge access/i,
+    hotelKeywords: /5[\s-]*star|luxury|boutique|resort|villa|suite|penthouse|palace|ritz|four seasons|mandarin oriental|aman|st\.?\s*regis|waldorf|peninsula|park hyatt|rosewood|belmond|one&only|six senses|alila|como|banyan tree/i,
+    activityKeywords: /private|vip|exclusive|yacht|helicopter|charter|champagne|fine dining|michelin/i,
+
+    // Score the trip: 0 = budget, 1-3 = mid, 4+ = luxury
+    scoreLuxury(days) {
+      let score = 0;
+      const signals = [];
+
+      days.forEach(day => {
+        day.items.forEach(item => {
+          const text = `${item.title} ${item.sub || ''} ${(item.details || []).map(d => d.value).join(' ')}`;
+
+          if (item.tag === 'flight' && this.flightKeywords.test(text)) {
+            score += 2;
+            signals.push({ type: 'flight', match: text.match(this.flightKeywords)?.[0] });
+          }
+          if (item.tag === 'hotel' && this.hotelKeywords.test(text)) {
+            score += 2;
+            signals.push({ type: 'hotel', match: text.match(this.hotelKeywords)?.[0] });
+          }
+          if (item.tag === 'activity' && this.activityKeywords.test(text)) {
+            score += 1;
+            signals.push({ type: 'activity', match: text.match(this.activityKeywords)?.[0] });
+          }
+
+          // Price-based detection
+          if (item.tag === 'flight' && item.price > 800) { score += 1; signals.push({ type: 'price', match: 'premium flight' }); }
+          if (item.tag === 'hotel' && item.price > 400) { score += 1; signals.push({ type: 'price', match: 'premium hotel' }); }
+        });
+      });
+
+      return { score, isLuxury: score >= 3, signals };
+    }
+  };
+
+  // ===== ECO COMPACT (Summary card) =====
+  function buildEcoCompact(grandTotal) {
+    const calc = CarbonCalc.calcTrip(timelineDays);
+    const totalCO2 = calc.totalCO2;
+    const treesNeeded = Math.ceil(totalCO2 / 22);
+    const roundUpAmount = Math.ceil(grandTotal / 100) * 100 - grandTotal || 10;
+    const { flights: fCO2, hotels: hCO2, activities: aCO2, transport: tCO2 } = calc.breakdown;
+
+    // Luxury detection
+    const luxury = LuxuryDetect.scoreLuxury(timelineDays);
+
+    // Travel with Purpose mode
+    const purposeMode = localStorage.getItem('travelWithPurpose') === 'true';
+
+    // Smart offset amount — luxury gets higher suggested donation
+    const suggestedOffset = luxury.isLuxury
+      ? Math.ceil(grandTotal * 0.02) // 2% of trip cost for luxury
+      : roundUpAmount;
+
+    // Mini donut SVG
+    const segments = [
+      { value: fCO2, color: '#f59e0b' },
+      { value: hCO2, color: '#6366f1' },
+      { value: aCO2, color: '#ec4899' },
+      { value: tCO2, color: '#3b82f6' },
+    ].filter(s => s.value > 0);
+    const cx = 28, cy = 28, r = 22, sw = 8;
+    const circ = 2 * Math.PI * r;
+    let off = 0;
+    const arcs = segments.map(s => {
+      const dl = (s.value / totalCO2) * circ;
+      const d = -off; off += dl;
+      return `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${s.color}" stroke-width="${sw}" stroke-dasharray="${dl} ${circ - dl}" stroke-dashoffset="${d}" transform="rotate(-90 ${cx} ${cy})"/>`;
+    }).join('');
+    const miniDonut = `<svg width="56" height="56" viewBox="0 0 56 56">${arcs}</svg>`;
+
+    // Accuracy badge
+    const methodLabel = calc.methods.includes('exact') ? 'Precise' :
+                        calc.methods.includes('lookup') ? 'Estimated' :
+                        calc.methods.includes('duration') ? 'Estimated' : 'Approximate';
+    const methodColor = methodLabel === 'Precise' ? 'var(--green)' : 'var(--amber)';
+
+    // Purpose mode badge
+    const purposeBadge = purposeMode ? `
+      <span class="eco-badge" style="background:rgba(52,211,153,0.15);color:#34d399;border:1px solid rgba(52,211,153,0.3);">
+        <i data-lucide="leaf" style="width:10px;height:10px;"></i> Purpose Mode
+      </span>` : '';
+
+    const el = document.getElementById('ecoCompactCard');
+    el.innerHTML = `
+      <div style="
+        background: linear-gradient(135deg, rgba(16,185,129,0.06), rgba(52,211,153,0.03));
+        border: 1px solid rgba(16,185,129,0.15);
+        border-radius: var(--radius);
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+      ">
+        <!-- Mini donut -->
+        <div style="position:relative;width:56px;height:56px;flex-shrink:0;">
+          ${miniDonut}
+          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);">
+            <i data-lucide="leaf" style="width:16px;height:16px;color:var(--green);"></i>
+          </div>
+        </div>
+
+        <!-- Info -->
+        <div style="flex:1;min-width:180px;">
+          <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:4px;flex-wrap:wrap;">
+            <span style="font-size:24px;font-weight:800;color:var(--text);font-family:var(--mono);">${totalCO2.toLocaleString()}</span>
+            <span style="font-size:12px;color:var(--text-3);">kg CO₂</span>
+            <span class="eco-badge" style="background:${methodColor}22;color:${methodColor};border:1px solid ${methodColor}33;">${methodLabel}</span>
+            ${purposeBadge}
+          </div>
+          <div style="font-size:12px;color:var(--text-2);line-height:1.5;">
+            Your trip's carbon footprint — equivalent to ${treesNeeded} trees growing for a year.
+            <a href="#" onclick="event.preventDefault();document.querySelectorAll('.tab-btn')[4].click();" style="color:var(--green);text-decoration:none;font-weight:600;"> View full breakdown <i data-lucide="arrow-right" style="width:12px;height:12px;display:inline;vertical-align:middle;"></i></a>
+          </div>
+        </div>
+
+        <!-- Offset CTA -->
+        <div style="display:flex;flex-direction:column;gap:8px;flex-shrink:0;">
+          <button onclick="event.preventDefault();document.querySelectorAll('.tab-btn')[4].click();" style="
+            background:var(--green);color:white;border:none;
+            border-radius:10px;padding:10px 20px;
+            font-size:13px;font-weight:700;font-family:var(--font);
+            cursor:pointer;display:flex;align-items:center;gap:6px;
+            transition:all 0.2s;white-space:nowrap;
+          " onmouseover="this.style.background='#0d9668';this.style.transform='translateY(-1px)'" onmouseout="this.style.background='var(--green)';this.style.transform='none'">
+            <i data-lucide="heart-handshake" style="width:15px;height:15px;"></i>
+            Offset for $${suggestedOffset}
+          </button>
+          <div style="font-size:10px;color:var(--text-3);text-align:center;">Round up & donate</div>
+        </div>
+      </div>
+
+      ${luxury.isLuxury ? `
+      <!-- LUXURY AUTO-ROUNDUP BANNER -->
+      <div id="luxuryRoundup" style="
+        margin-top: 14px;
+        background: linear-gradient(135deg, rgba(245,158,11,0.06), rgba(251,191,36,0.03));
+        border: 1px solid rgba(245,158,11,0.2);
+        border-radius: var(--radius);
+        padding: 18px 22px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+        animation: fadeIn 0.5s ease;
+      ">
+        <div style="width:42px;height:42px;border-radius:12px;background:rgba(245,158,11,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <i data-lucide="sparkles" style="width:20px;height:20px;color:var(--amber);"></i>
+        </div>
+        <div style="flex:1;min-width:200px;">
+          <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:3px;">
+            Premium trip detected — make it count
+          </div>
+          <div style="font-size:12px;color:var(--text-2);line-height:1.5;">
+            We noticed you're travelling in style. Adding just <strong style="color:var(--amber);">$${suggestedOffset}</strong> (${Math.round(suggestedOffset / grandTotal * 100)}% of your trip) offsets your entire carbon footprint and plants ${treesNeeded} trees.
+          </div>
+        </div>
+        <button id="luxuryRoundupBtn" onclick="acceptLuxuryRoundup(this, ${suggestedOffset})" style="
+          background: linear-gradient(135deg, #f59e0b, #d97706);
+          color: white; border: none;
+          border-radius: 10px; padding: 12px 22px;
+          font-size: 13px; font-weight: 700;
+          font-family: var(--font);
+          cursor: pointer; display: flex;
+          align-items: center; gap: 8px;
+          transition: all 0.2s; white-space: nowrap;
+          box-shadow: 0 4px 12px rgba(245,158,11,0.25);
+        " onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 6px 20px rgba(245,158,11,0.35)'" onmouseout="this.style.transform='none';this.style.boxShadow='0 4px 12px rgba(245,158,11,0.25)'">
+          <i data-lucide="heart" style="width:15px;height:15px;"></i>
+          Add $${suggestedOffset} to Booking
+        </button>
+      </div>
+      ` : ''}
+
+      ${purposeMode ? `
+      <!-- PURPOSE MODE BANNER -->
+      <div style="
+        margin-top: 14px;
+        background: linear-gradient(135deg, rgba(16,185,129,0.06), rgba(52,211,153,0.03));
+        border: 1px solid rgba(16,185,129,0.15);
+        border-radius: var(--radius);
+        padding: 16px 20px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        flex-wrap: wrap;
+      ">
+        <div style="width:36px;height:36px;border-radius:10px;background:rgba(16,185,129,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <i data-lucide="shield-check" style="width:18px;height:18px;color:var(--green);"></i>
+        </div>
+        <div style="flex:1;min-width:200px;">
+          <div style="font-size:13px;font-weight:700;color:var(--green);margin-bottom:2px;">Travel with Purpose is active</div>
+          <div style="font-size:11px;color:var(--text-3);line-height:1.5;">Lisa prioritised eco-certified hotels, low-impact activities, and direct flights to minimise your environmental footprint.</div>
+        </div>
+      </div>
+      ` : ''}
+    `;
+    initIcons();
+  }
+
+  // Accept luxury round-up
+  function acceptLuxuryRoundup(btn, amount) {
+    btn.innerHTML = '<i data-lucide="check" style="width:15px;height:15px;"></i> Added to booking';
+    btn.style.background = 'var(--green)';
+    btn.style.boxShadow = '0 4px 12px rgba(16,185,129,0.25)';
+    btn.onclick = null;
+    btn.style.cursor = 'default';
+    showToast('$' + amount + ' carbon offset added to your booking!', 'success');
+    initIcons();
+  }
+
+  // ===== ECO IMPACT (Full tab) =====
+  function buildEco() {
+    const calc = CarbonCalc.calcTrip(timelineDays);
+    const { flights: flightEmissions, hotels: hotelEmissions, activities: activityEmissions, transport: localTransport } = calc.breakdown;
+    const totalCO2 = calc.totalCO2;
+    const totalDays = timelineDays.length;
+
+    const treesNeeded = Math.ceil(totalCO2 / 22);
+    const drivingEquiv = Math.round(totalCO2 / 0.21);
+    const avgPersonDaily = 22;
+    const tripDailyAvg = Math.round(totalCO2 / totalDays);
+
+    const grandTotal = timelineDays.reduce((sum, day) =>
+      sum + day.items.reduce((s, i) => s + (i.price || 0), 0), 0);
+    const roundUpAmount = Math.ceil(grandTotal / 100) * 100 - grandTotal || 10;
+    const carbonOffsetCost = Math.ceil(totalCO2 * 0.03);
+    const treesCost = treesNeeded * 2;
+
+    // Donut chart as SVG
+    const segments = [
+      { label: 'Flights', value: flightEmissions, color: '#f59e0b' },
+      { label: 'Hotels', value: hotelEmissions, color: '#6366f1' },
+      { label: 'Activities', value: activityEmissions, color: '#ec4899' },
+      { label: 'Transport', value: localTransport, color: '#3b82f6' },
+    ].filter(s => s.value > 0);
+
+    let donutSVG = '';
+    if (totalCO2 > 0) {
+      const cx = 80, cy = 80, r = 64, strokeW = 24;
+      const circumference = 2 * Math.PI * r;
+      let offset = 0;
+      const arcs = segments.map(seg => {
+        const pct = seg.value / totalCO2;
+        const dashLen = pct * circumference;
+        const dashOffset = -offset;
+        offset += dashLen;
+        return `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${seg.color}" stroke-width="${strokeW}" stroke-dasharray="${dashLen} ${circumference - dashLen}" stroke-dashoffset="${dashOffset}" transform="rotate(-90 ${cx} ${cy})" style="transition: stroke-dasharray 0.8s ease;"/>`;
+      }).join('');
+      donutSVG = `<svg width="160" height="160" viewBox="0 0 160 160">${arcs}</svg>`;
+    }
+
+    const maxEmission = Math.max(flightEmissions, hotelEmissions, activityEmissions, localTransport);
+
+    const container = document.getElementById('ecoContent');
+    container.innerHTML = `
+      <!-- Hero -->
+      <div class="eco-hero">
+        <div class="eco-hero-icon"><i data-lucide="leaf" style="width:28px;height:28px;color:var(--green)"></i></div>
+        <div class="eco-hero-title">Your Trip's Environmental Footprint</div>
+        <div class="eco-hero-sub">
+          Understanding your carbon impact is the first step to travelling more sustainably. Here's the breakdown for your ${totalDays}-day trip.
+        </div>
+      </div>
+
+      <div class="eco-grid">
+        <!-- Carbon Breakdown -->
+        <div class="eco-card">
+          <div class="eco-card-title">
+            <i data-lucide="pie-chart" style="width:16px;height:16px;color:var(--green)"></i>
+            Carbon Breakdown
+          </div>
+          <div class="eco-donut-wrap">
+            <div class="eco-donut-canvas">
+              ${donutSVG}
+              <div class="eco-donut-center">
+                <div class="eco-donut-center-num">${totalCO2.toLocaleString()}</div>
+                <div class="eco-donut-center-label">kg CO₂</div>
+              </div>
+            </div>
+            <div class="eco-legend">
+              ${segments.map(s => `
+                <div class="eco-legend-item">
+                  <div class="eco-legend-dot" style="background:${s.color}"></div>
+                  <span>${s.label}</span>
+                  <span style="margin-left:auto;font-family:var(--mono);font-weight:600;font-size:11px;">${s.value.toLocaleString()} kg</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+
+        <!-- Bar Chart -->
+        <div class="eco-card">
+          <div class="eco-card-title">
+            <i data-lucide="bar-chart-3" style="width:16px;height:16px;color:var(--green)"></i>
+            Emissions by Category
+          </div>
+          ${[
+            { label: 'Flights', icon: 'plane-takeoff', value: flightEmissions, color: '#f59e0b' },
+            { label: 'Hotels', icon: 'bed-double', value: hotelEmissions, color: '#6366f1' },
+            { label: 'Activities', icon: 'sparkles', value: activityEmissions, color: '#ec4899' },
+            { label: 'Transport', icon: 'car', value: localTransport, color: '#3b82f6' },
+          ].map(b => `
+            <div class="eco-bar-row">
+              <div class="eco-bar-label">
+                <i data-lucide="${b.icon}" style="width:13px;height:13px;color:${b.color}"></i>
+                ${b.label}
+              </div>
+              <div class="eco-bar-track">
+                <div class="eco-bar-fill" style="width:${maxEmission > 0 ? (b.value / maxEmission * 100) : 0}%;background:${b.color};">
+                  ${b.value > maxEmission * 0.2 ? b.value + ' kg' : ''}
+                </div>
+              </div>
+              <div class="eco-bar-value">${b.value.toLocaleString()} kg</div>
+            </div>
+          `).join('')}
+          <div style="margin-top:16px;padding-top:12px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:12px;color:var(--text-2);">Daily average</span>
+            <span style="font-size:14px;font-weight:700;font-family:var(--mono);color:var(--text);">${tripDailyAvg} kg/day</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comparisons -->
+      <div class="eco-compare">
+        <div class="eco-compare-title">
+          <i data-lucide="scale" style="width:16px;height:16px;color:var(--amber)"></i>
+          How Does This Compare?
+        </div>
+        <div class="eco-compare-row">
+          <div class="eco-compare-icon" style="background:rgba(245,158,11,0.1);">
+            <i data-lucide="car" style="width:18px;height:18px;color:var(--amber)"></i>
+          </div>
+          <div class="eco-compare-info">
+            <div class="eco-compare-name">Equivalent to driving</div>
+            <div class="eco-compare-desc">In an average petrol car</div>
+          </div>
+          <div class="eco-compare-val" style="color:var(--amber);">${drivingEquiv.toLocaleString()} km</div>
+        </div>
+        <div class="eco-compare-row">
+          <div class="eco-compare-icon" style="background:rgba(16,185,129,0.1);">
+            <i data-lucide="tree-pine" style="width:18px;height:18px;color:var(--green)"></i>
+          </div>
+          <div class="eco-compare-info">
+            <div class="eco-compare-name">Trees needed to offset</div>
+            <div class="eco-compare-desc">Growing for one year</div>
+          </div>
+          <div class="eco-compare-val" style="color:var(--green);">${treesNeeded} trees</div>
+        </div>
+        <div class="eco-compare-row">
+          <div class="eco-compare-icon" style="background:rgba(99,102,241,0.1);">
+            <i data-lucide="user" style="width:18px;height:18px;color:var(--indigo)"></i>
+          </div>
+          <div class="eco-compare-info">
+            <div class="eco-compare-name">Average person emits</div>
+            <div class="eco-compare-desc">~22 kg CO₂ per day in daily life</div>
+          </div>
+          <div class="eco-compare-val" style="color:var(--indigo);">${tripDailyAvg > avgPersonDaily ? (tripDailyAvg / avgPersonDaily).toFixed(1) + 'x more' : 'Below avg'}</div>
+        </div>
+      </div>
+
+      <!-- Green Travel Tips -->
+      <div class="eco-tips">
+        <div class="eco-card-title">
+          <i data-lucide="lightbulb" style="width:16px;height:16px;color:var(--green)"></i>
+          Tips to Reduce Your Impact
+        </div>
+        <div class="eco-tip">
+          <div class="eco-tip-icon"><i data-lucide="plane" style="width:16px;height:16px;color:var(--green)"></i></div>
+          <div>
+            <div class="eco-tip-title">Choose direct flights</div>
+            <div class="eco-tip-desc">Non-stop flights produce up to 50% less CO₂ than connecting flights due to takeoff and landing fuel burn.</div>
+          </div>
+        </div>
+        <div class="eco-tip">
+          <div class="eco-tip-icon"><i data-lucide="building-2" style="width:16px;height:16px;color:var(--green)"></i></div>
+          <div>
+            <div class="eco-tip-title">Stay at eco-certified hotels</div>
+            <div class="eco-tip-desc">Look for Green Key or EarthCheck certified properties that actively reduce energy and water usage.</div>
+          </div>
+        </div>
+        <div class="eco-tip">
+          <div class="eco-tip-icon"><i data-lucide="bike" style="width:16px;height:16px;color:var(--green)"></i></div>
+          <div>
+            <div class="eco-tip-title">Use local transport & walk</div>
+            <div class="eco-tip-desc">Public transport, cycling, and walking can cut your daily travel emissions by up to 80%.</div>
+          </div>
+        </div>
+        <div class="eco-tip">
+          <div class="eco-tip-icon"><i data-lucide="utensils" style="width:16px;height:16px;color:var(--green)"></i></div>
+          <div>
+            <div class="eco-tip-title">Eat local, eat seasonal</div>
+            <div class="eco-tip-desc">Locally-sourced meals have a significantly lower carbon footprint than imported food and support the local economy.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Offset / Donate Section -->
+      <div class="eco-offset">
+        <div class="eco-offset-header">
+          <div class="eco-offset-icon"><i data-lucide="heart-handshake" style="width:24px;height:24px;color:var(--green)"></i></div>
+          <div>
+            <div class="eco-offset-title">Offset Your Impact</div>
+            <div class="eco-offset-desc">Round up your trip cost or choose an offset option to make a positive difference. 100% of contributions go directly to verified environmental projects.</div>
+          </div>
+        </div>
+
+        <div class="eco-offset-options" id="ecoOffsetOptions">
+          <div class="eco-offset-option" onclick="toggleEcoOption(this, 'roundup')" data-amount="${roundUpAmount}">
+            <div class="eco-checkbox"><i data-lucide="check" style="width:14px;height:14px;color:white;display:none;"></i></div>
+            <div class="eco-offset-opt-info">
+              <div class="eco-offset-opt-name">Round up trip cost</div>
+              <div class="eco-offset-opt-desc">Round $${grandTotal.toLocaleString()} up to $${(grandTotal + roundUpAmount).toLocaleString()} — donated to verified reforestation projects</div>
+            </div>
+            <div class="eco-offset-opt-price">+$${roundUpAmount}</div>
+          </div>
+
+          <div class="eco-offset-option" onclick="toggleEcoOption(this, 'carbon')" data-amount="${carbonOffsetCost}">
+            <div class="eco-checkbox"><i data-lucide="check" style="width:14px;height:14px;color:white;display:none;"></i></div>
+            <div class="eco-offset-opt-info">
+              <div class="eco-offset-opt-name">Full carbon offset</div>
+              <div class="eco-offset-opt-desc">Offset all ${totalCO2.toLocaleString()} kg CO₂ through Gold Standard certified projects</div>
+            </div>
+            <div class="eco-offset-opt-price">+$${carbonOffsetCost}</div>
+          </div>
+
+          <div class="eco-offset-option" onclick="toggleEcoOption(this, 'trees')" data-amount="${treesCost}">
+            <div class="eco-checkbox"><i data-lucide="check" style="width:14px;height:14px;color:white;display:none;"></i></div>
+            <div class="eco-offset-opt-info">
+              <div class="eco-offset-opt-name">Plant ${treesNeeded} trees</div>
+              <div class="eco-offset-opt-desc">Plant enough trees to absorb your trip's carbon emissions over one year via One Tree Planted</div>
+            </div>
+            <div class="eco-offset-opt-price">+$${treesCost}</div>
+          </div>
+        </div>
+
+        <div class="eco-offset-total">
+          <div class="eco-offset-total-label">Your contribution</div>
+          <div class="eco-offset-total-val" id="ecoOffsetTotal">$0</div>
+        </div>
+
+        <button class="eco-offset-btn" onclick="showToast('Carbon offset added to your booking!', 'success')">
+          <i data-lucide="leaf" style="width:18px;height:18px;"></i>
+          Add Offset to Booking
+        </button>
+      </div>
+    `;
+
+    initIcons();
+  }
+
+  // Eco offset selection logic
+  const ecoSelections = { roundup: false, carbon: false, trees: false };
+  function toggleEcoOption(el, key) {
+    ecoSelections[key] = !ecoSelections[key];
+    el.classList.toggle('selected');
+    const checkIcon = el.querySelector('i[data-lucide="check"]');
+    if (checkIcon) checkIcon.style.display = ecoSelections[key] ? 'block' : 'none';
+
+    // Calculate total
+    let total = 0;
+    document.querySelectorAll('.eco-offset-option.selected').forEach(opt => {
+      total += parseInt(opt.dataset.amount) || 0;
+    });
+    document.getElementById('ecoOffsetTotal').textContent = '$' + total;
     initIcons();
   }
 
