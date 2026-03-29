@@ -804,20 +804,11 @@ const timelineSteps = [
   { day:"Day 7", label:"Depart", location:"Cairns", icon:"🌅" },
 ];
 
-const lisaResponses = [
-  "Love that! I've pulled together some itineraries that match your style. Check the middle panel — the Golden Coast Explorer might be perfect for you!",
-  "Great taste! I've also pinned some social media posts from travelers who've done similar trips. Check the right panel for inspo!",
-  "I'd recommend the 7-day option — it gives you enough time to really soak it in without rushing. Want me to customize any of these?",
-  "Absolutely! I can adjust the timeline, swap out activities, or add rest days. Just let me know what feels right.",
-  "Once you're happy with everything, hit that Submit Itinerary button and we'll lock it in! 🎉",
-];
-
 // ══════════════════════════════════════════════════════════════
 // STATE
 // ══════════════════════════════════════════════════════════════
 let selectedItinerary = null;
 let addedItineraries = [];
-let responseIdx = 0;
 let hasChatted = false;
 let chatHistory = [];
 const DRAFT_KEY = 'oneup_planner_draft';
@@ -840,7 +831,6 @@ function saveDraft() {
     addedItineraries,
     chatHistory,
     hasChatted,
-    responseIdx,
     timestamp: Date.now(),
     tripName: localStorage.getItem('currentTrip') || 'Untitled Trip'
   };
@@ -870,7 +860,6 @@ function resumeDraft() {
   addedItineraries = draft.addedItineraries || [];
   chatHistory = draft.chatHistory || [];
   hasChatted = draft.hasChatted || false;
-  responseIdx = draft.responseIdx || 0;
   // Restore chat
   renderChatHistory();
   renderItineraries();
@@ -896,7 +885,7 @@ function renderChatHistory() {
   area.innerHTML = '';
   chatHistory.forEach(m => {
     if (m.from === 'lisa') {
-      area.innerHTML += `<div class="msg lisa"><div class="msg-avatar">L</div><div class="msg-bubble">${m.text}</div></div>`;
+      area.innerHTML += `<div class="msg lisa"><div class="msg-avatar">L</div><div class="msg-bubble">${formatLisaMessage(m.text)}</div></div>`;
     } else {
       area.innerHTML += `<div class="msg user"><div class="msg-bubble">${escapeHtml(m.text)}</div><div class="msg-avatar">👤</div></div>`;
     }
@@ -909,23 +898,29 @@ function renderChatHistory() {
 // ══════════════════════════════════════════════════════════════
 function checkHomepageHandoff() {
   const currentTrip = localStorage.getItem('currentTrip');
-  if (currentTrip && chatHistory.length === 0) {
-    const greeting = `Hey there! I see you're looking at "${currentTrip}" — great choice! ✨ I've curated some itineraries below. Let me know your budget, travel style, or if you want me to tweak anything!`;
+  const ecoMode = localStorage.getItem('travelWithPurpose') === 'true';
+  
+  if (currentTrip && currentTrip !== 'Editing saved trip' && chatHistory.length === 0) {
+    // Static greeting (instant, no API wait)
+    const ecoNote = ecoMode ? " I see you've got eco mode on — I'll prioritise sustainable options! 🌿" : "";
+    const greeting = `Hey there! I see you're interested in "${currentTrip}" — great choice! ✨${ecoNote}\n\nTell me a bit more so I can find the perfect trip for you:\n• What's your budget?\n• How many people are travelling?\n• What kind of vibe — adventure, relaxation, culture, foodie?\n\nOr just tell me anything and I'll work with it!`;
     chatHistory.push({ from: 'lisa', text: greeting });
     document.getElementById('itinSubtitle').textContent = `Curated by Lisa for "${currentTrip}". Click to explore or add to your plan.`;
   } else if (chatHistory.length === 0) {
-    chatHistory.push({ from: 'lisa', text: "Hey there! I'm Lisa, your personal travel curator ✨ Tell me about your dream trip — where are you thinking, what vibe are you after?" });
+    chatHistory.push({ from: 'lisa', text: "Hey there! I'm Lisa, your personal AI travel agent ✨\n\nTell me about your dream trip — where do you want to go, what's your budget, and what kind of experience are you after?\n\nI'll search the web for the best options, real prices, and current availability to build your perfect itinerary." });
   }
   renderChatHistory();
 }
 
 // ══════════════════════════════════════════════════════════════
-// CHAT
+// CHAT — powered by Claude AI + Web Search
 // ══════════════════════════════════════════════════════════════
-function sendMessage() {
+let isLisaTyping = false;
+
+async function sendMessage() {
   const input = document.getElementById('chatInput');
   const text = input.value.trim();
-  if (!text) return;
+  if (!text || isLisaTyping) return;
   input.value = '';
   hasChatted = true;
   updateStepper();
@@ -933,19 +928,64 @@ function sendMessage() {
 
   const area = document.getElementById('chatMessages');
   area.innerHTML += `<div class="msg user"><div class="msg-bubble">${escapeHtml(text)}</div><div class="msg-avatar">👤</div></div>`;
+  
+  // Show typing indicator
+  isLisaTyping = true;
   area.innerHTML += `<div id="typing" style="display:flex;gap:8px;animation:msgIn 0.3s ease"><div class="msg-avatar" style="background:var(--lisa-gradient);color:#fff;font-weight:800;font-size:12px;width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">L</div><div class="typing-dots"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></div></div>`;
   area.scrollTop = area.scrollHeight;
 
-  setTimeout(() => {
-    const el = document.getElementById('typing');
-    if (el) el.remove();
-    const resp = lisaResponses[responseIdx % lisaResponses.length];
-    responseIdx++;
-    chatHistory.push({ from: 'lisa', text: resp });
-    area.innerHTML += `<div class="msg lisa"><div class="msg-avatar" style="background:var(--lisa-gradient);color:#fff;font-weight:800;font-size:12px">L</div><div class="msg-bubble">${resp}</div></div>`;
+  try {
+    const ecoMode = localStorage.getItem('travelWithPurpose') === 'true';
+    
+    // Build messages for API — include conversation context
+    const apiMessages = chatHistory.filter(m => m.from === 'user' || m.from === 'lisa');
+
+    const response = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages: apiMessages, ecoMode }),
+    });
+
+    const data = await response.json();
+
+    // Remove typing indicator
+    const typingEl = document.getElementById('typing');
+    if (typingEl) typingEl.remove();
+    isLisaTyping = false;
+
+    if (!response.ok) {
+      throw new Error(data.error || 'API request failed');
+    }
+
+    const reply = data.reply || "Sorry, I couldn't process that. Try again?";
+    chatHistory.push({ from: 'lisa', text: reply });
+
+    // Render Lisa's response with formatted text
+    area.innerHTML += `<div class="msg lisa"><div class="msg-avatar" style="background:var(--lisa-gradient);color:#fff;font-weight:800;font-size:12px">L</div><div class="msg-bubble">${formatLisaMessage(reply)}</div></div>`;
     area.scrollTop = area.scrollHeight;
     saveDraft();
-  }, 1200);
+
+  } catch (error) {
+    console.error('Chat error:', error);
+    const typingEl = document.getElementById('typing');
+    if (typingEl) typingEl.remove();
+    isLisaTyping = false;
+
+    // Fallback response
+    const fallback = "I'm having a bit of trouble connecting right now. Try sending your message again in a moment! 🙏";
+    chatHistory.push({ from: 'lisa', text: fallback });
+    area.innerHTML += `<div class="msg lisa"><div class="msg-avatar" style="background:var(--lisa-gradient);color:#fff;font-weight:800;font-size:12px">L</div><div class="msg-bubble">${fallback}</div></div>`;
+    area.scrollTop = area.scrollHeight;
+  }
+}
+
+// Format Lisa's response — convert markdown-style formatting to HTML
+function formatLisaMessage(text) {
+  return text
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\n\n/g, '<br><br>')
+    .replace(/\n/g, '<br>')
+    .replace(/^- (.*)/gm, '• $1');
 }
 
 function escapeHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
