@@ -525,6 +525,12 @@
       margin-bottom: 18px;
       animation: fadeInUp 0.8s ease 0.65s backwards;
     }
+    /* Ensure toggle is always visible when eco mode is restored on page load */
+    .purpose-theme .purpose-toggle-wrap {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+      animation: none !important;
+    }
     .purpose-toggle-label {
       font-size: 13px;
       font-weight: 600;
@@ -1981,10 +1987,15 @@
 
     // Restore toggle state on load
     if (purposeMode) {
+      document.documentElement.classList.add('purpose-theme');
       document.getElementById('purposeToggle').classList.add('active');
       document.getElementById('purposeLabel').classList.add('active');
       document.getElementById('purposeBadge').classList.add('show');
       document.getElementById('tripInput').placeholder = 'Plan an eco-friendly trip to...';
+      // Ensure toggle stays visible after theme applies
+      document.querySelector('.purpose-toggle-wrap').style.opacity = '1';
+      document.querySelector('.purpose-toggle-wrap').style.transform = 'translateY(0)';
+      if (typeof updateGlobeTheme === 'function') updateGlobeTheme(true);
     }
 
     function handleEnter(event) {
