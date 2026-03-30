@@ -1322,20 +1322,32 @@ async function sendMessage() {
   var statusMessages = ['Thinking...'];
 
   // Detect what user is asking about and show relevant statuses
-  var wantsFlight = /flight|fly|airline|airport|one.?way|return|depart|arrive|bne|syd|mel/.test(msgLower);
+  var wantsFlight = /flight|fly|airline|airport|one.?way|return|depart|arrive|bne|syd|mel|brisbane.*to|sydney.*to|melbourne.*to|from.*brisbane|from.*sydney|from.*melbourne/.test(msgLower);
   var wantsHotel = /hotel|stay|accommodation|resort|villa|airbnb|hostel|book.*room|where.*stay/.test(msgLower);
-  var wantsActivity = /activit|tour|thing.*do|experience|adventure|restaurant|food|eat|dining|cook|surf|trek|hike|temple|museum/.test(msgLower);
+  var wantsActivity = /activit|tour|thing.*do|can.*do|what.*do|experience|adventure|restaurant|food|eat|dining|cook|surf|trek|hike|temple|museum|see|visit|explore/.test(msgLower);
   var wantsTrip = /trip|holiday|vacation|getaway|travel|plan|itinerary/.test(msgLower);
+  var isDayTrip = /day trip|day.?tour/.test(msgLower);
   var hasDestination = /bali|thailand|japan|europe|paris|london|tokyo|fiji|new zealand|vietnam|greece|italy|spain|morocco|maldives|hawaii|singapore|ubud|seminyak|canggu|phuket|bangkok/.test(msgLower);
+  var hasRoute = /to (bali|thailand|japan|paris|london|tokyo|fiji|singapore|vietnam|greece|italy|spain|hawaii|phuket|bangkok|denpasar|ubud)/.test(msgLower);
+
+  // A route like "Brisbane to Bali" implies flights
+  if (hasRoute) wantsFlight = true;
+
+  // If they mention route + duration or budget or passengers, it's a full trip
+  var hasTripSignals = /\d+k|\$\d|week|night|day|couple|solo|family|group|budget/.test(msgLower);
+  if (hasRoute && hasTripSignals) wantsTrip = true;
 
   // Build contextual messages
   statusMessages.push('Searching the web...');
 
-  if (wantsFlight || wantsTrip) {
+  if (isDayTrip) {
+    statusMessages.push('Finding day trip options...');
+    statusMessages.push('Checking availability...');
+  } else if (wantsFlight || (wantsTrip && !isDayTrip)) {
     statusMessages.push('Scanning flight routes and prices...');
     statusMessages.push('Comparing airlines...');
   }
-  if (wantsHotel || wantsTrip) {
+  if (wantsHotel || (wantsTrip && !isDayTrip)) {
     statusMessages.push('Checking hotel availability...');
     statusMessages.push('Reading guest reviews...');
   }
@@ -1371,7 +1383,7 @@ async function sendMessage() {
     const response = await fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages: apiMessages, ecoMode: ecoMode, lastImage: imageData }),
+      body: JSON.stringify({ messages: apiMessages, ecoMode: ecoMode, lastImage: imageData, today: new Date().toISOString().split('T')[0] }),
     });
 
     const data = await response.json();
@@ -1734,6 +1746,18 @@ function renderResults(data) {
     });
     html += '</div>';
   }
+
+  // Total estimate card
+  if (data.totalEstimate) {
+    html += '<div style="margin-top:20px;padding:20px 24px;background:#fff;border:1px solid #ddd7ca;border-radius:14px;display:flex;justify-content:space-between;align-items:center">';
+    html += '<div><div style="font-size:12px;text-transform:uppercase;letter-spacing:1px;color:#b5a99a;font-weight:600;margin-bottom:4px">Estimated Total</div>';
+    html += '<div style="font-size:11px;color:#96887a">Based on Lisa\'s recommended options</div></div>';
+    html += '<div style="font-size:24px;font-weight:800;color:#3a6b52">' + data.totalEstimate + '</div>';
+    html += '</div>';
+  }
+
+  // Price disclaimer
+  html += '<p style="font-size:11px;color:#b5a99a;text-align:center;margin-top:16px;line-height:1.6">Prices are approximate and sourced from the web. Click through for live pricing and availability.</p>';
 
   if (html) {
     area.innerHTML = html;
