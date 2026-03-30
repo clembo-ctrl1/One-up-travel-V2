@@ -1383,7 +1383,7 @@ async function sendMessage() {
     const response = await fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages: apiMessages, ecoMode: ecoMode, lastImage: imageData, today: new Date().toISOString().split('T')[0] }),
+      body: JSON.stringify({ messages: apiMessages, ecoMode: ecoMode, lastImage: imageData, today: new Date().toISOString().split('T')[0], userCity: window.userCity || '', userRegion: window.userRegion || '', userCountry: window.userCountry || '' }),
     });
 
     const data = await response.json();
@@ -2239,6 +2239,32 @@ function loadGooglePlacesPhotos() {
 }
 
 // ══════════════════════════════════════════════════════════════
+// DETECT USER LOCATION
+// Priority: 1) Browser geolocation → reverse geocode  2) Vercel headers (passed via API)
+window.userCity = '';
+window.userRegion = '';
+window.userCountry = '';
+
+// Try browser geolocation (more accurate)
+if (navigator.geolocation) {
+  navigator.geolocation.getCurrentPosition(function(pos) {
+    // Reverse geocode using free API
+    fetch('https://nominatim.openstreetmap.org/reverse?lat=' + pos.coords.latitude + '&lon=' + pos.coords.longitude + '&format=json&zoom=10')
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data && data.address) {
+          window.userCity = data.address.city || data.address.town || data.address.suburb || '';
+          window.userRegion = data.address.state || '';
+          window.userCountry = data.address.country || '';
+          console.log('Location detected:', window.userCity, window.userRegion, window.userCountry);
+        }
+      })
+      .catch(function() { console.log('Reverse geocode failed, falling back to Vercel headers'); });
+  }, function() {
+    console.log('Geolocation denied, falling back to Vercel headers');
+  }, { timeout: 5000 });
+}
+
 // INIT
 // ══════════════════════════════════════════════════════════════
 checkForDraft();
