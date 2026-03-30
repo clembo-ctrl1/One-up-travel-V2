@@ -31,7 +31,7 @@
       position: sticky; top: 0; z-index: 100;
       padding: 18px 40px;
       display: flex; justify-content: space-between; align-items: center;
-      background: rgba(255,255,255,0.85); backdrop-filter: none;
+      background: #fff; backdrop-filter: none;
       border-bottom: 1px solid #ddd7ca;
     }
 
@@ -44,7 +44,7 @@
     .logo img:hover { transform: scale(1.05); }
 
     .header-menu-btn {
-      background: transparent; border: 1px solid rgba(255,255,255,0.2);
+      background: transparent; border: 1px solid #c8c0ae;
       color: #2c2c2a; padding: 8px 16px; border-radius: 8px; cursor: pointer;
       font-weight: 500; font-size: 14px; transition: all 0.3s;
       display: flex; align-items: center; gap: 8px;
@@ -64,7 +64,7 @@
     .left-sidebar {
       position: fixed; top: 0; left: -280px; width: 280px; height: 100vh;
       background: rgba(12,12,20,0.97); backdrop-filter: blur(24px);
-      border-right: 1px solid rgba(255,255,255,0.08);
+      border-right: 1px solid rgba(92,138,114,0.06);
       padding: 24px 20px; transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
       z-index: 1000; overflow-y: auto;
     }
@@ -85,7 +85,7 @@
     .sidebar-item {
       display: flex; align-items: center; gap: 12px; width: 100%;
       background: transparent; border: 1px solid transparent;
-      color: rgba(255,255,255,0.7); padding: 12px 14px; border-radius: 10px;
+      color: #5a5248; padding: 12px 14px; border-radius: 10px;
       margin-bottom: 4px; text-decoration: none; text-align: left;
       font-weight: 500; font-size: 14px; transition: all 0.25s; cursor: pointer;
     }
@@ -104,13 +104,13 @@
 
     .sidebar-close-btn {
       position: absolute; top: 20px; right: 16px;
-      background: #ffffff; border: 1px solid rgba(255,255,255,0.12);
+      background: #ffffff; border: 1px solid rgba(92,138,114,0.08);
       color: #2c2c2a; width: 36px; height: 36px; border-radius: 10px;
       cursor: pointer; transition: all 0.25s;
       display: flex; align-items: center; justify-content: center;
     }
     .sidebar-close-btn:hover { background: rgba(239,68,68,0.15); border-color: rgba(239,68,68,0.4); box-shadow: 0 0 16px rgba(239,68,68,0.15); }
-    .sidebar-close-btn svg { width: 18px; height: 18px; stroke: rgba(255,255,255,0.8); stroke-width: 2.5; }
+    .sidebar-close-btn svg { width: 18px; height: 18px; stroke: #3d3d3a; stroke-width: 2.5; }
     .sidebar-close-btn:hover svg { stroke: white; }
     .sidebar-divider { height: 1px; background: #ffffff; margin: 8px 0 20px; }
 
@@ -260,18 +260,18 @@
       cursor: pointer; display: flex; align-items: center; justify-content: center;
       transition: all 0.25s; z-index: 2001;
     }
-    .post-modal-close:hover { background: rgba(255,255,255,0.2); }
+    .post-modal-close:hover { background: #c8c0ae; }
     .post-modal-close i { width: 22px; height: 22px; }
 
     /* Nav arrows */
     .post-nav {
       position: fixed; top: 50%; transform: translateY(-50%);
       width: 44px; height: 44px; border-radius: 50%;
-      background: rgba(92,138,114,0.06); border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(92,138,114,0.06); border: 1px solid rgba(92,138,114,0.08);
       color: #2c2c2a; cursor: pointer; display: flex; align-items: center; justify-content: center;
       transition: all 0.25s; z-index: 2001;
     }
-    .post-nav:hover { background: rgba(255,255,255,0.15); }
+    .post-nav:hover { background: #c8c0ae; }
     .post-nav i { width: 22px; height: 22px; }
     .post-nav.prev { left: 20px; }
     .post-nav.next { right: 20px; }
@@ -308,7 +308,7 @@
       bottom: 20px; left: 20px; right: 20px;
       background: rgba(0,0,0,0.65);
       backdrop-filter: blur(16px);
-      border: 1px solid rgba(255,255,255,0.12);
+      border: 1px solid rgba(92,138,114,0.08);
       border-radius: 14px;
       padding: 18px 20px;
     }
@@ -354,7 +354,7 @@
       flex: 0.8;
       display: flex;
       flex-direction: column;
-      border-left: 1px solid rgba(255,255,255,0.06);
+      border-left: 1px solid #ddd7ca;
     }
 
     /* Post header */
@@ -416,7 +416,7 @@
     .post-caption {
       margin-bottom: 20px;
       padding-bottom: 16px;
-      border-bottom: 1px solid rgba(255,255,255,0.04);
+      border-bottom: 1px solid rgba(92,138,114,0.04);
     }
 
     .post-caption-user {
@@ -425,12 +425,12 @@
     }
 
     .post-caption-text {
-      font-size: 13px; color: rgba(255,255,255,0.75);
+      font-size: 13px; color: #5a5248;
       line-height: 1.6;
     }
 
     .post-caption-time {
-      font-size: 11px; color: rgba(255,255,255,0.25);
+      font-size: 11px; color: #c8c0ae;
       margin-top: 8px;
     }
 
@@ -449,13 +449,13 @@
 
     .comment-body { flex: 1; }
     .comment-user { font-size: 12px; font-weight: 700; margin-right: 6px; }
-    .comment-text { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.5; }
+    .comment-text { font-size: 13px; color: #5a5248; line-height: 1.5; }
     .comment-meta {
       display: flex; gap: 14px; margin-top: 4px;
-      font-size: 11px; color: rgba(255,255,255,0.25);
+      font-size: 11px; color: #c8c0ae;
     }
     .comment-meta span { cursor: pointer; transition: color 0.2s; }
-    .comment-meta span:hover { color: rgba(255,255,255,0.6); }
+    .comment-meta span:hover { color: #96887a; }
 
     /* Actions bar */
     .post-actions {
@@ -482,7 +482,7 @@
 
     .post-time {
       padding: 4px 20px 0;
-      font-size: 11px; color: rgba(255,255,255,0.25);
+      font-size: 11px; color: #c8c0ae;
       text-transform: uppercase; letter-spacing: 0.5px;
     }
 
@@ -498,7 +498,7 @@
       color: #2c2c2a; font-size: 13px;
       font-family: 'Plus Jakarta Sans', sans-serif;
     }
-    .post-comment-input input::placeholder { color: rgba(255,255,255,0.25); }
+    .post-comment-input input::placeholder { color: #c8c0ae; }
 
     .post-comment-submit {
       background: none; border: none;
@@ -590,7 +590,7 @@
     }
     .sidebar-eco-left {
       display: flex; align-items: center; gap: 12px;
-      font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.7);
+      font-size: 14px; font-weight: 500; color: #5a5248;
       cursor: pointer; user-select: none;
     }
     .sidebar-eco-left i { width: 18px; height: 18px; opacity: 0.7; }
@@ -600,7 +600,7 @@
     .sidebar-eco-wrap.active .sidebar-eco-left i { opacity: 1; color: #7aa88e; }
     .sidebar-eco-switch {
       position: relative; width: 42px; height: 24px;
-      background: rgba(92,138,114,0.08); border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(92,138,114,0.08); border: 1px solid rgba(92,138,114,0.08);
       border-radius: 12px; cursor: pointer; transition: all 0.3s ease; flex-shrink: 0;
     }
     .sidebar-eco-wrap.active .sidebar-eco-switch {
@@ -608,7 +608,7 @@
     }
     .sidebar-eco-dot {
       position: absolute; top: 3px; left: 3px;
-      width: 16px; height: 16px; background: rgba(255,255,255,0.4);
+      width: 16px; height: 16px; background: #b5a99a;
       border-radius: 50%; transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
     }
     .sidebar-eco-wrap.active .sidebar-eco-dot {
@@ -1148,37 +1148,38 @@
     })();
 </script>
 
-<!-- ═══ FOOTER ═══ -->
-<footer style="border-top:1px solid rgba(255,255,255,0.06);padding:60px 30px 40px;max-width:1100px;margin:0 auto;width:100%;">
+
+<!-- FOOTER -->
+<footer style="border-top:1px solid #ddd7ca;padding:60px 30px 40px;max-width:1100px;margin:0 auto;width:100%;">
   <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px;" class="footer-grid">
     <div>
       <a href="/home" style="display:inline-block;margin-bottom:16px;"><img src="logo.png" alt="One-Up Travel" style="height:36px;"></a>
       <p style="font-size:13px;color:#96887a;line-height:1.7;max-width:280px;">AI-powered travel planning. Let Lisa build your perfect itinerary with real hotels, flights, and activities.</p>
       <div style="display:flex;gap:12px;margin-top:20px;">
-        <a href="https://instagram.com/oneuptravel" target="_blank" rel="noopener" style="width:36px;height:36px;border-radius:10px;background:#ffffff;border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;color:#96887a;transition:all 0.3s;text-decoration:none;" onmouseover="this.style.background='rgba(92,138,114,0.15)';this.style.borderColor='rgba(92,138,114,0.4)';this.style.color='#7aa88e'" onmouseout="this.style.background='rgba(92,138,114,0.05)';this.style.borderColor='#ddd7ca';this.style.color='#96887a'"><i data-lucide="instagram" style="width:16px;height:16px;"></i></a>
-        <a href="https://linkedin.com/company/oneuptravel" target="_blank" rel="noopener" style="width:36px;height:36px;border-radius:10px;background:#ffffff;border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;color:#96887a;transition:all 0.3s;text-decoration:none;" onmouseover="this.style.background='rgba(92,138,114,0.15)';this.style.borderColor='rgba(92,138,114,0.4)';this.style.color='#7aa88e'" onmouseout="this.style.background='rgba(92,138,114,0.05)';this.style.borderColor='#ddd7ca';this.style.color='#96887a'"><i data-lucide="linkedin" style="width:16px;height:16px;"></i></a>
+        <a href="https://instagram.com/oneuptravel" target="_blank" rel="noopener" style="width:36px;height:36px;border-radius:10px;background:#fff;border:1px solid #ddd7ca;display:flex;align-items:center;justify-content:center;color:#96887a;transition:all 0.3s;text-decoration:none;" onmouseover="this.style.background='rgba(92,138,114,0.08)';this.style.borderColor='rgba(92,138,114,0.3)';this.style.color='#5c8a72'" onmouseout="this.style.background='#fff';this.style.borderColor='#ddd7ca';this.style.color='#96887a'"><i data-lucide="instagram" style="width:16px;height:16px;"></i></a>
+        <a href="https://linkedin.com/company/oneuptravel" target="_blank" rel="noopener" style="width:36px;height:36px;border-radius:10px;background:#fff;border:1px solid #ddd7ca;display:flex;align-items:center;justify-content:center;color:#96887a;transition:all 0.3s;text-decoration:none;" onmouseover="this.style.background='rgba(92,138,114,0.08)';this.style.borderColor='rgba(92,138,114,0.3)';this.style.color='#5c8a72'" onmouseout="this.style.background='#fff';this.style.borderColor='#ddd7ca';this.style.color='#96887a'"><i data-lucide="instagram" style="width:16px;height:16px;"></i></a>
       </div>
     </div>
     <div>
       <div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:#b5a99a;font-weight:600;margin-bottom:16px;">Product</div>
-      <a href="/home" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Home</a>
-      <a href="/itinerary" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">My Itinerary</a>
-      <a href="/dashboard" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Saved Trips</a>
+      <a href="/home" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='#96887a'">Home</a>
+      <a href="/itinerary" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='#96887a'">My Itinerary</a>
+      <a href="/dashboard" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='#96887a'">Saved Trips</a>
     </div>
     <div>
       <div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:#b5a99a;font-weight:600;margin-bottom:16px;">Support</div>
-      <a href="/faq" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">FAQs</a>
-      <a href="/contact" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Contact Us</a>
-      <a href="mailto:Clem@one-up.cloud" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Clem@one-up.cloud</a>
+      <a href="/faq" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='#96887a'">FAQs</a>
+      <a href="/contact" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='#96887a'">Contact Us</a>
+      <a href="mailto:Clem@one-up.cloud" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='#96887a'">Clem@one-up.cloud</a>
     </div>
     <div>
       <div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:#b5a99a;font-weight:600;margin-bottom:16px;">Legal</div>
-      <a href="/legal#terms" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Terms of Service</a>
-      <a href="/legal#privacy" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Privacy Policy</a>
-      <a href="/legal#cookies" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Cookie Policy</a>
+      <a href="/legal#terms" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='#96887a'">Terms of Service</a>
+      <a href="/legal#privacy" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='#96887a'">Privacy Policy</a>
+      <a href="/legal#cookies" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='#96887a'">Cookie Policy</a>
     </div>
   </div>
-  <div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+  <div style="border-top:1px solid #ddd7ca;padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
     <p style="font-size:12px;color:#b5a99a;">&copy; 2026 One-Up Travel Pty Ltd. All rights reserved.</p>
     <p style="font-size:12px;color:#b5a99a;">Brisbane, Queensland, Australia</p>
   </div>
@@ -1187,6 +1188,7 @@
   @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 32px !important; } }
   @media (max-width: 480px) { .footer-grid { grid-template-columns: 1fr !important; } }
 </style>
+
 
 </body>
 </html>

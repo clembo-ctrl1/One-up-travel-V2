@@ -374,7 +374,7 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(92,138,114,0.08);
       backdrop-filter: none;
       border: 1px solid #ddd7ca;
       padding: 8px 20px;
@@ -568,7 +568,7 @@
       left: 3px;
       width: 18px;
       height: 18px;
-      background: rgba(255,255,255,0.5);
+      background: #96887a;
       border-radius: 50%;
       transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
     }
@@ -649,7 +649,7 @@
     .lisa-chat-window {
       width: 100%;
       max-width: 580px;
-      background: rgba(255,255,255,0.02);
+      background: rgba(92,138,114,0.03);
       border: 1px solid #ddd7ca;
       border-radius: 20px;
       overflow: hidden;
@@ -684,7 +684,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.2) 50%, transparent 60%);
+      background: linear-gradient(135deg, transparent 40%, #c8c0ae 50%, transparent 60%);
       background-size: 200% 200%;
       animation: avatarShine 3s ease infinite;
     }
@@ -735,7 +735,7 @@
       width: 10px;
       height: 10px;
       border-radius: 50%;
-      background: rgba(255,255,255,0.12);
+      background: rgba(92,138,114,0.08);
     }
 
     /* Chat messages area */
@@ -794,7 +794,7 @@
     .chat-msg.lisa .chat-msg-bubble {
       background: #ffffff;
       border: 1px solid #ddd7ca;
-      color: rgba(255,255,255,0.85);
+      color: #2c2c2a;
       border-top-left-radius: 4px;
     }
 
@@ -832,7 +832,7 @@
       width: 7px;
       height: 7px;
       border-radius: 50%;
-      background: rgba(255,255,255,0.35);
+      background: #c8c0ae;
       animation: typingBounce 1.4s ease infinite;
     }
     .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
@@ -901,7 +901,7 @@
       align-items: center;
       gap: 12px;
       padding: 18px 24px;
-      background: rgba(255,255,255,0.02);
+      background: rgba(92,138,114,0.03);
       border-top: 1px solid #ddd7ca;
     }
 
@@ -918,7 +918,7 @@
     }
 
     .lisa-chat-input input::placeholder { color: #b5a99a; }
-    .lisa-chat-input input:focus { border-color: rgba(92,138,114,0.4); background: rgba(255,255,255,0.07); }
+    .lisa-chat-input input:focus { border-color: rgba(92,138,114,0.4); background: #ddd7ca; }
 
     .lisa-chat-send {
       width: 42px;
@@ -1018,7 +1018,7 @@
       display: flex; align-items: center; justify-content: center;
     }
     .sidebar-close-btn:hover { background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.4); box-shadow: 0 0 16px rgba(239, 68, 68, 0.15); }
-    .sidebar-close-btn i, .sidebar-close-btn svg { width: 18px; height: 18px; color: rgba(255,255,255,0.8); stroke: rgba(255,255,255,0.8); stroke-width: 2.5; }
+    .sidebar-close-btn i, .sidebar-close-btn svg { width: 18px; height: 18px; color: #3d3d3a; stroke: #3d3d3a; stroke-width: 2.5; }
     .sidebar-close-btn:hover i, .sidebar-close-btn:hover svg { color: #2c2c2a; stroke: white; }
     .sidebar-divider { height: 1px; background: rgba(255, 255, 255, 0.06); margin: 8px 0 20px; }
 
@@ -1037,7 +1037,7 @@
       flex-direction: column;
       align-items: center;
       gap: 8px;
-      color: rgba(255,255,255,0.25);
+      color: #c8c0ae;
       font-size: 11px;
       font-weight: 600;
       text-transform: uppercase;
@@ -1084,7 +1084,7 @@
     }
     .sidebar-eco-left {
       display: flex; align-items: center; gap: 12px;
-      font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.7);
+      font-size: 14px; font-weight: 500; color: #5a5248;
       cursor: pointer; user-select: none;
     }
     .sidebar-eco-left i { width: 18px; height: 18px; opacity: 0.7; }
@@ -1094,7 +1094,7 @@
     .sidebar-eco-wrap.active .sidebar-eco-left i { opacity: 1; color: #7aa88e; }
     .sidebar-eco-switch {
       position: relative; width: 42px; height: 24px;
-      background: rgba(92,138,114,0.08); border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(92,138,114,0.08); border: 1px solid rgba(92,138,114,0.08);
       border-radius: 12px; cursor: pointer; transition: all 0.3s ease; flex-shrink: 0;
     }
     .sidebar-eco-wrap.active .sidebar-eco-switch {
@@ -1102,7 +1102,7 @@
     }
     .sidebar-eco-dot {
       position: absolute; top: 3px; left: 3px;
-      width: 16px; height: 16px; background: rgba(255,255,255,0.4);
+      width: 16px; height: 16px; background: #b5a99a;
       border-radius: 50%; transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
     }
     .sidebar-eco-wrap.active .sidebar-eco-dot {
@@ -1124,11 +1124,11 @@
 
     <!-- Nature elements (visible only in purpose mode) -->
     <div class="nature-elements" id="natureElements">
-      <div class="bird bird-1"><svg viewBox="0 0 40 20" fill="none"><path d="M0 10 Q10 0 20 10 Q30 0 40 10" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" fill="none"/></svg></div>
-      <div class="bird bird-2"><svg viewBox="0 0 40 20" fill="none"><path d="M0 10 Q10 0 20 10 Q30 0 40 10" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" fill="none"/></svg></div>
-      <div class="bird bird-3"><svg viewBox="0 0 40 20" fill="none"><path d="M0 10 Q10 0 20 10 Q30 0 40 10" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" fill="none"/></svg></div>
-      <div class="bird bird-4"><svg viewBox="0 0 30 15" fill="none"><path d="M0 7 Q7 0 15 7 Q22 0 30 7" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none"/></svg></div>
-      <div class="bird bird-5"><svg viewBox="0 0 30 15" fill="none"><path d="M0 7 Q7 0 15 7 Q22 0 30 7" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none"/></svg></div>
+      <div class="bird bird-1"><svg viewBox="0 0 40 20" fill="none"><path d="M0 10 Q10 0 20 10 Q30 0 40 10" stroke="#b5a99a" stroke-width="1.5" fill="none"/></svg></div>
+      <div class="bird bird-2"><svg viewBox="0 0 40 20" fill="none"><path d="M0 10 Q10 0 20 10 Q30 0 40 10" stroke="#c8c0ae" stroke-width="1.5" fill="none"/></svg></div>
+      <div class="bird bird-3"><svg viewBox="0 0 40 20" fill="none"><path d="M0 10 Q10 0 20 10 Q30 0 40 10" stroke="#c8c0ae" stroke-width="1.5" fill="none"/></svg></div>
+      <div class="bird bird-4"><svg viewBox="0 0 30 15" fill="none"><path d="M0 7 Q7 0 15 7 Q22 0 30 7" stroke="#c8c0ae" stroke-width="1" fill="none"/></svg></div>
+      <div class="bird bird-5"><svg viewBox="0 0 30 15" fill="none"><path d="M0 7 Q7 0 15 7 Q22 0 30 7" stroke="#c8c0ae" stroke-width="1" fill="none"/></svg></div>
     </div>
   </div>
 
@@ -1330,7 +1330,7 @@
         <div style="display:flex;gap:12px;margin-top:20px;">
           <a href="https://instagram.com/oneuptravel" target="_blank" rel="noopener" style="
             width:36px;height:36px;border-radius:10px;
-            background:#ffffff;border:1px solid rgba(255,255,255,0.1);
+            background:#ffffff;border:1px solid rgba(92,138,114,0.08);
             display:flex;align-items:center;justify-content:center;
             color:#96887a;transition:all 0.3s;text-decoration:none;
           " onmouseover="this.style.background='rgba(92,138,114,0.15)';this.style.borderColor='rgba(92,138,114,0.4)';this.style.color='#7aa88e'" onmouseout="this.style.background='rgba(92,138,114,0.05)';this.style.borderColor='#ddd7ca';this.style.color='#96887a'">
@@ -1338,7 +1338,7 @@
           </a>
           <a href="https://linkedin.com/company/oneuptravel" target="_blank" rel="noopener" style="
             width:36px;height:36px;border-radius:10px;
-            background:#ffffff;border:1px solid rgba(255,255,255,0.1);
+            background:#ffffff;border:1px solid rgba(92,138,114,0.08);
             display:flex;align-items:center;justify-content:center;
             color:#96887a;transition:all 0.3s;text-decoration:none;
           " onmouseover="this.style.background='rgba(92,138,114,0.15)';this.style.borderColor='rgba(92,138,114,0.4)';this.style.color='#7aa88e'" onmouseout="this.style.background='rgba(92,138,114,0.05)';this.style.borderColor='#ddd7ca';this.style.color='#96887a'">
@@ -1350,30 +1350,30 @@
       <!-- Product -->
       <div>
         <div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:#b5a99a;font-weight:600;margin-bottom:16px;">Product</div>
-        <a href="/home" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Home</a>
-        <a href="/itinerary" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">My Itinerary</a>
-        <a href="/dashboard" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Saved Trips</a>
+        <a href="/home" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='#96887a'">Home</a>
+        <a href="/itinerary" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='#96887a'">My Itinerary</a>
+        <a href="/dashboard" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='#96887a'">Saved Trips</a>
       </div>
 
       <!-- Support -->
       <div>
         <div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:#b5a99a;font-weight:600;margin-bottom:16px;">Support</div>
-        <a href="/faq" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">FAQs</a>
-        <a href="/contact" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Contact Us</a>
-        <a href="/cdn-cgi/l/email-protection#7d3e1118103d12131850080d531e11120819" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'"><span class="__cf_email__" data-cfemail="c98aa5aca489a6a7ace4bcb9e7aaa5a6bcad">[email&#160;protected]</span></a>
+        <a href="/faq" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='#96887a'">FAQs</a>
+        <a href="/contact" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='#96887a'">Contact Us</a>
+        <a href="/cdn-cgi/l/email-protection#7d3e1118103d12131850080d531e11120819" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='#96887a'"><span class="__cf_email__" data-cfemail="c98aa5aca489a6a7ace4bcb9e7aaa5a6bcad">[email&#160;protected]</span></a>
       </div>
 
       <!-- Legal -->
       <div>
         <div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:#b5a99a;font-weight:600;margin-bottom:16px;">Legal</div>
-        <a href="/legal#terms" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Terms of Service</a>
-        <a href="/legal#privacy" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Privacy Policy</a>
-        <a href="/legal#cookies" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Cookie Policy</a>
+        <a href="/legal#terms" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='#96887a'">Terms of Service</a>
+        <a href="/legal#privacy" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='#96887a'">Privacy Policy</a>
+        <a href="/legal#cookies" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='#96887a'">Cookie Policy</a>
       </div>
     </div>
 
     <!-- Bottom bar -->
-    <div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+    <div style="border-top:1px solid #ddd7ca;padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
       <p style="font-size:12px;color:#b5a99a;">&copy; 2026 One-Up Travel Pty Ltd. All rights reserved.</p>
       <p style="font-size:12px;color:#b5a99a;">Brisbane, Queensland, Australia</p>
     </div>

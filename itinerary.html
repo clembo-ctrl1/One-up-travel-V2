@@ -16,33 +16,33 @@
   <style>
     :root {
       --bg: #f5f2ec;
-      --surface: rgba(255,255,255,0.03);
-      --surface-2: rgba(255,255,255,0.06);
-      --border: rgba(255,255,255,0.07);
-      --border-2: rgba(255,255,255,0.12);
-      --text: #ffffff;
-      --text-2: rgba(255,255,255,0.6);
-      --text-3: rgba(255,255,255,0.35);
+      --surface: #ffffff;
+      --surface-2: #faf8f3;
+      --border: #ddd7ca;
+      --border-2: #c8c0ae;
+      --text: #2c2c2a;
+      --text-2: #96887a;
+      --text-3: #b5a99a;
       --indigo: #5c8a72;
       --indigo-glow: rgba(92,138,114,0.15);
       --green: #5c8a72;
       --green-glow: rgba(92,138,114,0.15);
-      --amber: #f59e0b;
-      --amber-glow: rgba(245,158,11,0.15);
-      --rose: #f43f5e;
-      --rose-glow: rgba(244,63,94,0.15);
-      --violet: #8b5cf6;
+      --amber: #c8a045;
+      --amber-glow: rgba(200,160,69,0.15);
+      --rose: #c75c6e;
+      --rose-glow: rgba(199,92,110,0.15);
+      --violet: #c8b48a;
       --radius: 14px;
       --font: 'Plus Jakarta Sans', -apple-system, sans-serif;
       --mono: 'Space Mono', monospace;
     }
 
-    /* =============== PURPOSE THEME (Green/Teal) =============== */
+    /* =============== PURPOSE THEME =============== */
     html.purpose-theme {
       --indigo: #3a6b52;
       --indigo-glow: rgba(92,138,114,0.15);
       --violet: #5c8a72;
-      --bg: #060f0d;
+      --bg: #e8f0eb;
     }
     html.purpose-theme body { background: var(--bg); }
 
@@ -146,7 +146,7 @@
     .loader-skeleton { width: 320px; display: flex; flex-direction: column; gap: 12px; }
     .skeleton-bar {
       height: 12px; border-radius: 6px;
-      background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.04) 75%);
+      background: linear-gradient(90deg, rgba(92,138,114,0.04) 25%, rgba(92,138,114,0.06) 50%, rgba(92,138,114,0.04) 75%);
       background-size: 200% 100%; animation: shimmer 1.5s infinite;
     }
     .skeleton-bar:nth-child(1) { width: 80%; }
@@ -164,7 +164,7 @@
     .toast {
       display: flex; align-items: center; gap: 12px; padding: 14px 20px; border-radius: 12px;
       background: rgba(15,15,25,0.95); backdrop-filter: none; border: 1px solid var(--border-2);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.4); font-size: 13px; font-weight: 600;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.06); font-size: 13px; font-weight: 600;
       animation: toast-in 0.4s cubic-bezier(0.16, 1, 0.3, 1); transition: all 0.3s ease; max-width: 360px;
     }
     .toast.success { border-color: rgba(92,138,114,0.3); }
@@ -205,14 +205,14 @@
     .logo img { height: 40px; transition: all 0.3s ease; }
     .logo img:hover { transform: scale(1.05); }
     .header-menu-btn {
-      background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #2c2c2a;
+      background: transparent; border: 1px solid #c8c0ae; color: #2c2c2a;
       padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 500; font-size: 14px;
       transition: all 0.3s ease; display: flex; align-items: center; gap: 8px; font-family: var(--font);
     }
     .header-menu-btn:hover { background: #ffffff; border-color: #b5a99a; }
     .header-menu-btn i { width: 18px; height: 18px; }
     .signin-btn {
-      background: var(--indigo); color: #2c2c2a; padding: 10px 24px; border-radius: 10px;
+      background: var(--indigo); color: #fff; padding: 10px 24px; border-radius: 10px;
       font-weight: 600; text-decoration: none; transition: 0.3s; font-size: 14px;
     }
     .signin-btn:hover { background: #3a6b52; transform: translateY(-2px); }
@@ -242,7 +242,7 @@
       background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.4);
       box-shadow: 0 0 16px rgba(239, 68, 68, 0.15);
     }
-    .sidebar-close-btn svg { width: 18px; height: 18px; stroke: rgba(255,255,255,0.8); }
+    .sidebar-close-btn svg { width: 18px; height: 18px; stroke: #2c2c2a; }
     .sidebar-close-btn:hover svg { stroke: white; }
     .sidebar-content { padding-top: 40px; }
     .sidebar-section { margin-bottom: 8px; }
@@ -298,14 +298,14 @@
     .hero-title { font-size: 36px; font-weight: 800; letter-spacing: -1px; line-height: 1.1; margin-bottom: 6px; text-shadow: 0 2px 20px rgba(0,0,0,0.5); }
     .hero-subtitle { font-size: 15px; color: var(--text-2); }
     .hero-dots { position: absolute; bottom: 16px; right: 32px; z-index: 3; display: flex; gap: 6px; }
-    .hero-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.3); cursor: pointer; transition: all 0.3s ease; }
+    .hero-dot { width: 8px; height: 8px; border-radius: 50%; background: #c8c0ae; cursor: pointer; transition: all 0.3s ease; }
     .hero-dot.active { background: white; width: 24px; border-radius: 4px; }
 
     /* =============== COUNTDOWN =============== */
     .countdown-bar {
       display: flex; align-items: center; justify-content: center; gap: 24px; padding: 20px;
       margin: 24px 0;
-      background: linear-gradient(135deg, rgba(92,138,114,0.08), rgba(139,92,246,0.08));
+      background: linear-gradient(135deg, rgba(92,138,114,0.08), rgba(200,180,138,0.08));
       border: 1px solid rgba(92,138,114,0.15); border-radius: var(--radius);
       position: relative; overflow: hidden;
     }
@@ -332,7 +332,7 @@
     .stat-card::after {
       content: '';
       position: absolute; top: -1px; left: 20%; right: 20%; height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      background: linear-gradient(90deg, transparent, rgba(92,138,114,0.06), transparent);
     }
     .stat-card:hover { border-color: var(--border-2); background: var(--surface-2); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
     .stat-icon { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; }
@@ -354,7 +354,7 @@
       background: var(--surface-2); border: 1px solid var(--border-2); border-radius: 10px;
       color: #2c2c2a; font-family: var(--mono); font-size: 13px; font-weight: 700;
       cursor: pointer; outline: none; transition: all 0.25s;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='rgba(255,255,255,0.5)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='2 4 6 8 10 4'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='rgba(44,44,42,0.4)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='2 4 6 8 10 4'/%3E%3C/svg%3E");
       background-repeat: no-repeat; background-position: right 12px center;
     }
     .currency-select:hover, .currency-select:focus {
@@ -374,7 +374,7 @@
       gap: 6px; font-family: var(--font);
     }
     .tab-btn i { width: 15px; height: 15px; }
-    .tab-btn.active { background: var(--indigo); color: #2c2c2a; box-shadow: 0 2px 12px rgba(92,138,114,0.3); }
+    .tab-btn.active { background: var(--indigo); color: #fff; box-shadow: 0 2px 12px rgba(92,138,114,0.3); }
     .tab-btn:hover:not(.active) { color: #2c2c2a; background: var(--surface-2); }
     .view-panel { display: none; animation: fadeInUp 0.4s ease; }
     .view-panel.active { display: block; }
@@ -561,7 +561,7 @@
     .tl-item-card::after {
       content: '';
       position: absolute; top: -1px; left: 15%; right: 15%; height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+      background: linear-gradient(90deg, transparent, rgba(92,138,114,0.04), transparent);
       pointer-events: none;
     }
     .tl-item-card.flight::before { background: var(--amber); }
@@ -730,7 +730,7 @@
     }
 
     .tl-filter.active .tl-filter-count {
-      background: rgba(255,255,255,0.15);
+      background: rgba(92,138,114,0.1);
     }
 
     /* Filtered-out rail dots */
@@ -766,7 +766,7 @@
     .sum-overview-card::after {
       content: '';
       position: absolute; top: -1px; left: 20%; right: 20%; height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      background: linear-gradient(90deg, transparent, rgba(92,138,114,0.06), transparent);
     }
     .sum-overview-card:hover {
       border-color: var(--border-2);
@@ -800,14 +800,20 @@
     }
 
     .sum-section {
-      margin-bottom: 20px;
+      margin-bottom: 16px;
+      background: #fff;
+      border: 1px solid #ddd7ca;
+      border-radius: 14px;
+      overflow: hidden;
+      transition: border-color 0.3s, box-shadow 0.3s;
     }
+    .sum-section:hover { border-color: #c8c0ae; box-shadow: 0 4px 16px rgba(0,0,0,0.04); }
 
     .sum-section-head {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 12px 0;
+      padding: 18px 20px;
       cursor: pointer;
       user-select: none;
     }
@@ -815,17 +821,17 @@
     .sum-section-head-left {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 14px;
     }
 
     .sum-section-icon {
-      width: 34px;
-      height: 34px;
-      border-radius: 10px;
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 16px;
+      font-size: 18px;
       flex-shrink: 0;
     }
 
@@ -834,8 +840,8 @@
     .sum-section-icon.activity { background: var(--green-glow); color: var(--green); }
     .sum-section-icon.free { background: var(--surface-2); color: var(--text-3); }
 
-    .sum-section-title { font-size: 15px; font-weight: 700; }
-    .sum-section-meta { font-size: 12px; color: var(--text-3); font-weight: 500; }
+    .sum-section-title { font-size: 16px; font-weight: 700; color: #2c2c2a; }
+    .sum-section-meta { font-size: 12px; color: #96887a; font-weight: 500; }
 
     .sum-section-total {
       font-family: var(--mono);
@@ -859,10 +865,16 @@
       max-height: 0;
       overflow: hidden;
       transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      padding: 0 20px;
     }
 
     .sum-section.open .sum-section-body {
       max-height: 2000px;
+      padding: 0 20px 18px;
+    }
+
+    .sum-section.open .sum-section-head {
+      border-bottom: 1px solid #e8e2d6;
     }
 
     .sum-section-list {
@@ -905,7 +917,7 @@
       cursor: pointer;
       transition: background 0.2s;
     }
-    .sum-card-header:hover { background: rgba(255,255,255,0.02); }
+    .sum-card-header:hover { background: rgba(92,138,114,0.03); }
 
     .sum-card-chevron {
       width: 16px; height: 16px;
@@ -943,7 +955,7 @@
       height: 100%;
       background-size: cover;
       background-position: center;
-      background-color: rgba(255,255,255,0.03);
+      background-color: #fff;
       position: relative;
       flex-shrink: 0;
     }
@@ -977,7 +989,7 @@
       padding: 4px 10px;
       border-radius: 20px;
       font-size: 11px; font-weight: 700;
-      color: rgba(255,255,255,0.9);
+      color: #2c2c2a;
       z-index: 2;
       font-family: var(--mono);
     }
@@ -990,7 +1002,7 @@
     .sum-carousel-dot {
       width: 6px; height: 6px;
       border-radius: 50%;
-      background: rgba(255,255,255,0.35);
+      background: #c8c0ae;
       cursor: pointer;
       transition: all 0.25s;
     }
@@ -1020,7 +1032,7 @@
       width: 18px; height: 18px;
     }
     .sum-rating-stars .star.filled { fill: #f59e0b; }
-    .sum-rating-stars .star.empty { fill: rgba(255,255,255,0.1); }
+    .sum-rating-stars .star.empty { fill: rgba(92,138,114,0.15); }
     .sum-rating-score {
       font-family: var(--mono);
       font-size: 16px;
@@ -1119,7 +1131,7 @@
     }
     .sum-review-score .star-sm {
       width: 12px; height: 12px;
-      fill: rgba(255,255,255,0.1);
+      fill: rgba(92,138,114,0.15);
     }
     .sum-review-score .star-sm.filled {
       fill: #f59e0b;
@@ -1276,7 +1288,7 @@
     .leaflet-popup-content-wrapper {
       background: rgba(15,15,25,0.95) !important; backdrop-filter: none;
       border: 1px solid var(--border-2) !important; border-radius: 12px !important;
-      color: #2c2c2a !important; box-shadow: 0 8px 32px rgba(0,0,0,0.4) !important;
+      color: #2c2c2a !important; box-shadow: 0 8px 32px rgba(0,0,0,0.06) !important;
     }
     .leaflet-popup-tip { background: rgba(15,15,25,0.95) !important; }
     .leaflet-popup-content { margin: 14px 16px !important; font-family: var(--font) !important; font-size: 13px !important; color: #2c2c2a !important; }
@@ -1294,7 +1306,7 @@
     .nearby-card:hover { background: var(--indigo-glow); border-color: rgba(92,138,114,0.2); transform: translateX(4px); }
     .nearby-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .nearby-icon.food { background: var(--amber-glow); color: var(--amber); }
-    .nearby-icon.culture { background: rgba(139,92,246,0.15); color: var(--violet); }
+    .nearby-icon.culture { background: rgba(200,180,138,0.15); color: var(--violet); }
     .nearby-icon.nature { background: var(--green-glow); color: var(--green); }
     .nearby-name { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
     .nearby-desc { font-size: 12px; color: var(--text-3); }
@@ -1302,7 +1314,7 @@
 
     /* =============== TOTAL / CTA =============== */
     .total-bar {
-      background: linear-gradient(135deg, rgba(92,138,114,0.1), rgba(139,92,246,0.1));
+      background: linear-gradient(135deg, rgba(92,138,114,0.1), rgba(200,180,138,0.1));
       border: 1px solid rgba(92,138,114,0.2); border-radius: var(--radius);
       padding: 28px; text-align: center; margin-top: 32px;
     }
@@ -1316,7 +1328,7 @@
       gap: 8px; transition: all 0.3s; font-family: var(--font); border: none;
     }
     .cta-btn i { width: 18px; height: 18px; }
-    .cta-btn.primary { background: var(--indigo); color: #2c2c2a; }
+    .cta-btn.primary { background: var(--indigo); color: #fff; }
     .cta-btn.primary:hover { background: #3a6b52; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(92,138,114,0.4); }
     .cta-btn.secondary { background: var(--surface-2); border: 1px solid var(--border); color: var(--text-2); }
     .cta-btn.secondary:hover { background: var(--indigo-glow); border-color: rgba(92,138,114,0.3); color: #2c2c2a; }
@@ -1545,7 +1557,7 @@
 
     .eco-checkbox {
       width: 22px; height: 22px; border-radius: 6px;
-      border: 2px solid rgba(255,255,255,0.2);
+      border: 2px solid #c8c0ae;
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0; transition: all 0.2s;
     }
@@ -1569,7 +1581,7 @@
 
     .eco-offset-btn {
       width: 100%; padding: 14px;
-      background: var(--green); color: #2c2c2a;
+      background: var(--green); color: #fff;
       border: none; border-radius: 12px;
       font-size: 14px; font-weight: 700;
       font-family: var(--font);
@@ -1599,7 +1611,7 @@
     }
     .sidebar-eco-left {
       display: flex; align-items: center; gap: 12px;
-      font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.7);
+      font-size: 14px; font-weight: 500; color: #5a5248;
       cursor: pointer; user-select: none;
     }
     .sidebar-eco-left i { width: 18px; height: 18px; opacity: 0.7; }
@@ -1609,7 +1621,7 @@
     .sidebar-eco-wrap.active .sidebar-eco-left i { opacity: 1; color: #7aa88e; }
     .sidebar-eco-switch {
       position: relative; width: 42px; height: 24px;
-      background: rgba(92,138,114,0.08); border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(92,138,114,0.08); border: 1px solid #c8c0ae;
       border-radius: 12px; cursor: pointer; transition: all 0.3s ease; flex-shrink: 0;
     }
     .sidebar-eco-wrap.active .sidebar-eco-switch {
@@ -1617,7 +1629,7 @@
     }
     .sidebar-eco-dot {
       position: absolute; top: 3px; left: 3px;
-      width: 16px; height: 16px; background: rgba(255,255,255,0.4);
+      width: 16px; height: 16px; background: #b5a99a;
       border-radius: 50%; transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
     }
     .sidebar-eco-wrap.active .sidebar-eco-dot {
@@ -2838,7 +2850,7 @@
     const uid = 'hg' + Math.random().toString(36).slice(2,6);
     let html = '';
     for (let i = 0; i < full; i++) html += '<svg class="star filled" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>';
-    if (half) html += `<svg class="star half" viewBox="0 0 24 24"><defs><linearGradient id="${uid}"><stop offset="50%" stop-color="#f59e0b"/><stop offset="50%" stop-color="rgba(255,255,255,0.15)"/></linearGradient></defs><path fill="url(#${uid})" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`;
+    if (half) html += `<svg class="star half" viewBox="0 0 24 24"><defs><linearGradient id="${uid}"><stop offset="50%" stop-color="#f59e0b"/><stop offset="50%" stop-color="rgba(92,138,114,0.15)"/></linearGradient></defs><path fill="url(#${uid})" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`;
     for (let i = 0; i < empty; i++) html += '<svg class="star empty" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>';
     return html;
   }
@@ -3644,11 +3656,11 @@
   }
   function addMarkers(f){
     markers.forEach(m=>map.removeLayer(m)); markers=[];
-    const colors={food:'#f59e0b',culture:'#8b5cf6',nature:'#5c8a72'};
+    const colors={food:'#f59e0b',culture:'#c8b48a',nature:'#5c8a72'};
     nearbyPlaces.forEach(p=>{
       if(f!=='all'&&p.cat!==f) return;
       const letter = catLetters[p.cat] || '·';
-      const m=L.marker([p.lat,p.lng],{icon:L.divIcon({className:'',html:`<div style="background:${colors[p.cat]||'#5c8a72'};width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#2c2c2a;border:2px solid rgba(255,255,255,0.8);box-shadow:0 2px 8px rgba(0,0,0,0.3);font-family:Plus Jakarta Sans,sans-serif;">${letter}</div>`,iconSize:[32,32],iconAnchor:[16,16]})}).addTo(map).bindPopup(`<div class="popup-cat">${p.cat}</div><div class="popup-name">${p.name}</div><div class="popup-desc">${p.desc} · ${p.dist}</div>`);
+      const m=L.marker([p.lat,p.lng],{icon:L.divIcon({className:'',html:`<div style="background:${colors[p.cat]||'#5c8a72'};width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#2c2c2a;border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,0.3);font-family:Plus Jakarta Sans,sans-serif;">${letter}</div>`,iconSize:[32,32],iconAnchor:[16,16]})}).addTo(map).bindPopup(`<div class="popup-cat">${p.cat}</div><div class="popup-name">${p.name}</div><div class="popup-desc">${p.desc} · ${p.dist}</div>`);
       markers.push(m);
     });
   }
@@ -3699,36 +3711,36 @@
 </script>
 
 <!-- ═══ FOOTER ═══ -->
-<footer style="border-top:1px solid rgba(255,255,255,0.06);padding:60px 30px 40px;max-width:1100px;margin:0 auto;width:100%;">
+<footer style="border-top:1px solid #ddd7ca;padding:60px 30px 40px;max-width:1100px;margin:0 auto;width:100%;">
   <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px;" class="footer-grid">
     <div>
       <a href="/home" style="display:inline-block;margin-bottom:16px;"><img src="logo.png" alt="One-Up Travel" style="height:36px;"></a>
       <p style="font-size:13px;color:#96887a;line-height:1.7;max-width:280px;">AI-powered travel planning. Let Lisa build your perfect itinerary with real hotels, flights, and activities.</p>
       <div style="display:flex;gap:12px;margin-top:20px;">
-        <a href="https://instagram.com/oneuptravel" target="_blank" rel="noopener" style="width:36px;height:36px;border-radius:10px;background:#ffffff;border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;color:#96887a;transition:all 0.3s;text-decoration:none;" onmouseover="this.style.background='rgba(92,138,114,0.15)';this.style.borderColor='rgba(92,138,114,0.4)';this.style.color='#7aa88e'" onmouseout="this.style.background='rgba(92,138,114,0.05)';this.style.borderColor='#ddd7ca';this.style.color='#96887a'"><i data-lucide="instagram" style="width:16px;height:16px;"></i></a>
-        <a href="https://linkedin.com/company/oneuptravel" target="_blank" rel="noopener" style="width:36px;height:36px;border-radius:10px;background:#ffffff;border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;color:#96887a;transition:all 0.3s;text-decoration:none;" onmouseover="this.style.background='rgba(92,138,114,0.15)';this.style.borderColor='rgba(92,138,114,0.4)';this.style.color='#7aa88e'" onmouseout="this.style.background='rgba(92,138,114,0.05)';this.style.borderColor='#ddd7ca';this.style.color='#96887a'"><i data-lucide="linkedin" style="width:16px;height:16px;"></i></a>
+        <a href="https://instagram.com/oneuptravel" target="_blank" rel="noopener" style="width:36px;height:36px;border-radius:10px;background:#ffffff;border:1px solid #ddd7ca;display:flex;align-items:center;justify-content:center;color:#96887a;transition:all 0.3s;text-decoration:none;" onmouseover="this.style.background='rgba(92,138,114,0.15)';this.style.borderColor='rgba(92,138,114,0.4)';this.style.color='#7aa88e'" onmouseout="this.style.background='rgba(92,138,114,0.05)';this.style.borderColor='#ddd7ca';this.style.color='#96887a'"><i data-lucide="instagram" style="width:16px;height:16px;"></i></a>
+        <a href="https://linkedin.com/company/oneuptravel" target="_blank" rel="noopener" style="width:36px;height:36px;border-radius:10px;background:#ffffff;border:1px solid #ddd7ca;display:flex;align-items:center;justify-content:center;color:#96887a;transition:all 0.3s;text-decoration:none;" onmouseover="this.style.background='rgba(92,138,114,0.15)';this.style.borderColor='rgba(92,138,114,0.4)';this.style.color='#7aa88e'" onmouseout="this.style.background='rgba(92,138,114,0.05)';this.style.borderColor='#ddd7ca';this.style.color='#96887a'"><i data-lucide="linkedin" style="width:16px;height:16px;"></i></a>
       </div>
     </div>
     <div>
       <div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:#b5a99a;font-weight:600;margin-bottom:16px;">Product</div>
-      <a href="/home" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Home</a>
-      <a href="/itinerary" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">My Itinerary</a>
-      <a href="/dashboard" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Saved Trips</a>
+      <a href="/home" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='#96887a'">Home</a>
+      <a href="/itinerary" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='#96887a'">My Itinerary</a>
+      <a href="/dashboard" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='#96887a'">Saved Trips</a>
     </div>
     <div>
       <div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:#b5a99a;font-weight:600;margin-bottom:16px;">Support</div>
-      <a href="/faq" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">FAQs</a>
-      <a href="/contact" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Contact Us</a>
-      <a href="mailto:Clem@one-up.cloud" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Clem@one-up.cloud</a>
+      <a href="/faq" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='#96887a'">FAQs</a>
+      <a href="/contact" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='#96887a'">Contact Us</a>
+      <a href="mailto:Clem@one-up.cloud" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='#96887a'">Clem@one-up.cloud</a>
     </div>
     <div>
       <div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:#b5a99a;font-weight:600;margin-bottom:16px;">Legal</div>
-      <a href="/legal#terms" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Terms of Service</a>
-      <a href="/legal#privacy" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Privacy Policy</a>
-      <a href="/legal#cookies" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Cookie Policy</a>
+      <a href="/legal#terms" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='#96887a'">Terms of Service</a>
+      <a href="/legal#privacy" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='#96887a'">Privacy Policy</a>
+      <a href="/legal#cookies" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='#96887a'">Cookie Policy</a>
     </div>
   </div>
-  <div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+  <div style="border-top:1px solid #ddd7ca;padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
     <p style="font-size:12px;color:#b5a99a;">&copy; 2026 One-Up Travel Pty Ltd. All rights reserved.</p>
     <p style="font-size:12px;color:#b5a99a;">Brisbane, Queensland, Australia</p>
   </div>
