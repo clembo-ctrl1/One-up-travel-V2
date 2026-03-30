@@ -1265,8 +1265,8 @@ function checkHomepageHandoff() {
   const ecoMode = localStorage.getItem('travelWithPurpose') === 'true';
 
   if (currentTrip && currentTrip !== 'Editing saved trip' && chatHistory.length === 0) {
-    const ecoNote = ecoMode ? " I notice you've got eco mode on -- I'll make sure we find sustainable options throughout." : "";
-    const greeting = "Hey, welcome to One-Up. I'm Lisa, your personal travel agent." + ecoNote + "\n\nI see you're looking at \"" + currentTrip + "\" -- great taste. To start putting this together for you, when are you thinking of going and who's coming along?";
+    const ecoNote = ecoMode ? " I see you've switched on Travel with Purpose -- great call. I'll prioritise eco-certified stays, lower-carbon flights, and sustainable experiences for your trip." : "";
+    const greeting = "Hey, welcome to One-Up. I'm Lisa, your personal travel agent." + ecoNote + "\n\nI see you're looking at \"" + currentTrip + "\" -- great taste. Where are you flying from?";
     chatHistory.push({ from: 'lisa', text: greeting });
     document.getElementById('itinSubtitle').textContent = 'Lisa will populate results here once she has your preferences.';
   } else if (chatHistory.length === 0) {
@@ -1317,23 +1317,48 @@ async function sendMessage() {
   area.innerHTML += '<div id="typing" style="display:flex;gap:10px;animation:msgIn 0.3s ease"><div class="msg-avatar" style="background:var(--lisa-gradient);color:#fff;font-weight:800;font-size:12px;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0">L</div><div class="search-status"><div class="search-spinner"></div><div class="search-status-text" id="searchStatusText">Thinking...</div></div></div>';
   area.scrollTop = area.scrollHeight;
 
-  // Cycle through search status messages
-  var statusMessages = [
-    'Thinking...',
-    'Searching the web...',
-    'Scanning flight options...',
-    'Checking hotel availability...',
-    'Reading traveler reviews...',
-    'Comparing prices...',
-    'Building recommendations...'
-  ];
+  // Cycle through contextual search status messages based on what user asked
+  var msgLower = msgText.toLowerCase();
+  var statusMessages = ['Thinking...'];
+
+  // Detect what user is asking about and show relevant statuses
+  var wantsFlight = /flight|fly|airline|airport|one.?way|return|depart|arrive|bne|syd|mel/.test(msgLower);
+  var wantsHotel = /hotel|stay|accommodation|resort|villa|airbnb|hostel|book.*room|where.*stay/.test(msgLower);
+  var wantsActivity = /activit|tour|thing.*do|experience|adventure|restaurant|food|eat|dining|cook|surf|trek|hike|temple|museum/.test(msgLower);
+  var wantsTrip = /trip|holiday|vacation|getaway|travel|plan|itinerary/.test(msgLower);
+  var hasDestination = /bali|thailand|japan|europe|paris|london|tokyo|fiji|new zealand|vietnam|greece|italy|spain|morocco|maldives|hawaii|singapore|ubud|seminyak|canggu|phuket|bangkok/.test(msgLower);
+
+  // Build contextual messages
+  statusMessages.push('Searching the web...');
+
+  if (wantsFlight || wantsTrip) {
+    statusMessages.push('Scanning flight routes and prices...');
+    statusMessages.push('Comparing airlines...');
+  }
+  if (wantsHotel || wantsTrip) {
+    statusMessages.push('Checking hotel availability...');
+    statusMessages.push('Reading guest reviews...');
+  }
+  if (wantsActivity) {
+    statusMessages.push('Finding top-rated experiences...');
+    statusMessages.push('Checking availability...');
+  }
+  if (hasDestination && !wantsFlight && !wantsHotel && !wantsActivity) {
+    statusMessages.push('Researching destination...');
+    statusMessages.push('Checking travel conditions...');
+  }
+  if (localStorage.getItem('travelWithPurpose') === 'true') {
+    statusMessages.push('Finding eco-certified options...');
+  }
+  statusMessages.push('Putting it together...');
+
   var statusIdx = 0;
   var statusInterval = setInterval(function() {
     statusIdx++;
     var el = document.getElementById('searchStatusText');
     if (el && statusIdx < statusMessages.length) {
       el.style.animation = 'none';
-      el.offsetHeight; // force reflow
+      el.offsetHeight;
       el.style.animation = 'fadeUp 0.3s ease';
       el.textContent = statusMessages[statusIdx];
     }
