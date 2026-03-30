@@ -555,20 +555,30 @@
     }
     .result-card:hover { background: var(--card-hover); border-color: var(--border-hover); transform: translateY(-1px); box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
 
-    /* Flight card */
-    .flight-card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-    .flight-airline { font-size: 16px; font-weight: 700; }
-    .flight-price { font-size: 20px; font-weight: 800; color: var(--green-bright); }
-    .flight-price-label { font-size: 11px; color: var(--text-dim); font-weight: 400; }
-    .flight-route { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-    .flight-endpoint { text-align: center; }
-    .flight-code { font-size: 18px; font-weight: 700; letter-spacing: 1px; }
-    .flight-city { font-size: 11px; color: var(--text-muted); }
-    .flight-line { flex: 1; display: flex; align-items: center; gap: 0; position: relative; }
-    .flight-line-bar { flex: 1; height: 2px; background: var(--border); }
-    .flight-line-icon { color: var(--text-dim); font-size: 11px; padding: 0 4px; }
-    .flight-meta { display: flex; gap: 16px; font-size: 12px; color: var(--text-muted); margin-bottom: 14px; }
-    .flight-meta-item { display: flex; align-items: center; gap: 5px; }
+    /* Flight card — Expedia style */
+    .flight-card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+    .flight-airline { font-size: 15px; font-weight: 700; }
+    .flight-airline-sub { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+    .flight-price { font-size: 22px; font-weight: 800; color: var(--green-bright); text-align: right; }
+    .flight-price-label { font-size: 11px; color: var(--text-dim); font-weight: 400; display: block; }
+
+    .flight-route { display: flex; align-items: center; gap: 0; margin-bottom: 16px; padding: 16px 0; border-top: 1px solid rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.04); }
+    .flight-endpoint { flex: 0 0 auto; min-width: 70px; }
+    .flight-time { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; line-height: 1; }
+    .flight-airport { font-size: 12px; color: var(--text-muted); margin-top: 4px; font-weight: 500; }
+    .flight-endpoint.arrive { text-align: right; }
+
+    .flight-line { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 0 16px; min-width: 100px; }
+    .flight-duration-label { font-size: 11px; color: var(--text-dim); font-weight: 500; }
+    .flight-line-track { width: 100%; display: flex; align-items: center; gap: 0; }
+    .flight-line-bar { flex: 1; height: 2px; background: rgba(255,255,255,0.12); }
+    .flight-line-dot { width: 8px; height: 8px; border-radius: 50%; border: 2px solid var(--text-dim); background: transparent; flex-shrink: 0; }
+    .flight-line-dot.filled { background: var(--green-bright); border-color: var(--green-bright); }
+    .flight-stops-label { font-size: 11px; color: var(--green-bright); font-weight: 600; }
+    .flight-stops-label.has-stops { color: #f59e0b; }
+
+    .flight-meta { display: flex; gap: 12px; font-size: 12px; color: var(--text-muted); margin-bottom: 14px; flex-wrap: wrap; }
+    .flight-meta-tag { padding: 4px 10px; border-radius: 6px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); }
     .flight-book {
       display: inline-flex; align-items: center; gap: 6px;
       padding: 10px 20px; border-radius: 10px; font-size: 13px; font-weight: 600;
@@ -580,8 +590,39 @@
     .flight-badge {
       font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 6px;
       background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.3);
-      color: var(--green-light);
+      color: var(--green-light); margin-left: 8px;
     }
+
+    /* Flight legs breakdown */
+    .flight-legs {
+      margin: 0 0 14px; padding: 14px 16px; border-radius: 10px;
+      background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);
+    }
+    .flight-leg {
+      display: flex; align-items: center; gap: 12px; padding: 8px 0;
+    }
+    .flight-leg + .flight-leg { border-top: 1px dashed rgba(255,255,255,0.06); }
+    .flight-leg-icon {
+      width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; color: var(--text-muted);
+    }
+    .flight-leg-icon.plane { background: rgba(99,102,241,0.1); color: #a5b4fc; }
+    .flight-leg-icon.layover { background: rgba(245,158,11,0.1); color: #f59e0b; }
+    .flight-leg-times {
+      display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; min-width: 120px;
+    }
+    .flight-leg-arrow { color: var(--text-dim); font-size: 11px; }
+    .flight-leg-detail { flex: 1; font-size: 12px; color: var(--text-muted); }
+    .flight-leg-route { font-weight: 600; color: rgba(255,255,255,0.7); }
+    .flight-leg-duration { font-size: 11px; color: var(--text-dim); }
+    .flight-layover-text { font-size: 12px; color: #f59e0b; font-weight: 600; }
+    .flight-legs-toggle {
+      font-size: 12px; color: #a5b4fc; cursor: pointer; background: none;
+      border: none; padding: 6px 0; font-family: inherit; font-weight: 500;
+      transition: color 0.2s;
+    }
+    .flight-legs-toggle:hover { color: #fff; }
 
     /* Hotel card */
     .hotel-card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
@@ -793,7 +834,7 @@
 <div class="submit-overlay" id="submitOverlay">
   <div class="submit-overlay-bg"></div>
   <div class="submit-content">
-    <div class="submit-emoji">🎉</div>
+    <div class="submit-emoji"><svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
     <h1 class="submit-title">Itinerary Ready!</h1>
     <p class="submit-sub">Your trip plan has been saved. View the full itinerary, save it to your account to come back later, or keep editing.</p>
     <div class="submit-actions">
@@ -961,7 +1002,7 @@
       <div class="tab-panel active" id="tab-summary"><h3 class="section-title">Trip Summary</h3><div id="summaryContent"></div></div>
       <div class="tab-panel" id="tab-budget"><h3 class="section-title">Budget Breakdown</h3><div id="budgetContent"></div></div>
       <div class="tab-panel" id="tab-weather"><h3 class="section-title">Weather Forecast</h3><p style="font-size:12px;color:var(--text-dim);margin-bottom:16px">Estimated conditions for your trip dates.</p><div id="weatherGrid"></div></div>
-      <div class="tab-panel" id="tab-map"><h3 class="section-title">Interactive Map</h3><div class="map-card"><svg viewBox="0 0 300 200" style="width:100%;height:100%"><defs><radialGradient id="g1" cx="70%" cy="30%" r="40%"><stop offset="0%" stop-color="#6366f1" stop-opacity="0.15"/><stop offset="100%" stop-color="#6366f1" stop-opacity="0"/></radialGradient><radialGradient id="g2" cx="30%" cy="70%" r="35%"><stop offset="0%" stop-color="#a855f7" stop-opacity="0.1"/><stop offset="100%" stop-color="#a855f7" stop-opacity="0"/></radialGradient></defs><rect width="300" height="200" fill="#0d0d15"/><rect width="300" height="200" fill="url(#g1)"/><rect width="300" height="200" fill="url(#g2)"/><path d="M80,60 Q100,40 140,45 Q180,35 210,50 Q240,55 250,80 Q255,110 240,135 Q220,155 190,160 Q160,165 140,155 Q120,160 100,150 Q80,135 75,110 Q70,85 80,60Z" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/><circle cx="210" cy="55" r="10" fill="none" stroke="#6366f1" stroke-width="1" opacity="0.5"><animate attributeName="r" from="6" to="16" dur="2.5s" repeatCount="indefinite"/><animate attributeName="opacity" from="0.6" to="0" dur="2.5s" repeatCount="indefinite"/></circle><circle cx="210" cy="55" r="5" fill="#6366f1"/><circle cx="210" cy="55" r="2" fill="#fff"/><text x="210" y="45" text-anchor="middle" font-size="7.5" fill="#a5b4fc" font-weight="600">Cairns</text><circle cx="195" cy="68" r="10" fill="none" stroke="#6366f1" stroke-width="1" opacity="0.5"><animate attributeName="r" from="6" to="16" dur="2.5s" repeatCount="indefinite"/><animate attributeName="opacity" from="0.6" to="0" dur="2.5s" repeatCount="indefinite"/></circle><circle cx="195" cy="68" r="5" fill="#6366f1"/><circle cx="195" cy="68" r="2" fill="#fff"/><text x="195" y="58" text-anchor="middle" font-size="7.5" fill="#a5b4fc" font-weight="600">Daintree</text><circle cx="160" cy="92" r="3" fill="rgba(255,255,255,0.25)"/><text x="160" y="82" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.3)">Uluru</text><circle cx="228" cy="128" r="3" fill="rgba(255,255,255,0.25)"/><text x="228" y="118" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.3)">Sydney</text><circle cx="215" cy="143" r="3" fill="rgba(255,255,255,0.25)"/><text x="215" y="133" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.3)">Melbourne</text><path d="M210,55 Q205,60 195,68" fill="none" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.5"/></svg><div class="map-label">📍 Active destinations</div></div><p style="font-size:12px;color:var(--text-dim);margin-top:12px;line-height:1.5">Pins highlight destinations from selected itineraries.</p></div>
+      <div class="tab-panel" id="tab-map"><h3 class="section-title">Interactive Map</h3><div class="map-card"><svg viewBox="0 0 300 200" style="width:100%;height:100%"><defs><radialGradient id="g1" cx="70%" cy="30%" r="40%"><stop offset="0%" stop-color="#6366f1" stop-opacity="0.15"/><stop offset="100%" stop-color="#6366f1" stop-opacity="0"/></radialGradient><radialGradient id="g2" cx="30%" cy="70%" r="35%"><stop offset="0%" stop-color="#a855f7" stop-opacity="0.1"/><stop offset="100%" stop-color="#a855f7" stop-opacity="0"/></radialGradient></defs><rect width="300" height="200" fill="#0d0d15"/><rect width="300" height="200" fill="url(#g1)"/><rect width="300" height="200" fill="url(#g2)"/><path d="M80,60 Q100,40 140,45 Q180,35 210,50 Q240,55 250,80 Q255,110 240,135 Q220,155 190,160 Q160,165 140,155 Q120,160 100,150 Q80,135 75,110 Q70,85 80,60Z" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/><circle cx="210" cy="55" r="10" fill="none" stroke="#6366f1" stroke-width="1" opacity="0.5"><animate attributeName="r" from="6" to="16" dur="2.5s" repeatCount="indefinite"/><animate attributeName="opacity" from="0.6" to="0" dur="2.5s" repeatCount="indefinite"/></circle><circle cx="210" cy="55" r="5" fill="#6366f1"/><circle cx="210" cy="55" r="2" fill="#fff"/><text x="210" y="45" text-anchor="middle" font-size="7.5" fill="#a5b4fc" font-weight="600">Cairns</text><circle cx="195" cy="68" r="10" fill="none" stroke="#6366f1" stroke-width="1" opacity="0.5"><animate attributeName="r" from="6" to="16" dur="2.5s" repeatCount="indefinite"/><animate attributeName="opacity" from="0.6" to="0" dur="2.5s" repeatCount="indefinite"/></circle><circle cx="195" cy="68" r="5" fill="#6366f1"/><circle cx="195" cy="68" r="2" fill="#fff"/><text x="195" y="58" text-anchor="middle" font-size="7.5" fill="#a5b4fc" font-weight="600">Daintree</text><circle cx="160" cy="92" r="3" fill="rgba(255,255,255,0.25)"/><text x="160" y="82" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.3)">Uluru</text><circle cx="228" cy="128" r="3" fill="rgba(255,255,255,0.25)"/><text x="228" y="118" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.3)">Sydney</text><circle cx="215" cy="143" r="3" fill="rgba(255,255,255,0.25)"/><text x="215" y="133" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.3)">Melbourne</text><path d="M210,55 Q205,60 195,68" fill="none" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.5"/></svg><div class="map-label">Active destinations</div></div><p style="font-size:12px;color:var(--text-dim);margin-top:12px;line-height:1.5">Pins highlight destinations from selected itineraries.</p></div>
       <div class="tab-panel" id="tab-social"><h3 class="section-title">Social Pinboard</h3><p style="font-size:13px;color:var(--text-muted);margin-bottom:18px;line-height:1.5">Cross-reference recommendations from real travelers.</p><div class="filter-row"><button class="filter-btn active">All</button><button class="filter-btn">Instagram</button><button class="filter-btn">TikTok</button><button class="filter-btn">Google</button></div><div class="social-grid" id="socialGrid"></div></div>
       <div class="tab-panel" id="tab-timeline"><h3 class="section-title">Trip Timeline</h3><p style="font-size:13px;color:var(--text-muted);margin-bottom:24px;line-height:1.5">High-level journey overview. Customize with Lisa.</p><div class="timeline" id="timelineWrap"><div class="timeline-line"></div></div></div>
     </div>
@@ -1000,17 +1041,17 @@ const weatherData = [
 const socialPins = [
   { platform:"ig", handle:"@explorequeensland", content:"Hidden waterfall near Cairns 🌊", likes:"12.4k" },
   { platform:"tt", handle:"@traveloz", content:"This beach is UNREAL #australia", likes:"89k" },
-  { platform:"g", handle:"Google Reviews", content:"Great Barrier Reef tours ★★★★★", likes:"4.9" },
+  { platform:"g", handle:"Google Reviews", content:"Great Barrier Reef tours - 5.0 rating", likes:"4.9" },
   { platform:"ig", handle:"@wanderlust.au", content:"Sunrise at Uluru hits different", likes:"8.2k" },
   { platform:"tt", handle:"@backpackerlife", content:"Best hostels in Byron Bay", likes:"34k" },
   { platform:"g", handle:"Google Maps", content:"Daintree walks — must visit!", likes:"4.8" },
 ];
 
 const timelineSteps = [
-  { day:"Day 1–2", label:"Arrive & Settle", location:"Cairns", icon:"✈️" },
+  { day:"Day 1-2", label:"Arrive & Settle", location:"Cairns", icon:"" },
   { day:"Day 3–4", label:"Reef & Coast", location:"Great Barrier Reef", icon:"🐠" },
-  { day:"Day 5", label:"Rainforest", location:"Daintree", icon:"🌿" },
-  { day:"Day 6", label:"Beach Day", location:"Port Douglas", icon:"🏖️" },
+  { day:"Day 5", label:"Rainforest", location:"Daintree", icon:"" },
+  { day:"Day 6", label:"Beach Day", location:"Port Douglas", icon:"" },
   { day:"Day 7", label:"Depart", location:"Cairns", icon:"🌅" },
 ];
 
@@ -1360,14 +1401,91 @@ function renderResults(data) {
     html += '<div class="results-section-title">Flights <span class="results-section-count">' + data.flights.length + ' options</span></div>';
     data.flights.forEach(function(f, i) {
       var badge = i === 0 ? '<span class="flight-badge">Best Value</span>' : '';
+      var isDirect = !f.stops || f.stops === 'Direct' || f.stops === 'Nonstop' || f.stops === '0';
+      var stopsLabel = isDirect ? 'Direct' : f.stops;
+      var stopsClass = isDirect ? '' : ' has-stops';
+
+      // Fallbacks for old format
+      var departTime = f.departTime || '';
+      var arriveTime = f.arriveTime || '';
+      var departAirport = f.departAirport || (f.route ? f.route.split(' to ')[0] : '');
+      var arriveAirport = f.arriveAirport || (f.route ? f.route.split(' to ')[1] : '');
+      var departCity = f.departCity || departAirport;
+      var arriveCity = f.arriveCity || arriveAirport;
+      var flightClass = f.class || f.type || 'Economy';
+      var priceLabel = f.priceLabel || 'per person';
+
       html += '<div class="result-card">';
-      html += '<div class="flight-card-top"><div><div class="flight-airline">' + f.airline + '</div>' + badge + '</div><div><div class="flight-price">' + f.price + ' <span class="flight-price-label">per person</span></div></div></div>';
-      html += '<div class="flight-route"><div class="flight-endpoint"><div class="flight-code">' + (f.route.split(' to ')[0] || f.route).substring(0,20) + '</div></div><div class="flight-line"><div class="flight-line-bar"></div><div class="flight-line-icon">✈</div><div class="flight-line-bar"></div></div><div class="flight-endpoint"><div class="flight-code">' + (f.route.split(' to ')[1] || '').substring(0,20) + '</div></div></div>';
-      html += '<div class="flight-meta">';
-      if (f.duration) html += '<div class="flight-meta-item">⏱ ' + f.duration + '</div>';
-      if (f.type) html += '<div class="flight-meta-item">✈ ' + f.type + '</div>';
-      if (f.frequency) html += '<div class="flight-meta-item">📅 ' + f.frequency + '</div>';
+
+      // Top: airline + price
+      html += '<div class="flight-card-top">';
+      html += '<div><div class="flight-airline">' + f.airline + badge + '</div>';
+      if (f.flightNo) html += '<div class="flight-airline-sub">' + f.flightNo + '</div>';
       html += '</div>';
+      html += '<div><div class="flight-price">' + f.price + '</div><span class="flight-price-label">' + priceLabel + '</span></div>';
+      html += '</div>';
+
+      // Route: departure → duration → arrival (Expedia style)
+      html += '<div class="flight-route">';
+      html += '<div class="flight-endpoint depart">';
+      if (departTime) html += '<div class="flight-time">' + departTime + '</div>';
+      html += '<div class="flight-airport">' + departAirport;
+      if (departCity && departCity !== departAirport) html += ' · ' + departCity;
+      html += '</div></div>';
+
+      html += '<div class="flight-line">';
+      html += '<div class="flight-duration-label">' + (f.duration || '') + '</div>';
+      html += '<div class="flight-line-track"><div class="flight-line-dot filled"></div><div class="flight-line-bar"></div><div class="flight-line-dot filled"></div></div>';
+      html += '<div class="flight-stops-label' + stopsClass + '">' + stopsLabel + '</div>';
+      html += '</div>';
+
+      html += '<div class="flight-endpoint arrive">';
+      if (arriveTime) html += '<div class="flight-time">' + arriveTime + '</div>';
+      html += '<div class="flight-airport">' + arriveAirport;
+      if (arriveCity && arriveCity !== arriveAirport) html += ' · ' + arriveCity;
+      html += '</div></div>';
+      html += '</div>';
+
+      // Legs breakdown for multi-stop flights
+      if (f.legs && f.legs.length > 0) {
+        var legsId = 'legs-' + i;
+        html += '<button class="flight-legs-toggle" onclick="var el=document.getElementById(\'' + legsId + '\');el.style.display=el.style.display===\'none\'?\'block\':\'none\';this.textContent=el.style.display===\'none\'?\'Show flight details ▾\':\'Hide flight details ▴\'">Show flight details ▾</button>';
+        html += '<div class="flight-legs" id="' + legsId + '" style="display:none">';
+        f.legs.forEach(function(leg) {
+          if (leg.layover) {
+            // Layover segment
+            html += '<div class="flight-leg">';
+            html += '<div class="flight-leg-icon layover"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>';
+            html += '<div class="flight-leg-times"><span class="flight-layover-text">' + leg.layover + ' layover</span></div>';
+            html += '<div class="flight-leg-detail"><span class="flight-leg-route">' + (leg.city || leg.airport || '') + '</span></div>';
+            html += '</div>';
+          } else {
+            // Flight segment
+            html += '<div class="flight-leg">';
+            html += '<div class="flight-leg-icon plane"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M21 16v-2l-8-5V3.5A1.5 1.5 0 0011.5 2 1.5 1.5 0 0010 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg></div>';
+            html += '<div class="flight-leg-times">';
+            html += '<span>' + (leg.departTime || '') + '</span>';
+            html += '<span class="flight-leg-arrow">→</span>';
+            html += '<span>' + (leg.arriveTime || '') + '</span>';
+            html += '</div>';
+            html += '<div class="flight-leg-detail">';
+            html += '<div class="flight-leg-route">' + (leg.departAirport || '') + ' → ' + (leg.arriveAirport || '') + '</div>';
+            html += '<div class="flight-leg-duration">' + (leg.flightNo ? leg.flightNo + ' · ' : '') + (leg.duration || '') + '</div>';
+            html += '</div>';
+            html += '</div>';
+          }
+        });
+        html += '</div>';
+      }
+
+      // Meta tags
+      html += '<div class="flight-meta">';
+      if (flightClass) html += '<span class="flight-meta-tag">' + flightClass + '</span>';
+      if (f.baggage) html += '<span class="flight-meta-tag">' + f.baggage + '</span>';
+      if (f.frequency) html += '<span class="flight-meta-tag">' + f.frequency + '</span>';
+      html += '</div>';
+
+      // Book button
       html += '<a href="' + (f.bookUrl || 'https://www.skyscanner.com.au') + '" target="_blank" rel="noopener" class="flight-book">View on ' + getDomain(f.bookUrl) + ' →</a>';
       html += '</div>';
     });
@@ -1382,7 +1500,7 @@ function renderResults(data) {
       html += '<div class="result-card">';
       html += '<div class="hotel-card-top"><div><div class="hotel-name">' + h.name + '</div><div class="hotel-location">' + (h.location || '') + '</div></div><div class="hotel-price-wrap"><div class="hotel-price-night">' + h.pricePerNight + '<span class="flight-price-label">/night</span></div>' + (h.totalPrice ? '<div class="hotel-price-total">Total: ' + h.totalPrice + '</div>' : '') + '</div></div>';
       html += '<div class="hotel-rating">';
-      if (h.stars) { var stars = ''; for (var s = 0; s < h.stars; s++) stars += '★'; html += '<span class="hotel-stars">' + stars + '</span>'; }
+      if (h.stars) { var stars = ''; for (var s = 0; s < h.stars; s++) stars += '<svg width="12" height="12" viewBox="0 0 24 24" fill="#f59e0b" style="display:inline-block;vertical-align:middle"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>'; html += '<span class="hotel-stars">' + stars + '</span>'; }
       if (h.rating) html += '<span class="hotel-score">' + h.rating + '</span>';
       html += '</div>';
       if (h.highlights && h.highlights.length) {
@@ -1405,8 +1523,8 @@ function renderResults(data) {
       html += '<div class="activity-card-top"><div class="activity-name">' + a.name + '</div><div class="activity-price">' + a.price + '</div></div>';
       if (a.provider) html += '<div class="activity-provider">via ' + a.provider + '</div>';
       html += '<div class="activity-meta">';
-      if (a.duration) html += '<div class="flight-meta-item">⏱ ' + a.duration + '</div>';
-      if (a.rating) html += '<div class="flight-meta-item">★ ' + a.rating + '</div>';
+      if (a.duration) html += '<div class="flight-meta-item">' + a.duration + '</div>';
+      if (a.rating) html += '<div class="flight-meta-item">' + a.rating + ' rating</div>';
       html += '</div>';
       html += '<a href="' + (a.bookUrl || 'https://www.getyourguide.com') + '" target="_blank" rel="noopener" class="flight-book">View on ' + getDomain(a.bookUrl) + ' →</a>';
       html += '</div>';
