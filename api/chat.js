@@ -276,6 +276,15 @@ module.exports = async function handler(req, res) {
     var ecoMode = body.ecoMode;
     var lastImage = body.lastImage;
 
+    // Detect user location from Vercel headers or frontend data
+    var userCity = body.userCity || req.headers["x-vercel-ip-city"] || "";
+    var userRegion = body.userRegion || req.headers["x-vercel-ip-region"] || "";
+    var userCountry = body.userCountry || req.headers["x-vercel-ip-country"] || "";
+    var userLocation = "";
+    if (userCity) userLocation = decodeURIComponent(userCity);
+    if (userRegion && userRegion !== userCity) userLocation += (userLocation ? ", " : "") + decodeURIComponent(userRegion);
+    if (userCountry) userLocation += (userLocation ? ", " : "") + userCountry;
+
     if (!messages || !Array.isArray(messages) || messages.length === 0) {
       return res.status(400).json({ error: "Messages required" });
     }
@@ -283,6 +292,9 @@ module.exports = async function handler(req, res) {
     var systemPrompt = SYSTEM_PROMPT;
     var today = body.today || new Date().toISOString().split("T")[0];
     systemPrompt = systemPrompt + "\n\nToday's date is " + today + ". Use this for calculating relative dates like tomorrow, next week, next month.";
+    if (userLocation) {
+      systemPrompt = systemPrompt + "\nThe user is located in " + userLocation + ". Use this as their likely departure city unless they say otherwise. Do NOT ask where they are flying from if you already know. Just confirm: 'I can see you are in " + (userCity ? decodeURIComponent(userCity) : userLocation) + " -- I will search flights from there.'";
+    }
     if (ecoMode) {
       systemPrompt = systemPrompt + "\n\nACTIVE: Eco Mode is ON. Prioritise sustainable options in all recommendations.";
     }
