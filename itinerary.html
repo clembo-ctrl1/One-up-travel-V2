@@ -15,7 +15,7 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <style>
     :root {
-      --bg: #0a0a0f;
+      --bg: #f5f2ec;
       --surface: rgba(255,255,255,0.03);
       --surface-2: rgba(255,255,255,0.06);
       --border: rgba(255,255,255,0.07);
@@ -23,10 +23,10 @@
       --text: #ffffff;
       --text-2: rgba(255,255,255,0.6);
       --text-3: rgba(255,255,255,0.35);
-      --indigo: #6366f1;
-      --indigo-glow: rgba(99,102,241,0.15);
-      --green: #10b981;
-      --green-glow: rgba(16,185,129,0.15);
+      --indigo: #5c8a72;
+      --indigo-glow: rgba(92,138,114,0.15);
+      --green: #5c8a72;
+      --green-glow: rgba(92,138,114,0.15);
       --amber: #f59e0b;
       --amber-glow: rgba(245,158,11,0.15);
       --rose: #f43f5e;
@@ -39,86 +39,86 @@
 
     /* =============== PURPOSE THEME (Green/Teal) =============== */
     html.purpose-theme {
-      --indigo: #059669;
-      --indigo-glow: rgba(16,185,129,0.15);
-      --violet: #14b8a6;
+      --indigo: #3a6b52;
+      --indigo-glow: rgba(92,138,114,0.15);
+      --violet: #5c8a72;
       --bg: #060f0d;
     }
     html.purpose-theme body { background: var(--bg); }
 
     /* Tab buttons */
     .purpose-theme .tab-btn.active {
-      background: #059669 !important;
-      box-shadow: 0 2px 12px rgba(16,185,129,0.3) !important;
+      background: #3a6b52 !important;
+      box-shadow: 0 2px 12px rgba(92,138,114,0.3) !important;
     }
 
     /* Timeline filter active */
     .purpose-theme .tl-filter.active {
-      background: #059669 !important;
-      box-shadow: 0 2px 10px rgba(16,185,129,0.25) !important;
+      background: #3a6b52 !important;
+      box-shadow: 0 2px 10px rgba(92,138,114,0.25) !important;
     }
 
     /* Sidebar active */
     .purpose-theme .sidebar-item.active,
     .purpose-theme .sidebar-item.primary {
-      background: rgba(16,185,129,0.15) !important;
-      border-color: rgba(16,185,129,0.3) !important;
-      color: #6ee7b7 !important;
+      background: rgba(92,138,114,0.15) !important;
+      border-color: rgba(92,138,114,0.3) !important;
+      color: #7aa88e !important;
     }
 
     /* CTA buttons */
     .purpose-theme .cta-btn.primary {
-      background: linear-gradient(135deg, #059669, #0d9488) !important;
-      box-shadow: 0 4px 20px rgba(16,185,129,0.3) !important;
+      background: linear-gradient(135deg, #3a6b52, #0d9488) !important;
+      box-shadow: 0 4px 20px rgba(92,138,114,0.3) !important;
     }
 
     /* Sign in button */
     .purpose-theme .signin-btn {
-      background: #059669 !important;
+      background: #3a6b52 !important;
     }
 
     /* Logo dot */
     .purpose-theme .logo-dot {
-      background: #10b981 !important;
-      box-shadow: 0 0 12px rgba(16,185,129,0.7), 0 0 24px rgba(16,185,129,0.3) !important;
+      background: #5c8a72 !important;
+      box-shadow: 0 0 12px rgba(92,138,114,0.7), 0 0 24px rgba(92,138,114,0.3) !important;
     }
 
     /* Map filters */
     .purpose-theme .map-filter.active {
-      background: #059669 !important;
-      box-shadow: 0 2px 10px rgba(16,185,129,0.25) !important;
+      background: #3a6b52 !important;
+      box-shadow: 0 2px 10px rgba(92,138,114,0.25) !important;
     }
 
     /* Summary overview card hover glow */
     .purpose-theme .sum-overview-card:hover {
-      border-color: rgba(16,185,129,0.3) !important;
-      box-shadow: 0 4px 20px rgba(16,185,129,0.1) !important;
+      border-color: rgba(92,138,114,0.3) !important;
+      box-shadow: 0 4px 20px rgba(92,138,114,0.1) !important;
     }
 
     /* Currency button active */
     .purpose-theme .curr-btn.active {
-      background: #059669 !important;
-      box-shadow: 0 2px 10px rgba(16,185,129,0.25) !important;
+      background: #3a6b52 !important;
+      box-shadow: 0 2px 10px rgba(92,138,114,0.25) !important;
     }
 
     /* Header gradient line */
     .purpose-theme .itin-header::after {
-      background: linear-gradient(90deg, transparent, #10b981, #14b8a6, transparent) !important;
+      background: linear-gradient(90deg, transparent, #5c8a72, #5c8a72, transparent) !important;
     }
 
     /* Link colors */
-    .purpose-theme a[style*="color:#a5b4fc"],
-    .purpose-theme a[style*="color: #a5b4fc"] {
-      color: #6ee7b7 !important;
+    .purpose-theme a[style*="color:#7aa88e"],
+    .purpose-theme a[style*="color: #7aa88e"] {
+      color: #7aa88e !important;
     }
 
     /* Share modal button */
     .purpose-theme .share-link-copy {
-      background: #059669 !important;
+      background: #3a6b52 !important;
     }
 
     /* Toast success inherits green already, but ensure accent */
-    .purpose-theme .toast-bar { background: #059669 !important; }
+    .purpose-theme .toast-bar { background: #3a6b52 !important; }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -155,7 +155,7 @@
     .skeleton-bar:nth-child(4) { width: 45%; }
     .loader-text { font-size: 13px; color: var(--text-3); letter-spacing: 1px; text-transform: uppercase; font-weight: 600; }
     @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
-    @keyframes pulse-glow { 0%,100% { box-shadow: 0 0 20px rgba(99,102,241,0.3); } 50% { box-shadow: 0 0 40px rgba(99,102,241,0.6); } }
+    @keyframes pulse-glow { 0%,100% { box-shadow: 0 0 20px rgba(92,138,114,0.3); } 50% { box-shadow: 0 0 40px rgba(92,138,114,0.6); } }
 
     /* =============== IMAGE LOADING =============== */
 
@@ -163,13 +163,13 @@
     .toast-container { position: fixed; top: 24px; right: 24px; z-index: 10000; display: flex; flex-direction: column; gap: 10px; }
     .toast {
       display: flex; align-items: center; gap: 12px; padding: 14px 20px; border-radius: 12px;
-      background: rgba(15,15,25,0.95); backdrop-filter: blur(20px); border: 1px solid var(--border-2);
+      background: rgba(15,15,25,0.95); backdrop-filter: none; border: 1px solid var(--border-2);
       box-shadow: 0 8px 32px rgba(0,0,0,0.4); font-size: 13px; font-weight: 600;
       animation: toast-in 0.4s cubic-bezier(0.16, 1, 0.3, 1); transition: all 0.3s ease; max-width: 360px;
     }
-    .toast.success { border-color: rgba(16,185,129,0.3); }
+    .toast.success { border-color: rgba(92,138,114,0.3); }
     .toast.success .toast-icon { color: var(--green); }
-    .toast.info { border-color: rgba(99,102,241,0.3); }
+    .toast.info { border-color: rgba(92,138,114,0.3); }
     .toast.info .toast-icon { color: var(--indigo); }
     .toast-icon { width: 20px; height: 20px; flex-shrink: 0; }
     .toast-msg { flex: 1; }
@@ -193,8 +193,8 @@
       align-items: center;
       position: sticky;
       top: 0;
-      background: rgba(10, 10, 15, 0.95);
-      backdrop-filter: blur(20px);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: none;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       z-index: 100;
     }
@@ -205,17 +205,17 @@
     .logo img { height: 40px; transition: all 0.3s ease; }
     .logo img:hover { transform: scale(1.05); }
     .header-menu-btn {
-      background: transparent; border: 1px solid rgba(255,255,255,0.2); color: white;
+      background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #2c2c2a;
       padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 500; font-size: 14px;
       transition: all 0.3s ease; display: flex; align-items: center; gap: 8px; font-family: var(--font);
     }
-    .header-menu-btn:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.3); }
+    .header-menu-btn:hover { background: #ffffff; border-color: #b5a99a; }
     .header-menu-btn i { width: 18px; height: 18px; }
     .signin-btn {
-      background: var(--indigo); color: white; padding: 10px 24px; border-radius: 10px;
+      background: var(--indigo); color: #2c2c2a; padding: 10px 24px; border-radius: 10px;
       font-weight: 600; text-decoration: none; transition: 0.3s; font-size: 14px;
     }
-    .signin-btn:hover { background: #4f46e5; transform: translateY(-2px); }
+    .signin-btn:hover { background: #3a6b52; transform: translateY(-2px); }
 
     /* =============== LEFT SIDEBAR =============== */
     .left-sidebar {
@@ -235,7 +235,7 @@
     .sidebar-close-btn {
       position: absolute; top: 20px; right: 16px;
       background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12);
-      color: white; width: 36px; height: 36px; border-radius: 10px; cursor: pointer;
+      color: #2c2c2a; width: 36px; height: 36px; border-radius: 10px; cursor: pointer;
       transition: all 0.25s ease; display: flex; align-items: center; justify-content: center;
     }
     .sidebar-close-btn:hover {
@@ -258,15 +258,15 @@
       transition: all 0.25s ease; font-family: var(--font);
     }
     .sidebar-item:hover {
-      background: rgba(99, 102, 241, 0.12); border-color: rgba(99, 102, 241, 0.25); color: white;
-      box-shadow: 0 0 20px rgba(99, 102, 241, 0.15), inset 0 0 20px rgba(99, 102, 241, 0.05);
+      background: rgba(92, 138, 114, 0.12); border-color: rgba(92, 138, 114, 0.25); color: #2c2c2a;
+      box-shadow: 0 0 20px rgba(92, 138, 114, 0.15), inset 0 0 20px rgba(92, 138, 114, 0.05);
     }
     .sidebar-item.active {
-      background: rgba(99, 102, 241, 0.15); border-color: rgba(99, 102, 241, 0.3); color: white;
+      background: rgba(92, 138, 114, 0.15); border-color: rgba(92, 138, 114, 0.3); color: #2c2c2a;
     }
     .sidebar-item.primary {
-      background: rgba(99, 102, 241, 0.15); border-color: rgba(99, 102, 241, 0.4);
-      color: #a5b4fc; font-weight: 600;
+      background: rgba(92, 138, 114, 0.15); border-color: rgba(92, 138, 114, 0.4);
+      color: #7aa88e; font-weight: 600;
     }
     .sidebar-item i { width: 18px; height: 18px; flex-shrink: 0; opacity: 0.7; }
     .sidebar-item:hover i { opacity: 1; }
@@ -291,9 +291,9 @@
     .hero-content { position: absolute; bottom: 0; left: 0; right: 0; padding: 32px; z-index: 2; }
     .hero-badge {
       display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px;
-      background: rgba(99,102,241,0.2); border: 1px solid rgba(99,102,241,0.3);
+      background: rgba(92,138,114,0.2); border: 1px solid rgba(92,138,114,0.3);
       border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 1px; color: #a5b4fc; margin-bottom: 12px;
+      letter-spacing: 1px; color: #7aa88e; margin-bottom: 12px;
     }
     .hero-title { font-size: 36px; font-weight: 800; letter-spacing: -1px; line-height: 1.1; margin-bottom: 6px; text-shadow: 0 2px 20px rgba(0,0,0,0.5); }
     .hero-subtitle { font-size: 15px; color: var(--text-2); }
@@ -305,13 +305,13 @@
     .countdown-bar {
       display: flex; align-items: center; justify-content: center; gap: 24px; padding: 20px;
       margin: 24px 0;
-      background: linear-gradient(135deg, rgba(99,102,241,0.08), rgba(139,92,246,0.08));
-      border: 1px solid rgba(99,102,241,0.15); border-radius: var(--radius);
+      background: linear-gradient(135deg, rgba(92,138,114,0.08), rgba(139,92,246,0.08));
+      border: 1px solid rgba(92,138,114,0.15); border-radius: var(--radius);
       position: relative; overflow: hidden;
     }
     .countdown-bar::before {
       content: ''; position: absolute; inset: 0;
-      background: linear-gradient(90deg, transparent, rgba(99,102,241,0.05), transparent);
+      background: linear-gradient(90deg, transparent, rgba(92,138,114,0.05), transparent);
       animation: countdown-sweep 3s ease infinite;
     }
     @keyframes countdown-sweep { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
@@ -319,7 +319,7 @@
     .countdown-label i { width: 16px; height: 16px; color: var(--amber); }
     .countdown-units { display: flex; gap: 16px; }
     .countdown-unit { text-align: center; }
-    .countdown-number { font-family: var(--mono); font-size: 24px; font-weight: 700; color: white; line-height: 1; }
+    .countdown-number { font-family: var(--mono); font-size: 24px; font-weight: 700; color: #2c2c2a; line-height: 1; }
     .countdown-word { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-3); margin-top: 4px; }
 
     /* =============== STATS =============== */
@@ -336,7 +336,7 @@
     }
     .stat-card:hover { border-color: var(--border-2); background: var(--surface-2); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
     .stat-icon { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; }
-    .stat-icon.indigo { background: var(--indigo-glow); color: #a5b4fc; }
+    .stat-icon.indigo { background: var(--indigo-glow); color: #7aa88e; }
     .stat-icon.green { background: var(--green-glow); color: var(--green); }
     .stat-icon.amber { background: var(--amber-glow); color: var(--amber); }
     .stat-icon.rose { background: var(--rose-glow); color: var(--rose); }
@@ -352,15 +352,15 @@
       appearance: none; -webkit-appearance: none;
       padding: 8px 36px 8px 14px;
       background: var(--surface-2); border: 1px solid var(--border-2); border-radius: 10px;
-      color: white; font-family: var(--mono); font-size: 13px; font-weight: 700;
+      color: #2c2c2a; font-family: var(--mono); font-size: 13px; font-weight: 700;
       cursor: pointer; outline: none; transition: all 0.25s;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='rgba(255,255,255,0.5)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='2 4 6 8 10 4'/%3E%3C/svg%3E");
       background-repeat: no-repeat; background-position: right 12px center;
     }
     .currency-select:hover, .currency-select:focus {
-      border-color: rgba(99,102,241,0.4); background-color: var(--indigo-glow);
+      border-color: rgba(92,138,114,0.4); background-color: var(--indigo-glow);
     }
-    .currency-select option { background: #1a1a2e; color: white; }
+    .currency-select option { background: #1a1a2e; color: #2c2c2a; }
 
     /* =============== VIEW TABS =============== */
     .view-tabs {
@@ -374,8 +374,8 @@
       gap: 6px; font-family: var(--font);
     }
     .tab-btn i { width: 15px; height: 15px; }
-    .tab-btn.active { background: var(--indigo); color: white; box-shadow: 0 2px 12px rgba(99,102,241,0.3); }
-    .tab-btn:hover:not(.active) { color: white; background: var(--surface-2); }
+    .tab-btn.active { background: var(--indigo); color: #2c2c2a; box-shadow: 0 2px 12px rgba(92,138,114,0.3); }
+    .tab-btn:hover:not(.active) { color: #2c2c2a; background: var(--surface-2); }
     .view-panel { display: none; animation: fadeInUp 0.4s ease; }
     .view-panel.active { display: block; }
     @keyframes fadeInUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
@@ -425,11 +425,11 @@
       height: 46px;
       border-radius: 14px;
       transform: scale(1);
-      box-shadow: 0 0 20px rgba(99,102,241,0.2);
+      box-shadow: 0 0 20px rgba(92,138,114,0.2);
     }
 
     .tl-rail-dot.active.flight { background: var(--amber-glow); border-color: rgba(245,158,11,0.35); }
-    .tl-rail-dot.active.activity { background: var(--green-glow); border-color: rgba(16,185,129,0.35); }
+    .tl-rail-dot.active.activity { background: var(--green-glow); border-color: rgba(92,138,114,0.35); }
     .tl-rail-dot.active.free { background: var(--surface-2); border-color: var(--border-2); }
 
     .tl-rail-dot .dot-num {
@@ -440,7 +440,7 @@
       transition: all 0.3s;
     }
 
-    .tl-rail-dot.active .dot-num { color: white; font-size: 15px; }
+    .tl-rail-dot.active .dot-num { color: #2c2c2a; font-size: 15px; }
     .tl-rail-dot.active.flight .dot-num { color: var(--amber); }
     .tl-rail-dot.active.activity .dot-num { color: var(--green); }
 
@@ -463,7 +463,7 @@
       flex-shrink: 0;
       transition: background 0.3s;
     }
-    .tl-rail-line.passed { background: rgba(99,102,241,0.25); }
+    .tl-rail-line.passed { background: rgba(92,138,114,0.25); }
 
     /* Right content panel */
     .tl-day-panel {
@@ -524,7 +524,7 @@
       font-family: var(--font);
     }
 
-    .tl-nav-btn:hover { border-color: var(--border-2); color: white; background: var(--surface-2); }
+    .tl-nav-btn:hover { border-color: var(--border-2); color: #2c2c2a; background: var(--surface-2); }
     .tl-nav-btn:disabled { opacity: 0.25; cursor: not-allowed; }
     .tl-nav-btn:disabled:hover { border-color: var(--border); color: var(--text-3); background: var(--surface); }
     .tl-nav-btn svg { width: 16px; height: 16px; }
@@ -583,7 +583,7 @@
       padding: 4px 10px; border-radius: 6px; margin-bottom: 6px;
     }
     .tl-item-tag.flight { background: var(--amber-glow); color: var(--amber); }
-    .tl-item-tag.hotel { background: var(--indigo-glow); color: #a5b4fc; }
+    .tl-item-tag.hotel { background: var(--indigo-glow); color: #7aa88e; }
     .tl-item-tag.activity { background: var(--green-glow); color: var(--green); }
     .tl-item-tag.free { background: var(--surface-2); color: var(--text-3); }
 
@@ -630,13 +630,13 @@
     .tl-item-link {
       display: inline-flex; align-items: center; gap: 6px;
       padding: 8px 16px; margin-top: 14px;
-      background: var(--indigo-glow); border: 1px solid rgba(99,102,241,0.3);
-      border-radius: 8px; color: #a5b4fc; font-size: 12px; font-weight: 700;
+      background: var(--indigo-glow); border: 1px solid rgba(92,138,114,0.3);
+      border-radius: 8px; color: #7aa88e; font-size: 12px; font-weight: 700;
       text-decoration: none; transition: all 0.25s;
     }
     .tl-item-link:hover {
-      background: rgba(99,102,241,0.25); border-color: rgba(99,102,241,0.5);
-      color: white;
+      background: rgba(92,138,114,0.25); border-color: rgba(92,138,114,0.5);
+      color: #2c2c2a;
     }
     .tl-item-link i { width: 14px; height: 14px; }
 
@@ -713,8 +713,8 @@
 
     .tl-filter.active {
       background: var(--indigo-glow);
-      border-color: rgba(99,102,241,0.35);
-      color: white;
+      border-color: rgba(92,138,114,0.35);
+      color: #2c2c2a;
     }
 
     .tl-filter i { flex-shrink: 0; }
@@ -722,7 +722,7 @@
     .tl-filter-count {
       font-size: 10px;
       font-weight: 800;
-      background: rgba(255,255,255,0.08);
+      background: rgba(92,138,114,0.06);
       padding: 1px 6px;
       border-radius: 6px;
       min-width: 18px;
@@ -785,7 +785,7 @@
     .sum-overview-num {
       font-size: 22px;
       font-weight: 800;
-      color: white;
+      color: #2c2c2a;
       font-family: var(--mono);
       line-height: 1.1;
     }
@@ -830,7 +830,7 @@
     }
 
     .sum-section-icon.flight { background: var(--amber-glow); color: var(--amber); }
-    .sum-section-icon.hotel { background: var(--indigo-glow); color: #a5b4fc; }
+    .sum-section-icon.hotel { background: var(--indigo-glow); color: #7aa88e; }
     .sum-section-icon.activity { background: var(--green-glow); color: var(--green); }
     .sum-section-icon.free { background: var(--surface-2); color: var(--text-3); }
 
@@ -931,7 +931,7 @@
       border-radius: 10px;
       overflow: hidden;
       height: 220px;
-      background: rgba(255,255,255,0.03);
+      background: rgba(92,138,114,0.04);
     }
     .sum-carousel-track {
       display: flex;
@@ -960,14 +960,14 @@
       border-radius: 50%;
       background: rgba(0,0,0,0.55);
       backdrop-filter: blur(4px);
-      border: 1px solid rgba(255,255,255,0.15);
-      color: white;
+      border: 1px solid #c8c0ae;
+      color: #2c2c2a;
       display: flex; align-items: center; justify-content: center;
       cursor: pointer;
       transition: all 0.2s;
       z-index: 2;
     }
-    .sum-carousel-btn:hover { background: rgba(0,0,0,0.75); border-color: rgba(255,255,255,0.3); }
+    .sum-carousel-btn:hover { background: rgba(0,0,0,0.75); border-color: #b5a99a; }
     .sum-carousel-btn.prev { left: 8px; }
     .sum-carousel-btn.next { right: 8px; }
     .sum-carousel-counter {
@@ -1035,7 +1035,7 @@
       padding: 2px 6px;
       border-radius: 4px;
       background: rgba(52,211,153,0.15);
-      color: #34d399;
+      color: #7aa88e;
       margin-left: 6px;
       vertical-align: middle;
     }
@@ -1090,7 +1090,7 @@
       width: 32px; height: 32px;
       border-radius: 50%;
       background: var(--indigo-glow);
-      color: #a5b4fc;
+      color: #7aa88e;
       display: flex; align-items: center; justify-content: center;
       font-size: 13px; font-weight: 800;
       flex-shrink: 0;
@@ -1183,16 +1183,16 @@
     }
     .sum-card-link {
       background: var(--indigo);
-      color: white;
+      color: #2c2c2a;
       border: none;
     }
-    .sum-card-link:hover { background: #4f46e5; }
+    .sum-card-link:hover { background: #3a6b52; }
     .sum-card-goto {
       background: transparent;
       border: 1px solid var(--border);
       color: var(--text-2);
     }
-    .sum-card-goto:hover { border-color: var(--border-2); color: white; }
+    .sum-card-goto:hover { border-color: var(--border-2); color: #2c2c2a; }
 
     .sum-row-day {
       font-size: 10px;
@@ -1269,18 +1269,18 @@
       padding: 6px 14px; border-radius: 8px; background: var(--surface-2); border: 1px solid var(--border);
       color: var(--text-3); font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.25s; font-family: var(--font);
     }
-    .map-filter.active { background: var(--indigo-glow); border-color: rgba(99,102,241,0.4); color: white; }
-    .map-filter:hover:not(.active) { color: white; }
+    .map-filter.active { background: var(--indigo-glow); border-color: rgba(92,138,114,0.4); color: #2c2c2a; }
+    .map-filter:hover:not(.active) { color: #2c2c2a; }
     #insightsMap { height: 400px; width: 100%; }
     .leaflet-container { background: var(--bg) !important; }
     .leaflet-popup-content-wrapper {
-      background: rgba(15,15,25,0.95) !important; backdrop-filter: blur(20px);
+      background: rgba(15,15,25,0.95) !important; backdrop-filter: none;
       border: 1px solid var(--border-2) !important; border-radius: 12px !important;
-      color: white !important; box-shadow: 0 8px 32px rgba(0,0,0,0.4) !important;
+      color: #2c2c2a !important; box-shadow: 0 8px 32px rgba(0,0,0,0.4) !important;
     }
     .leaflet-popup-tip { background: rgba(15,15,25,0.95) !important; }
-    .leaflet-popup-content { margin: 14px 16px !important; font-family: var(--font) !important; font-size: 13px !important; color: white !important; }
-    .popup-cat { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #a5b4fc; font-weight: 700; }
+    .leaflet-popup-content { margin: 14px 16px !important; font-family: var(--font) !important; font-size: 13px !important; color: #2c2c2a !important; }
+    .popup-cat { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #7aa88e; font-weight: 700; }
     .popup-name { font-size: 15px; font-weight: 700; margin: 4px 0; }
     .popup-desc { font-size: 12px; color: var(--text-2); }
 
@@ -1291,7 +1291,7 @@
       background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
       margin-bottom: 8px; cursor: pointer; transition: all 0.25s;
     }
-    .nearby-card:hover { background: var(--indigo-glow); border-color: rgba(99,102,241,0.2); transform: translateX(4px); }
+    .nearby-card:hover { background: var(--indigo-glow); border-color: rgba(92,138,114,0.2); transform: translateX(4px); }
     .nearby-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .nearby-icon.food { background: var(--amber-glow); color: var(--amber); }
     .nearby-icon.culture { background: rgba(139,92,246,0.15); color: var(--violet); }
@@ -1302,8 +1302,8 @@
 
     /* =============== TOTAL / CTA =============== */
     .total-bar {
-      background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(139,92,246,0.1));
-      border: 1px solid rgba(99,102,241,0.2); border-radius: var(--radius);
+      background: linear-gradient(135deg, rgba(92,138,114,0.1), rgba(139,92,246,0.1));
+      border: 1px solid rgba(92,138,114,0.2); border-radius: var(--radius);
       padding: 28px; text-align: center; margin-top: 32px;
     }
     .total-label { font-size: 14px; color: var(--text-2); margin-bottom: 6px; }
@@ -1316,10 +1316,10 @@
       gap: 8px; transition: all 0.3s; font-family: var(--font); border: none;
     }
     .cta-btn i { width: 18px; height: 18px; }
-    .cta-btn.primary { background: var(--indigo); color: white; }
-    .cta-btn.primary:hover { background: #4f46e5; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(99,102,241,0.4); }
+    .cta-btn.primary { background: var(--indigo); color: #2c2c2a; }
+    .cta-btn.primary:hover { background: #3a6b52; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(92,138,114,0.4); }
     .cta-btn.secondary { background: var(--surface-2); border: 1px solid var(--border); color: var(--text-2); }
-    .cta-btn.secondary:hover { background: var(--indigo-glow); border-color: rgba(99,102,241,0.3); color: white; }
+    .cta-btn.secondary:hover { background: var(--indigo-glow); border-color: rgba(92,138,114,0.3); color: #2c2c2a; }
 
     /* =============== SHARE MODAL =============== */
     .modal-overlay {
@@ -1344,22 +1344,22 @@
     }
     .share-link-copy {
       padding: 12px 20px; background: var(--indigo); border: none; border-radius: 10px;
-      color: white; font-weight: 700; cursor: pointer; font-size: 13px; font-family: var(--font); transition: all 0.25s;
+      color: #2c2c2a; font-weight: 700; cursor: pointer; font-size: 13px; font-family: var(--font); transition: all 0.25s;
     }
-    .share-link-copy:hover { background: #4f46e5; }
+    .share-link-copy:hover { background: #3a6b52; }
     .share-methods { display: flex; gap: 12px; justify-content: center; }
     .share-method {
       width: 48px; height: 48px; border-radius: 14px; background: var(--surface-2);
       border: 1px solid var(--border); display: flex; align-items: center; justify-content: center;
       color: var(--text-2); cursor: pointer; transition: all 0.25s;
     }
-    .share-method:hover { transform: translateY(-2px); border-color: var(--border-2); box-shadow: 0 4px 16px rgba(0,0,0,0.3); color: white; }
+    .share-method:hover { transform: translateY(-2px); border-color: var(--border-2); box-shadow: 0 4px 16px rgba(0,0,0,0.3); color: #2c2c2a; }
     .modal-close {
       position: absolute; top: 16px; right: 16px; background: none; border: none;
       color: var(--text-3); cursor: pointer; width: 32px; height: 32px;
       display: flex; align-items: center; justify-content: center; border-radius: 8px;
     }
-    .modal-close:hover { background: var(--surface-2); color: white; }
+    .modal-close:hover { background: var(--surface-2); color: #2c2c2a; }
 
     /* =============== RESPONSIVE =============== */
     @media (max-width: 640px) {
@@ -1381,8 +1381,8 @@
 
     /* ===== ECO IMPACT STYLES ===== */
     .eco-hero {
-      background: linear-gradient(135deg, rgba(16,185,129,0.08), rgba(52,211,153,0.04));
-      border: 1px solid rgba(16,185,129,0.15);
+      background: linear-gradient(135deg, rgba(92,138,114,0.08), rgba(52,211,153,0.04));
+      border: 1px solid rgba(92,138,114,0.15);
       border-radius: var(--radius);
       padding: 28px;
       margin-bottom: 20px;
@@ -1390,7 +1390,7 @@
     }
     .eco-hero-icon {
       width: 56px; height: 56px; border-radius: 16px;
-      background: rgba(16,185,129,0.12);
+      background: rgba(92,138,114,0.12);
       display: flex; align-items: center; justify-content: center;
       margin: 0 auto 16px;
     }
@@ -1433,13 +1433,13 @@
       display: flex; align-items: center; gap: 6px;
     }
     .eco-bar-track {
-      flex: 1; height: 28px; background: rgba(255,255,255,0.04);
+      flex: 1; height: 28px; background: rgba(92,138,114,0.05);
       border-radius: 8px; overflow: hidden; position: relative;
     }
     .eco-bar-fill {
       height: 100%; border-radius: 8px;
       display: flex; align-items: center; justify-content: flex-end;
-      padding-right: 10px; font-size: 11px; font-weight: 700; color: white;
+      padding-right: 10px; font-size: 11px; font-weight: 700; color: #2c2c2a;
       transition: width 0.8s cubic-bezier(0.4,0,0.2,1);
     }
     .eco-bar-value {
@@ -1507,7 +1507,7 @@
     .eco-tip:last-child { border-bottom: none; }
     .eco-tip-icon {
       width: 36px; height: 36px; border-radius: 10px;
-      background: rgba(16,185,129,0.1);
+      background: rgba(92,138,114,0.1);
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
     }
@@ -1515,15 +1515,15 @@
     .eco-tip-desc { font-size: 12px; color: var(--text-3); line-height: 1.5; }
 
     .eco-offset {
-      background: linear-gradient(135deg, rgba(16,185,129,0.06), rgba(52,211,153,0.03));
-      border: 1px solid rgba(16,185,129,0.15);
+      background: linear-gradient(135deg, rgba(92,138,114,0.06), rgba(52,211,153,0.03));
+      border: 1px solid rgba(92,138,114,0.15);
       border-radius: var(--radius);
       padding: 28px;
     }
     .eco-offset-header { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
     .eco-offset-icon {
       width: 48px; height: 48px; border-radius: 14px;
-      background: rgba(16,185,129,0.12);
+      background: rgba(92,138,114,0.12);
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
     }
@@ -1533,15 +1533,15 @@
     .eco-offset-options { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
     .eco-offset-option {
       display: flex; align-items: center; gap: 14px;
-      background: rgba(255,255,255,0.03);
+      background: rgba(92,138,114,0.04);
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 16px;
       cursor: pointer;
       transition: all 0.2s;
     }
-    .eco-offset-option:hover { border-color: rgba(16,185,129,0.3); background: rgba(16,185,129,0.04); }
-    .eco-offset-option.selected { border-color: var(--green); background: rgba(16,185,129,0.08); }
+    .eco-offset-option:hover { border-color: rgba(92,138,114,0.3); background: rgba(92,138,114,0.04); }
+    .eco-offset-option.selected { border-color: var(--green); background: rgba(92,138,114,0.08); }
 
     .eco-checkbox {
       width: 22px; height: 22px; border-radius: 6px;
@@ -1560,7 +1560,7 @@
     .eco-offset-total {
       display: flex; justify-content: space-between; align-items: center;
       padding: 16px 20px;
-      background: rgba(16,185,129,0.08);
+      background: rgba(92,138,114,0.08);
       border-radius: 12px;
       margin-bottom: 16px;
     }
@@ -1569,14 +1569,14 @@
 
     .eco-offset-btn {
       width: 100%; padding: 14px;
-      background: var(--green); color: white;
+      background: var(--green); color: #2c2c2a;
       border: none; border-radius: 12px;
       font-size: 14px; font-weight: 700;
       font-family: var(--font);
       cursor: pointer; transition: all 0.2s;
       display: flex; align-items: center; justify-content: center; gap: 8px;
     }
-    .eco-offset-btn:hover { background: #0d9668; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(16,185,129,0.3); }
+    .eco-offset-btn:hover { background: #0d9668; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(92,138,114,0.3); }
 
     .eco-badge {
       display: inline-flex; align-items: center; gap: 4px;
@@ -1592,10 +1592,10 @@
       transition: all 0.25s; cursor: pointer;
     }
     .sidebar-eco-wrap:hover {
-      background: rgba(16,185,129,0.08); border-color: rgba(16,185,129,0.2);
+      background: rgba(92,138,114,0.08); border-color: rgba(92,138,114,0.2);
     }
     .sidebar-eco-wrap.active {
-      background: rgba(16,185,129,0.12); border-color: rgba(16,185,129,0.3);
+      background: rgba(92,138,114,0.12); border-color: rgba(92,138,114,0.3);
     }
     .sidebar-eco-left {
       display: flex; align-items: center; gap: 12px;
@@ -1603,17 +1603,17 @@
       cursor: pointer; user-select: none;
     }
     .sidebar-eco-left i { width: 18px; height: 18px; opacity: 0.7; }
-    .sidebar-eco-wrap:hover .sidebar-eco-left { color: #6ee7b7; }
+    .sidebar-eco-wrap:hover .sidebar-eco-left { color: #7aa88e; }
     .sidebar-eco-wrap:hover .sidebar-eco-left i { opacity: 1; }
-    .sidebar-eco-wrap.active .sidebar-eco-left { color: #34d399; font-weight: 600; }
-    .sidebar-eco-wrap.active .sidebar-eco-left i { opacity: 1; color: #34d399; }
+    .sidebar-eco-wrap.active .sidebar-eco-left { color: #7aa88e; font-weight: 600; }
+    .sidebar-eco-wrap.active .sidebar-eco-left i { opacity: 1; color: #7aa88e; }
     .sidebar-eco-switch {
       position: relative; width: 42px; height: 24px;
-      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(92,138,114,0.08); border: 1px solid rgba(255,255,255,0.12);
       border-radius: 12px; cursor: pointer; transition: all 0.3s ease; flex-shrink: 0;
     }
     .sidebar-eco-wrap.active .sidebar-eco-switch {
-      background: rgba(16,185,129,0.25); border-color: rgba(16,185,129,0.5);
+      background: rgba(92,138,114,0.25); border-color: rgba(92,138,114,0.5);
     }
     .sidebar-eco-dot {
       position: absolute; top: 3px; left: 3px;
@@ -1621,7 +1621,7 @@
       border-radius: 50%; transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
     }
     .sidebar-eco-wrap.active .sidebar-eco-dot {
-      left: 21px; background: #34d399;
+      left: 21px; background: #7aa88e;
       box-shadow: 0 0 10px rgba(52,211,153,0.5);
     }
   </style>
@@ -1630,7 +1630,7 @@
 
 <!-- PAGE LOADER -->
 <div class="page-loader" id="pageLoader">
-  <div class="loader-logo"><i data-lucide="globe" style="width:24px;height:24px;color:white"></i></div>
+  <div class="loader-logo"><i data-lucide="globe" style="width:24px;height:24px;color:#2c2c2a"></i></div>
   <div class="loader-skeleton">
     <div class="skeleton-bar"></div><div class="skeleton-bar"></div>
     <div class="skeleton-bar"></div><div class="skeleton-bar"></div>
@@ -2622,7 +2622,7 @@
       <!-- Overview cards -->
       <div class="sum-overview">
         <div class="sum-overview-card">
-          <div class="sum-overview-icon"><i data-lucide="calendar-range" style="width:20px;height:20px;color:#a5b4fc"></i></div>
+          <div class="sum-overview-icon"><i data-lucide="calendar-range" style="width:20px;height:20px;color:#7aa88e"></i></div>
           <div class="sum-overview-num">${totalDays}</div>
           <div class="sum-overview-label">Days</div>
         </div>
@@ -3209,8 +3209,8 @@
     // Mini donut SVG
     const segments = [
       { value: fCO2, color: '#f59e0b' },
-      { value: hCO2, color: '#6366f1' },
-      { value: aCO2, color: '#ec4899' },
+      { value: hCO2, color: '#5c8a72' },
+      { value: aCO2, color: '#c8b48a' },
       { value: tCO2, color: '#3b82f6' },
     ].filter(s => s.value > 0);
     const cx = 28, cy = 28, r = 22, sw = 8;
@@ -3231,15 +3231,15 @@
 
     // Purpose mode badge
     const purposeBadge = purposeMode ? `
-      <span class="eco-badge" style="background:rgba(52,211,153,0.15);color:#34d399;border:1px solid rgba(52,211,153,0.3);">
+      <span class="eco-badge" style="background:rgba(52,211,153,0.15);color:#7aa88e;border:1px solid rgba(52,211,153,0.3);">
         <i data-lucide="leaf" style="width:10px;height:10px;"></i> Purpose Mode
       </span>` : '';
 
     const el = document.getElementById('ecoCompactCard');
     el.innerHTML = `
       <div style="
-        background: linear-gradient(135deg, rgba(16,185,129,0.06), rgba(52,211,153,0.03));
-        border: 1px solid rgba(16,185,129,0.15);
+        background: linear-gradient(135deg, rgba(92,138,114,0.06), rgba(52,211,153,0.03));
+        border: 1px solid rgba(92,138,114,0.15);
         border-radius: var(--radius);
         padding: 20px;
         display: flex;
@@ -3272,7 +3272,7 @@
         <!-- Offset CTA -->
         <div style="display:flex;flex-direction:column;gap:8px;flex-shrink:0;">
           <button onclick="event.preventDefault();document.querySelectorAll('.tab-btn')[4].click();" style="
-            background:var(--green);color:white;border:none;
+            background:var(--green);color:#2c2c2a;border:none;
             border-radius:10px;padding:10px 20px;
             font-size:13px;font-weight:700;font-family:var(--font);
             cursor:pointer;display:flex;align-items:center;gap:6px;
@@ -3312,7 +3312,7 @@
         </div>
         <button id="luxuryRoundupBtn" onclick="acceptLuxuryRoundup(this, ${suggestedOffset})" style="
           background: linear-gradient(135deg, #f59e0b, #d97706);
-          color: white; border: none;
+          color: #2c2c2a; border: none;
           border-radius: 10px; padding: 12px 22px;
           font-size: 13px; font-weight: 700;
           font-family: var(--font);
@@ -3331,8 +3331,8 @@
       <!-- PURPOSE MODE BANNER -->
       <div style="
         margin-top: 14px;
-        background: linear-gradient(135deg, rgba(16,185,129,0.06), rgba(52,211,153,0.03));
-        border: 1px solid rgba(16,185,129,0.15);
+        background: linear-gradient(135deg, rgba(92,138,114,0.06), rgba(52,211,153,0.03));
+        border: 1px solid rgba(92,138,114,0.15);
         border-radius: var(--radius);
         padding: 16px 20px;
         display: flex;
@@ -3340,7 +3340,7 @@
         gap: 14px;
         flex-wrap: wrap;
       ">
-        <div style="width:36px;height:36px;border-radius:10px;background:rgba(16,185,129,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <div style="width:36px;height:36px;border-radius:10px;background:rgba(92,138,114,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
           <i data-lucide="shield-check" style="width:18px;height:18px;color:var(--green);"></i>
         </div>
         <div style="flex:1;min-width:200px;">
@@ -3357,7 +3357,7 @@
   function acceptLuxuryRoundup(btn, amount) {
     btn.innerHTML = '<i data-lucide="check" style="width:15px;height:15px;"></i> Added to booking';
     btn.style.background = 'var(--green)';
-    btn.style.boxShadow = '0 4px 12px rgba(16,185,129,0.25)';
+    btn.style.boxShadow = '0 4px 12px rgba(92,138,114,0.25)';
     btn.onclick = null;
     btn.style.cursor = 'default';
     showToast('$' + amount + ' carbon offset added to your booking!', 'success');
@@ -3385,8 +3385,8 @@
     // Donut chart as SVG
     const segments = [
       { label: 'Flights', value: flightEmissions, color: '#f59e0b' },
-      { label: 'Hotels', value: hotelEmissions, color: '#6366f1' },
-      { label: 'Activities', value: activityEmissions, color: '#ec4899' },
+      { label: 'Hotels', value: hotelEmissions, color: '#5c8a72' },
+      { label: 'Activities', value: activityEmissions, color: '#c8b48a' },
       { label: 'Transport', value: localTransport, color: '#3b82f6' },
     ].filter(s => s.value > 0);
 
@@ -3453,8 +3453,8 @@
           </div>
           ${[
             { label: 'Flights', icon: 'plane-takeoff', value: flightEmissions, color: '#f59e0b' },
-            { label: 'Hotels', icon: 'bed-double', value: hotelEmissions, color: '#6366f1' },
-            { label: 'Activities', icon: 'sparkles', value: activityEmissions, color: '#ec4899' },
+            { label: 'Hotels', icon: 'bed-double', value: hotelEmissions, color: '#5c8a72' },
+            { label: 'Activities', icon: 'sparkles', value: activityEmissions, color: '#c8b48a' },
             { label: 'Transport', icon: 'car', value: localTransport, color: '#3b82f6' },
           ].map(b => `
             <div class="eco-bar-row">
@@ -3494,7 +3494,7 @@
           <div class="eco-compare-val" style="color:var(--amber);">${drivingEquiv.toLocaleString()} km</div>
         </div>
         <div class="eco-compare-row">
-          <div class="eco-compare-icon" style="background:rgba(16,185,129,0.1);">
+          <div class="eco-compare-icon" style="background:rgba(92,138,114,0.1);">
             <i data-lucide="tree-pine" style="width:18px;height:18px;color:var(--green)"></i>
           </div>
           <div class="eco-compare-info">
@@ -3504,7 +3504,7 @@
           <div class="eco-compare-val" style="color:var(--green);">${treesNeeded} trees</div>
         </div>
         <div class="eco-compare-row">
-          <div class="eco-compare-icon" style="background:rgba(99,102,241,0.1);">
+          <div class="eco-compare-icon" style="background:rgba(92,138,114,0.1);">
             <i data-lucide="user" style="width:18px;height:18px;color:var(--indigo)"></i>
           </div>
           <div class="eco-compare-info">
@@ -3563,7 +3563,7 @@
 
         <div class="eco-offset-options" id="ecoOffsetOptions">
           <div class="eco-offset-option" onclick="toggleEcoOption(this, 'roundup')" data-amount="${roundUpAmount}">
-            <div class="eco-checkbox"><i data-lucide="check" style="width:14px;height:14px;color:white;display:none;"></i></div>
+            <div class="eco-checkbox"><i data-lucide="check" style="width:14px;height:14px;color:#2c2c2a;display:none;"></i></div>
             <div class="eco-offset-opt-info">
               <div class="eco-offset-opt-name">Round up trip cost</div>
               <div class="eco-offset-opt-desc">Round $${grandTotal.toLocaleString()} up to $${(grandTotal + roundUpAmount).toLocaleString()} — donated to verified reforestation projects</div>
@@ -3572,7 +3572,7 @@
           </div>
 
           <div class="eco-offset-option" onclick="toggleEcoOption(this, 'carbon')" data-amount="${carbonOffsetCost}">
-            <div class="eco-checkbox"><i data-lucide="check" style="width:14px;height:14px;color:white;display:none;"></i></div>
+            <div class="eco-checkbox"><i data-lucide="check" style="width:14px;height:14px;color:#2c2c2a;display:none;"></i></div>
             <div class="eco-offset-opt-info">
               <div class="eco-offset-opt-name">Full carbon offset</div>
               <div class="eco-offset-opt-desc">Offset all ${totalCO2.toLocaleString()} kg CO₂ through Gold Standard certified projects</div>
@@ -3581,7 +3581,7 @@
           </div>
 
           <div class="eco-offset-option" onclick="toggleEcoOption(this, 'trees')" data-amount="${treesCost}">
-            <div class="eco-checkbox"><i data-lucide="check" style="width:14px;height:14px;color:white;display:none;"></i></div>
+            <div class="eco-checkbox"><i data-lucide="check" style="width:14px;height:14px;color:#2c2c2a;display:none;"></i></div>
             <div class="eco-offset-opt-info">
               <div class="eco-offset-opt-name">Plant ${treesNeeded} trees</div>
               <div class="eco-offset-opt-desc">Plant enough trees to absorb your trip's carbon emissions over one year via One Tree Planted</div>
@@ -3639,16 +3639,16 @@
     map=L.map('insightsMap',{zoomControl:false}).setView([-8.5069,115.3425],14);
     L.control.zoom({position:'topright'}).addTo(map);
     L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{attribution:'© CARTO © OSM',maxZoom:19}).addTo(map);
-    L.marker([-8.5069,115.3425],{icon:L.divIcon({className:'',html:'<div style="background:#6366f1;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:white;border:3px solid white;box-shadow:0 4px 16px rgba(99,102,241,0.5);font-family:Plus Jakarta Sans,sans-serif;">H</div>',iconSize:[40,40],iconAnchor:[20,20]})}).addTo(map).bindPopup('<div class="popup-cat">Your Hotel</div><div class="popup-name">Alila Ubud Resort</div><div class="popup-desc">Deluxe Valley View · 7 nights</div>');
+    L.marker([-8.5069,115.3425],{icon:L.divIcon({className:'',html:'<div style="background:#5c8a72;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#2c2c2a;border:3px solid white;box-shadow:0 4px 16px rgba(92,138,114,0.5);font-family:Plus Jakarta Sans,sans-serif;">H</div>',iconSize:[40,40],iconAnchor:[20,20]})}).addTo(map).bindPopup('<div class="popup-cat">Your Hotel</div><div class="popup-name">Alila Ubud Resort</div><div class="popup-desc">Deluxe Valley View · 7 nights</div>');
     addMarkers('all'); renderNearby('all');
   }
   function addMarkers(f){
     markers.forEach(m=>map.removeLayer(m)); markers=[];
-    const colors={food:'#f59e0b',culture:'#8b5cf6',nature:'#10b981'};
+    const colors={food:'#f59e0b',culture:'#8b5cf6',nature:'#5c8a72'};
     nearbyPlaces.forEach(p=>{
       if(f!=='all'&&p.cat!==f) return;
       const letter = catLetters[p.cat] || '·';
-      const m=L.marker([p.lat,p.lng],{icon:L.divIcon({className:'',html:`<div style="background:${colors[p.cat]||'#6366f1'};width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:white;border:2px solid rgba(255,255,255,0.8);box-shadow:0 2px 8px rgba(0,0,0,0.3);font-family:Plus Jakarta Sans,sans-serif;">${letter}</div>`,iconSize:[32,32],iconAnchor:[16,16]})}).addTo(map).bindPopup(`<div class="popup-cat">${p.cat}</div><div class="popup-name">${p.name}</div><div class="popup-desc">${p.desc} · ${p.dist}</div>`);
+      const m=L.marker([p.lat,p.lng],{icon:L.divIcon({className:'',html:`<div style="background:${colors[p.cat]||'#5c8a72'};width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#2c2c2a;border:2px solid rgba(255,255,255,0.8);box-shadow:0 2px 8px rgba(0,0,0,0.3);font-family:Plus Jakarta Sans,sans-serif;">${letter}</div>`,iconSize:[32,32],iconAnchor:[16,16]})}).addTo(map).bindPopup(`<div class="popup-cat">${p.cat}</div><div class="popup-name">${p.name}</div><div class="popup-desc">${p.desc} · ${p.dist}</div>`);
       markers.push(m);
     });
   }
@@ -3703,34 +3703,34 @@
   <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px;" class="footer-grid">
     <div>
       <a href="/home" style="display:inline-block;margin-bottom:16px;"><img src="logo.png" alt="One-Up Travel" style="height:36px;"></a>
-      <p style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.7;max-width:280px;">AI-powered travel planning. Let Lisa build your perfect itinerary with real hotels, flights, and activities.</p>
+      <p style="font-size:13px;color:#96887a;line-height:1.7;max-width:280px;">AI-powered travel planning. Let Lisa build your perfect itinerary with real hotels, flights, and activities.</p>
       <div style="display:flex;gap:12px;margin-top:20px;">
-        <a href="https://instagram.com/oneuptravel" target="_blank" rel="noopener" style="width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.5);transition:all 0.3s;text-decoration:none;" onmouseover="this.style.background='rgba(99,102,241,0.15)';this.style.borderColor='rgba(99,102,241,0.4)';this.style.color='#a5b4fc'" onmouseout="this.style.background='rgba(255,255,255,0.05)';this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='rgba(255,255,255,0.5)'"><i data-lucide="instagram" style="width:16px;height:16px;"></i></a>
-        <a href="https://linkedin.com/company/oneuptravel" target="_blank" rel="noopener" style="width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.5);transition:all 0.3s;text-decoration:none;" onmouseover="this.style.background='rgba(99,102,241,0.15)';this.style.borderColor='rgba(99,102,241,0.4)';this.style.color='#a5b4fc'" onmouseout="this.style.background='rgba(255,255,255,0.05)';this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='rgba(255,255,255,0.5)'"><i data-lucide="linkedin" style="width:16px;height:16px;"></i></a>
+        <a href="https://instagram.com/oneuptravel" target="_blank" rel="noopener" style="width:36px;height:36px;border-radius:10px;background:#ffffff;border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;color:#96887a;transition:all 0.3s;text-decoration:none;" onmouseover="this.style.background='rgba(92,138,114,0.15)';this.style.borderColor='rgba(92,138,114,0.4)';this.style.color='#7aa88e'" onmouseout="this.style.background='rgba(92,138,114,0.05)';this.style.borderColor='#ddd7ca';this.style.color='#96887a'"><i data-lucide="instagram" style="width:16px;height:16px;"></i></a>
+        <a href="https://linkedin.com/company/oneuptravel" target="_blank" rel="noopener" style="width:36px;height:36px;border-radius:10px;background:#ffffff;border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;color:#96887a;transition:all 0.3s;text-decoration:none;" onmouseover="this.style.background='rgba(92,138,114,0.15)';this.style.borderColor='rgba(92,138,114,0.4)';this.style.color='#7aa88e'" onmouseout="this.style.background='rgba(92,138,114,0.05)';this.style.borderColor='#ddd7ca';this.style.color='#96887a'"><i data-lucide="linkedin" style="width:16px;height:16px;"></i></a>
       </div>
     </div>
     <div>
-      <div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,0.35);font-weight:600;margin-bottom:16px;">Product</div>
-      <a href="/home" style="display:block;font-size:14px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Home</a>
-      <a href="/itinerary" style="display:block;font-size:14px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">My Itinerary</a>
-      <a href="/dashboard" style="display:block;font-size:14px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Saved Trips</a>
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:#b5a99a;font-weight:600;margin-bottom:16px;">Product</div>
+      <a href="/home" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Home</a>
+      <a href="/itinerary" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">My Itinerary</a>
+      <a href="/dashboard" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Saved Trips</a>
     </div>
     <div>
-      <div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,0.35);font-weight:600;margin-bottom:16px;">Support</div>
-      <a href="/faq" style="display:block;font-size:14px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">FAQs</a>
-      <a href="/contact" style="display:block;font-size:14px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Contact Us</a>
-      <a href="mailto:Clem@one-up.cloud" style="display:block;font-size:14px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Clem@one-up.cloud</a>
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:#b5a99a;font-weight:600;margin-bottom:16px;">Support</div>
+      <a href="/faq" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">FAQs</a>
+      <a href="/contact" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Contact Us</a>
+      <a href="mailto:Clem@one-up.cloud" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Clem@one-up.cloud</a>
     </div>
     <div>
-      <div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,0.35);font-weight:600;margin-bottom:16px;">Legal</div>
-      <a href="/legal#terms" style="display:block;font-size:14px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Terms of Service</a>
-      <a href="/legal#privacy" style="display:block;font-size:14px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Privacy Policy</a>
-      <a href="/legal#cookies" style="display:block;font-size:14px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Cookie Policy</a>
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:#b5a99a;font-weight:600;margin-bottom:16px;">Legal</div>
+      <a href="/legal#terms" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Terms of Service</a>
+      <a href="/legal#privacy" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Privacy Policy</a>
+      <a href="/legal#cookies" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Cookie Policy</a>
     </div>
   </div>
   <div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
-    <p style="font-size:12px;color:rgba(255,255,255,0.3);">&copy; 2026 One-Up Travel Pty Ltd. All rights reserved.</p>
-    <p style="font-size:12px;color:rgba(255,255,255,0.3);">Brisbane, Queensland, Australia</p>
+    <p style="font-size:12px;color:#b5a99a;">&copy; 2026 One-Up Travel Pty Ltd. All rights reserved.</p>
+    <p style="font-size:12px;color:#b5a99a;">Brisbane, Queensland, Australia</p>
   </div>
 </footer>
 <style>

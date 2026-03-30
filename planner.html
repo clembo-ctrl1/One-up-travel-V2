@@ -10,24 +10,24 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg: #0a0a0f;
-      --card: rgba(255,255,255,0.06);
-      --card-hover: rgba(255,255,255,0.10);
-      --border: rgba(255,255,255,0.08);
-      --border-hover: rgba(255,255,255,0.15);
-      --primary: #6366f1;
-      --primary-hover: #4f46e5;
-      --primary-glow: rgba(99,102,241,0.25);
-      --accent: #a855f7;
-      --pink: #ec4899;
-      --green: #10b981;
-      --green-light: #6ee7b7;
-      --green-bright: #4ade80;
-      --text: #ffffff;
-      --text-muted: rgba(255,255,255,0.5);
-      --text-dim: rgba(255,255,255,0.35);
-      --lisa-gradient: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
-      --headline-gradient: linear-gradient(135deg, #a5b4fc, #c084fc, #f0abfc);
+      --bg: #f5f2ec;
+      --card: #ffffff;
+      --card-hover: #faf8f3;
+      --border: #ddd7ca;
+      --border-hover: #c8c0ae;
+      --primary: #5c8a72;
+      --primary-hover: #3a6b52;
+      --primary-glow: rgba(92,138,114,0.2);
+      --accent: #c8b48a;
+      --pink: #c8b48a;
+      --green: #5c8a72;
+      --green-light: #3a6b52;
+      --green-bright: #3a6b52;
+      --text: #2c2c2a;
+      --text-muted: #96887a;
+      --text-dim: #b5a99a;
+      --lisa-gradient: linear-gradient(135deg, #5c8a72, #3a6b52, #4a7c5e);
+      --headline-gradient: linear-gradient(135deg, #3a6b52, #5c8a72, #4a7c5e);
     }
 
     body {
@@ -38,18 +38,18 @@
 
     ::-webkit-scrollbar { width: 5px; }
     ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 10px; }
+    ::-webkit-scrollbar-thumb { background: rgba(92,138,114,0.06); border-radius: 10px; }
 
     .bg-gradients {
-      position: fixed; inset: 0; pointer-events: none; z-index: 0;
-      background: radial-gradient(ellipse at 20% 20%, rgba(99,102,241,0.08) 0%, transparent 55%),
+      display: none; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background: radial-gradient(ellipse at 20% 20%, rgba(92,138,114,0.08) 0%, transparent 55%),
                   radial-gradient(ellipse at 80% 80%, rgba(139,92,246,0.05) 0%, transparent 50%);
     }
 
     /* ═══ ANIMATIONS ═══ */
     @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes msgIn { from { opacity: 0; transform: translateY(8px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
-    @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(99,102,241,0.4); } 50% { box-shadow: 0 0 0 8px rgba(99,102,241,0); } }
+    @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(92,138,114,0.4); } 50% { box-shadow: 0 0 0 8px rgba(92,138,114,0); } }
     @keyframes dotBounce { 0%,80%,100% { transform: translateY(0); } 40% { transform: translateY(-5px); } }
     @keyframes statusPulse { 0%,100% { opacity:1; box-shadow:0 0 4px #10b981; } 50% { opacity:0.5; box-shadow:0 0 8px #10b981; } }
     @keyframes avatarShine { 0% { background-position: 200% 200%; } 100% { background-position: -200% -200%; } }
@@ -60,7 +60,7 @@
     .left-sidebar {
       position: fixed; top: 0; left: -280px; width: 280px; height: 100vh;
       background: rgba(12,12,20,0.97); backdrop-filter: blur(24px);
-      border-right: 1px solid var(--border); padding: 24px 20px;
+      border-right: 1px solid #ddd7ca; padding: 24px 20px;
       transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
       z-index: 1000; overflow-y: auto;
     }
@@ -84,38 +84,38 @@
       transition: all 0.25s ease; cursor: pointer;
     }
     .sidebar-item:hover {
-      background: rgba(99,102,241,0.12); border-color: rgba(99,102,241,0.25);
-      color: white; box-shadow: 0 0 20px rgba(99,102,241,0.15);
+      background: rgba(92,138,114,0.12); border-color: rgba(92,138,114,0.25);
+      color: white; box-shadow: 0 0 20px rgba(92,138,114,0.15);
     }
     .sidebar-item.active {
-      background: rgba(99,102,241,0.15); border-color: rgba(99,102,241,0.3); color: white;
+      background: rgba(92,138,114,0.15); border-color: rgba(92,138,114,0.3); color: white;
     }
     .sidebar-item.primary {
-      background: rgba(99,102,241,0.15); border-color: rgba(99,102,241,0.4);
-      color: #a5b4fc; font-weight: 600;
+      background: rgba(92,138,114,0.15); border-color: rgba(92,138,114,0.4);
+      color: #7aa88e; font-weight: 600;
     }
     .sidebar-item.primary:hover {
-      background: rgba(99,102,241,0.25); border-color: rgba(99,102,241,0.5);
+      background: rgba(92,138,114,0.25); border-color: rgba(92,138,114,0.5);
       color: white;
     }
     .sidebar-item i { width: 18px; height: 18px; flex-shrink: 0; opacity: 0.7; }
     .sidebar-item:hover i { opacity: 1; }
     .sidebar-close-btn {
       position: absolute; top: 20px; right: 16px;
-      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+      background: #fff; border: 1px solid rgba(255,255,255,0.12);
       color: white; width: 36px; height: 36px; border-radius: 10px;
       cursor: pointer; transition: all 0.25s; display: flex;
       align-items: center; justify-content: center;
     }
     .sidebar-close-btn:hover { background: rgba(239,68,68,0.15); border-color: rgba(239,68,68,0.4); }
     .sidebar-close-btn svg { width: 18px; height: 18px; stroke: rgba(255,255,255,0.8); stroke-width: 2.5; }
-    .sidebar-divider { height: 1px; background: rgba(255,255,255,0.06); margin: 8px 0 20px; }
+    .sidebar-divider { height: 1px; background: #fff; margin: 8px 0 20px; }
 
     /* ═══ HEADER (matches site) ═══ */
     .header {
       padding: 14px 28px; display: flex; align-items: center; justify-content: space-between;
-      border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100;
-      background: rgba(10,10,15,0.85); backdrop-filter: blur(20px);
+      border-bottom: 1px solid #ddd7ca; position: sticky; top: 0; z-index: 100;
+      background: rgba(10,10,15,0.85); backdrop-filter: none;
     }
     .header-left { flex: 1; display: flex; align-items: center; }
     .header-center { flex: 1; display: flex; justify-content: center; }
@@ -126,7 +126,7 @@
       font-weight: 500; font-size: 14px; transition: all 0.3s; display: flex;
       align-items: center; gap: 8px; font-family: inherit;
     }
-    .header-menu-btn:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.3); }
+    .header-menu-btn:hover { background: #fff; border-color: #b5a99a; }
     .header-menu-btn i { width: 18px; height: 18px; }
     .logo { display: flex; align-items: center; text-decoration: none; }
     .logo img { height: 40px; transition: all 0.3s; }
@@ -138,19 +138,19 @@
     }
     .signin-btn:hover { background: var(--primary-hover); transform: translateY(-2px); }
     .selected-badge {
-      background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.3);
-      color: #a5b4fc; font-size: 12px; font-weight: 600; padding: 5px 14px;
+      background: rgba(92,138,114,0.15); border: 1px solid rgba(92,138,114,0.3);
+      color: #7aa88e; font-size: 12px; font-weight: 600; padding: 5px 14px;
       border-radius: 20px; display: none;
     }
     .selected-badge.show { display: inline-block; }
     .submit-btn {
-      background: rgba(255,255,255,0.06); color: var(--text-muted);
-      border: 1px solid var(--border); border-radius: 10px;
+      background: #fff; color: var(--text-muted);
+      border: 1px solid #ddd7ca; border-radius: 10px;
       padding: 10px 24px; font-size: 14px; font-weight: 600;
       cursor: default; font-family: inherit; transition: all 0.3s;
     }
     .submit-btn.active {
-      background: var(--primary); color: #fff; border: none;
+      background: var(--primary); color: #2c2c2a; border: none;
       cursor: pointer; box-shadow: 0 4px 16px var(--primary-glow);
       animation: pulse 2s infinite;
     }
@@ -159,8 +159,8 @@
     /* ═══ STEPPER ═══ */
     .stepper {
       display: flex; align-items: center; justify-content: center;
-      padding: 0 28px; background: rgba(10,10,15,0.6);
-      backdrop-filter: blur(20px); border-bottom: 1px solid var(--border);
+      padding: 0 28px; background: rgba(255,255,255,0.9);
+      backdrop-filter: none; border-bottom: 1px solid #ddd7ca;
       position: relative; z-index: 99;
     }
     .step { display: flex; align-items: center; gap: 10px; padding: 12px 20px; }
@@ -172,51 +172,51 @@
       transition: all 0.4s; flex-shrink: 0;
     }
     .step.active .step-num { border-color: var(--primary); background: var(--primary); color: #fff; box-shadow: 0 0 16px var(--primary-glow); }
-    .step.completed .step-num { border-color: var(--green); background: var(--green); color: #fff; box-shadow: 0 0 12px rgba(16,185,129,0.3); }
+    .step.completed .step-num { border-color: var(--green); background: var(--green); color: #2c2c2a; box-shadow: 0 0 12px rgba(16,185,129,0.3); }
     .step-label { font-size: 13px; font-weight: 500; color: var(--text-dim); transition: all 0.3s; }
-    .step.active .step-label { color: #fff; font-weight: 600; }
+    .step.active .step-label { color: #2c2c2a; font-weight: 600; }
     .step.completed .step-label { color: var(--green-light); }
-    .step-connector { width: 48px; height: 2px; background: rgba(255,255,255,0.08); border-radius: 2px; position: relative; overflow: hidden; }
+    .step-connector { width: 48px; height: 2px; background: rgba(92,138,114,0.06); border-radius: 2px; position: relative; overflow: hidden; }
     .step-connector-fill { position: absolute; top: 0; left: 0; height: 100%; width: 0; background: var(--green); border-radius: 2px; transition: width 0.6s ease; }
     .step-connector.filled .step-connector-fill { width: 100%; }
 
     /* ═══ DRAFT BANNER ═══ */
     .draft-banner {
-      display: none; padding: 10px 28px; background: rgba(99,102,241,0.08);
-      border-bottom: 1px solid rgba(99,102,241,0.15);
+      display: none; padding: 10px 28px; background: rgba(92,138,114,0.08);
+      border-bottom: 1px solid rgba(92,138,114,0.15);
       align-items: center; justify-content: space-between; gap: 12px;
       animation: fadeUp 0.4s ease; z-index: 98; position: relative;
     }
     .draft-banner.show { display: flex; }
-    .draft-banner-text { font-size: 13px; color: #a5b4fc; display: flex; align-items: center; gap: 8px; }
+    .draft-banner-text { font-size: 13px; color: #7aa88e; display: flex; align-items: center; gap: 8px; }
     .draft-banner-actions { display: flex; gap: 8px; }
     .draft-btn {
       padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 600;
       cursor: pointer; font-family: inherit; transition: all 0.2s; border: none;
     }
-    .draft-btn.resume { background: var(--primary); color: #fff; }
-    .draft-btn.discard { background: rgba(255,255,255,0.06); color: var(--text-muted); border: 1px solid var(--border); }
+    .draft-btn.resume { background: var(--primary); color: #2c2c2a; }
+    .draft-btn.discard { background: #fff; color: var(--text-muted); border: 1px solid #ddd7ca; }
 
     /* ═══ CENTERED CHAT MODE (initial) ═══ */
     .chat-centered {
       display: flex; flex-direction: column;
       max-width: 720px; width: 100%; margin: 0 auto;
       height: calc(100vh - 109px); position: relative; z-index: 1;
-      background: rgba(10,10,15,0.3); backdrop-filter: blur(20px);
-      border-left: 1px solid var(--border); border-right: 1px solid var(--border);
+      background: rgba(255,255,255,0.6); backdrop-filter: none;
+      border-left: 1px solid #ddd7ca; border-right: 1px solid #ddd7ca;
     }
     .chat-centered .chat-header-bar {
-      padding: 20px 28px; border-bottom: 1px solid var(--border);
+      padding: 20px 28px; border-bottom: 1px solid #ddd7ca;
       display: flex; align-items: center; gap: 14;
-      background: rgba(10,10,15,0.4); flex-shrink: 0;
+      background: rgba(255,255,255,0.8); flex-shrink: 0;
     }
     .chat-centered .chat-messages {
       flex: 1; overflow-y: auto; padding: 28px 24px;
       display: flex; flex-direction: column; gap: 20px; min-height: 0;
     }
     .chat-centered .chat-input-wrap {
-      padding: 20px 24px; border-top: 1px solid var(--border);
-      display: flex; gap: 12px; background: rgba(10,10,15,0.4); flex-shrink: 0;
+      padding: 20px 24px; border-top: 1px solid #ddd7ca;
+      display: flex; gap: 12px; background: rgba(255,255,255,0.8); flex-shrink: 0;
     }
     .chat-centered .msg-bubble { font-size: 15px; line-height: 1.7; }
 
@@ -230,12 +230,12 @@
 
     /* ═══ LEFT CHAT ═══ */
     .chat-col {
-      border-right: 1px solid var(--border); display: flex; flex-direction: column;
-      background: rgba(10,10,15,0.5); backdrop-filter: blur(20px);
+      border-right: 1px solid #ddd7ca; display: flex; flex-direction: column;
+      background: #fff; backdrop-filter: none;
       min-height: 0; overflow: hidden;
     }
     .chat-header-bar {
-      padding: 16px 20px; border-bottom: 1px solid var(--border);
+      padding: 16px 20px; border-bottom: 1px solid #ddd7ca;
       display: flex; align-items: center; gap: 14; flex-shrink: 0;
     }
     .lisa-avatar {
@@ -243,7 +243,7 @@
       display: flex; align-items: center; justify-content: center;
       box-shadow: 0 4px 16px var(--primary-glow); position: relative; overflow: hidden; flex-shrink: 0;
     }
-    .lisa-avatar span { font-weight: 800; font-size: 16px; color: #fff; position: relative; z-index: 1; }
+    .lisa-avatar span { font-weight: 800; font-size: 16px; color: #2c2c2a; position: relative; z-index: 1; }
     .lisa-avatar::after {
       content: ''; position: absolute; inset: 0;
       background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.2) 50%, transparent 60%);
@@ -258,16 +258,16 @@
     .msg-avatar {
       width: 32px; height: 32px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0; font-size: 13px; font-weight: 800; color: #fff;
+      flex-shrink: 0; font-size: 13px; font-weight: 800; color: #2c2c2a;
     }
     .msg.lisa .msg-avatar { background: var(--lisa-gradient); margin-right: 10px; margin-top: 2px; }
-    .msg.user .msg-avatar { background: rgba(255,255,255,0.08); margin-left: 10px; margin-top: 2px; font-size: 13px; }
-    .msg-bubble { max-width: 85%; padding: 14px 18px; font-size: 14.5px; line-height: 1.65; color: #fff; }
-    .msg.lisa .msg-bubble { background: rgba(255,255,255,0.06); border: 1px solid var(--border); border-radius: 18px 18px 18px 6px; }
+    .msg.user .msg-avatar { background: rgba(92,138,114,0.06); margin-left: 10px; margin-top: 2px; font-size: 13px; }
+    .msg-bubble { max-width: 85%; padding: 14px 18px; font-size: 14.5px; line-height: 1.65; color: #2c2c2a; }
+    .msg.lisa .msg-bubble { background: #fff; border: 1px solid #ddd7ca; border-radius: 18px 18px 18px 6px; }
     .msg.user .msg-bubble { background: var(--primary); border-radius: 18px 18px 6px 18px; box-shadow: 0 2px 12px var(--primary-glow); }
     .typing-dots {
       padding: 12px 18px; border-radius: 18px 18px 18px 6px;
-      background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+      background: #fff; border: 1px solid #ddd7ca;
       display: flex; gap: 4; align-items: center;
     }
     .typing-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--text-muted); }
@@ -278,12 +278,12 @@
     /* Search status messages */
     .search-status {
       padding: 14px 20px; border-radius: 18px 18px 18px 6px;
-      background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+      background: #fff; border: 1px solid #ddd7ca;
       display: flex; align-items: center; gap: 12px; min-width: 220px;
     }
     .search-spinner {
       width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.1);
-      border-top-color: #a5b4fc; border-radius: 50%;
+      border-top-color: #7aa88e; border-radius: 50%;
       animation: spin 0.8s linear infinite; flex-shrink: 0;
     }
     .purpose-theme .search-spinner { border-top-color: #6ee7b7; }
@@ -292,14 +292,14 @@
       font-size: 13px; color: var(--text-muted); font-weight: 500;
       animation: fadeUp 0.3s ease;
     }
-    .chat-input-wrap { padding: 16px 18px; border-top: 1px solid var(--border); display: flex; gap: 10px; background: rgba(10,10,15,0.3); flex-shrink: 0; }
+    .chat-input-wrap { padding: 16px 18px; border-top: 1px solid #ddd7ca; display: flex; gap: 10px; background: rgba(255,255,255,0.6); flex-shrink: 0; }
     .chat-input {
-      flex: 1; background: rgba(255,255,255,0.06); border: 1.5px solid var(--border);
-      border-radius: 24px; padding: 12px 20px; font-size: 14.5px; color: #fff;
+      flex: 1; background: #fff; border: 1.5px solid var(--border);
+      border-radius: 24px; padding: 12px 20px; font-size: 14.5px; color: #2c2c2a;
       outline: none; font-family: inherit; transition: all 0.3s;
     }
     .chat-input::placeholder { color: var(--text-muted); }
-    .chat-input:focus { border-color: rgba(99,102,241,0.5); background: rgba(255,255,255,0.06); box-shadow: 0 0 20px rgba(99,102,241,0.1); }
+    .chat-input:focus { border-color: rgba(92,138,114,0.5); background: #fff; box-shadow: 0 0 20px rgba(92,138,114,0.1); }
     .chat-send {
       background: var(--primary); color: #fff; border: none; border-radius: 50%;
       width: 44px; height: 44px; font-size: 18px; cursor: pointer;
@@ -307,6 +307,28 @@
       display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
     .chat-send:hover { background: var(--primary-hover); }
+    .chat-upload {
+      background: none; border: 1px solid #ddd7ca; color: var(--text-muted);
+      width: 44px; height: 44px; border-radius: 50%; font-size: 18px;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; transition: all 0.2s;
+    }
+    .chat-upload:hover { border-color: rgba(92,138,114,0.4); color: #7aa88e; background: rgba(92,138,114,0.08); }
+    .chat-upload input { display: none; }
+    .chat-image-preview {
+      padding: 8px 18px 0; display: flex; align-items: center; gap: 10px;
+    }
+    .chat-image-preview img {
+      width: 60px; height: 60px; border-radius: 8px; object-fit: cover;
+      border: 1px solid #ddd7ca;
+    }
+    .chat-image-preview .remove-preview {
+      background: #fff; border: 1px solid #ddd7ca;
+      color: var(--text-muted); width: 24px; height: 24px; border-radius: 50%;
+      cursor: pointer; font-size: 14px; display: flex; align-items: center;
+      justify-content: center; transition: all 0.2s;
+    }
+    .chat-image-preview .remove-preview:hover { color: #f87171; border-color: rgba(248,113,113,0.4); }
 
     /* Quick-reply chips */
     .quick-replies {
@@ -315,27 +337,27 @@
     }
     .chat-centered .quick-replies { padding: 0 24px 16px; }
     .quick-chip {
-      background: rgba(255,255,255,0.04); border: 1.5px solid rgba(99,102,241,0.3);
-      color: #a5b4fc; padding: 10px 18px; border-radius: 24px;
+      background: rgba(92,138,114,0.06); border: 1.5px solid rgba(92,138,114,0.3);
+      color: #7aa88e; padding: 10px 18px; border-radius: 24px;
       font-size: 13.5px; font-weight: 500; cursor: pointer; font-family: inherit;
       transition: all 0.25s; white-space: nowrap;
     }
     .quick-chip:hover {
-      background: rgba(99,102,241,0.12); border-color: rgba(99,102,241,0.5);
-      color: #fff; transform: translateY(-1px);
-      box-shadow: 0 4px 16px rgba(99,102,241,0.15);
+      background: rgba(92,138,114,0.12); border-color: rgba(92,138,114,0.5);
+      color: #2c2c2a; transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(92,138,114,0.15);
     }
     .quick-chip:active { transform: translateY(0); }
     .quick-chip.other-chip {
       background: transparent; border-style: dashed;
       color: var(--text-muted); font-style: italic;
     }
-    .quick-chip.other-chip:hover { color: #fff; border-style: solid; }
+    .quick-chip.other-chip:hover { color: #2c2c2a; border-style: solid; }
     .purpose-theme .quick-chip {
       border-color: rgba(16,185,129,0.3); color: #6ee7b7;
     }
     .purpose-theme .quick-chip:hover {
-      background: rgba(16,185,129,0.12); border-color: rgba(16,185,129,0.5); color: #fff;
+      background: rgba(16,185,129,0.12); border-color: rgba(16,185,129,0.5); color: #2c2c2a;
       box-shadow: 0 4px 16px rgba(16,185,129,0.15);
     }
 
@@ -345,14 +367,14 @@
     .itin-sub { color: var(--text-muted); font-size: 13px; margin-bottom: 24px; line-height: 1.6; }
     .itin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
     .itin-card {
-      background: var(--card); backdrop-filter: blur(20px); border: 1px solid var(--border);
+      background: var(--card); backdrop-filter: none; border: 1px solid #ddd7ca;
       border-radius: 14px; overflow: hidden; cursor: pointer; transition: all 0.3s;
       animation: fadeUp 0.4s ease both;
     }
     .itin-card:nth-child(1) { animation-delay: 0s; } .itin-card:nth-child(2) { animation-delay: 0.08s; }
     .itin-card:nth-child(3) { animation-delay: 0.16s; } .itin-card:nth-child(4) { animation-delay: 0.24s; }
     .itin-card:hover { background: var(--card-hover); border-color: var(--border-hover); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.4); }
-    .itin-card.selected { border-color: rgba(99,102,241,0.5); box-shadow: 0 0 30px rgba(99,102,241,0.12), inset 0 0 30px rgba(99,102,241,0.04); }
+    .itin-card.selected { border-color: rgba(92,138,114,0.5); box-shadow: 0 0 30px rgba(92,138,114,0.12), inset 0 0 30px rgba(92,138,114,0.04); }
     .itin-card.added { border-color: rgba(16,185,129,0.3); }
     .itin-img {
       width: 100%; height: 120px; object-fit: cover; display: block;
@@ -365,46 +387,46 @@
     .itin-location { font-size: 12px; color: var(--text-muted); margin-top: 3px; }
     .match-badge { font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 6px; }
     .match-high { background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.35); color: var(--green-light); }
-    .match-mid { background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.35); color: #a5b4fc; }
+    .match-mid { background: rgba(92,138,114,0.15); border: 1px solid rgba(92,138,114,0.35); color: #7aa88e; }
     .itin-highlight { font-size: 12.5px; color: rgba(255,255,255,0.6); padding: 3px 0; display: flex; align-items: center; gap: 7; }
     .itin-highlight::before { content: '●'; color: var(--primary); font-size: 6px; }
-    .itin-footer { padding: 12px 18px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+    .itin-footer { padding: 12px 18px; border-top: 1px solid #ddd7ca; display: flex; justify-content: space-between; align-items: center; }
     .itin-meta { display: flex; gap: 14px; font-size: 12px; color: var(--text-muted); }
     .itin-price { font-weight: 700; color: var(--green-bright); }
     .add-btn {
-      background: transparent; color: #a5b4fc; border: 1.5px solid rgba(99,102,241,0.4);
+      background: transparent; color: #7aa88e; border: 1.5px solid rgba(92,138,114,0.4);
       border-radius: 8px; padding: 6px 14px; font-size: 12px; font-weight: 600;
       cursor: pointer; font-family: inherit; transition: all 0.25s;
     }
-    .add-btn:hover { background: rgba(99,102,241,0.1); }
-    .add-btn.added { background: var(--green); color: #fff; border: none; box-shadow: 0 2px 8px rgba(16,185,129,0.3); }
-    .itin-expanded { padding: 14px 18px; border-top: 1px solid var(--border); background: rgba(99,102,241,0.04); animation: fadeUp 0.3s ease; }
+    .add-btn:hover { background: rgba(92,138,114,0.1); }
+    .add-btn.added { background: var(--green); color: #2c2c2a; border: none; box-shadow: 0 2px 8px rgba(16,185,129,0.3); }
+    .itin-expanded { padding: 14px 18px; border-top: 1px solid #ddd7ca; background: rgba(92,138,114,0.04); animation: fadeUp 0.3s ease; }
     .itin-expanded p { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.65; }
     .itin-tags { display: flex; gap: 8px; margin-top: 12px; }
     .itin-tag { font-size: 11px; padding: 3px 10px; border-radius: 6px; font-weight: 500; }
 
     /* ═══ RIGHT TABS ═══ */
-    .right-col { border-left: 1px solid var(--border); overflow-y: auto; background: rgba(10,10,15,0.5); backdrop-filter: blur(20px); }
-    .tab-nav { display: flex; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10; background: rgba(10,10,15,0.9); backdrop-filter: blur(20px); }
+    .right-col { border-left: 1px solid #ddd7ca; overflow-y: auto; background: #fff; backdrop-filter: none; }
+    .tab-nav { display: flex; border-bottom: 1px solid #ddd7ca; position: sticky; top: 0; z-index: 10; background: rgba(10,10,15,0.9); backdrop-filter: none; }
     .tab-btn {
       flex: 1; padding: 14px 0; border: none; background: transparent;
       font-size: 11px; font-weight: 400; font-family: inherit;
       color: var(--text-muted); cursor: pointer; transition: all 0.2s;
       text-transform: capitalize; border-bottom: 2px solid transparent;
     }
-    .tab-btn.active { font-weight: 600; color: #a5b4fc; border-bottom-color: var(--primary); }
+    .tab-btn.active { font-weight: 600; color: #7aa88e; border-bottom-color: var(--primary); }
     .tab-content { padding: 22px 18px; }
     .tab-panel { display: none; animation: fadeUp 0.4s ease; }
     .tab-panel.active { display: block; }
     .section-title { font-size: 18px; font-weight: 700; margin-bottom: 16px; }
 
     /* Glass box */
-    .glass-box { background: var(--card); backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: 16px; padding: 16px; margin-bottom: 16px; }
+    .glass-box { background: var(--card); backdrop-filter: none; border: 1px solid #ddd7ca; border-radius: 16px; padding: 16px; margin-bottom: 16px; }
     .summary-row { display: flex; justify-content: space-between; padding: 6px 0; }
-    .summary-row:not(:last-child) { border-bottom: 1px solid var(--border); margin-bottom: 6px; }
+    .summary-row:not(:last-child) { border-bottom: 1px solid #ddd7ca; margin-bottom: 6px; }
     .summary-label { font-size: 13px; color: var(--text-muted); }
     .summary-value { font-size: 13px; font-weight: 700; }
-    .summary-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+    .summary-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid #ddd7ca; }
     .remove-btn { background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.3); color: #fca5a5; border-radius: 6px; padding: 4px 10px; font-size: 11px; font-weight: 600; cursor: pointer; font-family: inherit; }
     .empty-state { text-align: center; padding: 48px 20px; }
     .empty-icon { font-size: 44px; margin-bottom: 14px; opacity: 0.5; }
@@ -426,12 +448,12 @@
     .budget-bar-header { display: flex; justify-content: space-between; margin-bottom: 6px; }
     .budget-bar-label { font-size: 12px; color: var(--text-muted); }
     .budget-bar-value { font-size: 12px; font-weight: 600; }
-    .budget-bar-track { width: 100%; height: 8px; border-radius: 4px; background: rgba(255,255,255,0.06); overflow: hidden; }
+    .budget-bar-track { width: 100%; height: 8px; border-radius: 4px; background: #fff; overflow: hidden; }
     .budget-bar-fill { height: 100%; border-radius: 4px; animation: barGrow 0.8s ease both; }
 
     /* Weather */
     .weather-card {
-      background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+      background: var(--card); border: 1px solid #ddd7ca; border-radius: 14px;
       padding: 14px 16px; display: flex; align-items: center; gap: 14;
       margin-bottom: 10px; transition: all 0.3s;
     }
@@ -443,34 +465,34 @@
     .weather-temps { text-align: right; }
     .weather-high { font-size: 20px; font-weight: 700; }
     .weather-low { font-size: 12px; color: var(--text-dim); }
-    .weather-detail-row { display: flex; gap: 12px; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border); }
+    .weather-detail-row { display: flex; gap: 12px; margin-top: 8px; padding-top: 8px; border-top: 1px solid #ddd7ca; }
     .weather-detail { font-size: 10px; color: var(--text-dim); display: flex; align-items: center; gap: 4; }
     .weather-detail span { color: var(--text-muted); font-weight: 600; }
 
     /* Map */
-    .map-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; height: 280px; position: relative; }
-    .map-label { position: absolute; bottom: 12px; left: 12px; background: rgba(10,10,15,0.8); backdrop-filter: blur(20px); border-radius: 8px; padding: 6px 12px; font-size: 11px; color: var(--text-muted); border: 1px solid var(--border); }
+    .map-card { background: var(--card); border: 1px solid #ddd7ca; border-radius: 16px; overflow: hidden; height: 280px; position: relative; }
+    .map-label { position: absolute; bottom: 12px; left: 12px; background: rgba(10,10,15,0.8); backdrop-filter: none; border-radius: 8px; padding: 6px 12px; font-size: 11px; color: var(--text-muted); border: 1px solid #ddd7ca; }
 
     /* Social */
     .social-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .social-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 14px; transition: all 0.3s; cursor: pointer; }
+    .social-card { background: var(--card); border: 1px solid #ddd7ca; border-radius: 16px; padding: 14px; transition: all 0.3s; cursor: pointer; }
     .social-card:hover { background: var(--card-hover); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
-    .platform-badge { font-size: 9px; font-weight: 700; border-radius: 4px; padding: 2px 6px; color: #fff; }
+    .platform-badge { font-size: 9px; font-weight: 700; border-radius: 4px; padding: 2px 6px; color: #2c2c2a; }
     .badge-ig { background: linear-gradient(135deg, #E1306C, #F77737); }
     .badge-tt { background: linear-gradient(135deg, #25F4EE, #FE2C55); }
     .badge-g { background: linear-gradient(135deg, #4285F4, #34A853); }
     .filter-row { display: flex; gap: 8px; margin-bottom: 18px; }
-    .filter-btn { background: transparent; color: var(--text-muted); border: 1px solid var(--border); border-radius: 20px; padding: 5px 14px; font-size: 11px; cursor: pointer; font-family: inherit; font-weight: 500; }
-    .filter-btn.active { background: rgba(99,102,241,0.15); color: #a5b4fc; border-color: rgba(99,102,241,0.3); }
+    .filter-btn { background: transparent; color: var(--text-muted); border: 1px solid #ddd7ca; border-radius: 20px; padding: 5px 14px; font-size: 11px; cursor: pointer; font-family: inherit; font-weight: 500; }
+    .filter-btn.active { background: rgba(92,138,114,0.15); color: #7aa88e; border-color: rgba(92,138,114,0.3); }
 
     /* Timeline */
     .timeline { position: relative; padding-left: 30px; }
-    .timeline-line { position: absolute; left: 9px; top: 10px; bottom: 10px; width: 2px; border-radius: 2px; background: linear-gradient(to bottom, var(--primary), rgba(99,102,241,0.15)); }
+    .timeline-line { position: absolute; left: 9px; top: 10px; bottom: 10px; width: 2px; border-radius: 2px; background: linear-gradient(to bottom, var(--primary), rgba(92,138,114,0.15)); }
     .timeline-step { position: relative; margin-bottom: 18px; animation: fadeUp 0.4s ease both; }
     .timeline-dot { position: absolute; left: -25px; top: 14px; width: 14px; height: 14px; border-radius: 50%; background: var(--bg); border: 2px solid var(--primary); z-index: 2; }
     .timeline-dot.first { background: var(--primary); box-shadow: 0 0 12px var(--primary-glow); }
-    .timeline-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 14px 16px; }
-    .timeline-day { font-size: 11px; font-weight: 700; color: #a5b4fc; }
+    .timeline-card { background: var(--card); border: 1px solid #ddd7ca; border-radius: 16px; padding: 14px 16px; }
+    .timeline-day { font-size: 11px; font-weight: 700; color: #7aa88e; }
     .timeline-icon { font-size: 18px; }
     .timeline-label { font-size: 15px; font-weight: 700; }
     .timeline-location { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
@@ -481,7 +503,7 @@
       display: none; align-items: center; justify-content: center; flex-direction: column;
     }
     .submit-overlay.show { display: flex; }
-    .submit-overlay-bg { position: absolute; inset: 0; background: radial-gradient(circle at 50% 40%, rgba(99,102,241,0.12) 0%, transparent 60%); }
+    .submit-overlay-bg { position: absolute; inset: 0; background: radial-gradient(circle at 50% 40%, rgba(92,138,114,0.12) 0%, transparent 60%); }
     .submit-content { position: relative; z-index: 1; text-align: center; animation: fadeUp 0.6s ease; max-width: 480px; }
     .submit-emoji { font-size: 64px; margin-bottom: 20px; }
     .submit-title { font-size: 36px; font-weight: 800; margin-bottom: 8px; background: var(--headline-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
@@ -494,23 +516,23 @@
     }
     .btn-primary { background: var(--primary); color: #fff; box-shadow: 0 4px 16px var(--primary-glow); }
     .btn-primary:hover { background: var(--primary-hover); transform: translateY(-2px); }
-    .btn-secondary { background: rgba(255,255,255,0.06); color: var(--text-muted); border: 1px solid var(--border) !important; }
-    .btn-secondary:hover { background: rgba(255,255,255,0.1); color: #fff; }
-    .btn-save { background: var(--green); color: #fff; box-shadow: 0 4px 12px rgba(16,185,129,0.3); }
+    .btn-secondary { background: #fff; color: var(--text-muted); border: 1px solid #ddd7ca !important; }
+    .btn-secondary:hover { background: rgba(92,138,114,0.08); color: #2c2c2a; }
+    .btn-save { background: var(--green); color: #2c2c2a; box-shadow: 0 4px 12px rgba(16,185,129,0.3); }
     .btn-save:hover { transform: translateY(-2px); }
 
     /* ═══ COLLAPSIBLE PANELS ═══ */
     .panel-toggle {
       position: absolute; top: 50%; transform: translateY(-50%);
       width: 24px; height: 48px; border-radius: 0 8px 8px 0;
-      background: rgba(255,255,255,0.06); border: 1px solid var(--border);
+      background: #fff; border: 1px solid #ddd7ca;
       border-left: none; color: var(--text-muted); cursor: pointer;
       display: flex; align-items: center; justify-content: center;
       font-size: 14px; z-index: 20; transition: all 0.2s;
     }
-    .panel-toggle:hover { background: rgba(99,102,241,0.15); color: #a5b4fc; }
+    .panel-toggle:hover { background: rgba(92,138,114,0.15); color: #7aa88e; }
     .panel-toggle.left { right: -24px; }
-    .panel-toggle.right { left: -24px; border-radius: 8px 0 0 8px; border: 1px solid var(--border); border-right: none; }
+    .panel-toggle.right { left: -24px; border-radius: 8px 0 0 8px; border: 1px solid #ddd7ca; border-right: none; }
     .columns.chat-collapsed { grid-template-columns: 0px 1fr 340px; }
     .columns.chat-collapsed .chat-col { display: none; }
     .columns.right-collapsed { grid-template-columns: 380px 1fr 0px; }
@@ -523,14 +545,14 @@
     .expand-chat-btn, .expand-right-btn {
       position: fixed; top: 50%; transform: translateY(-50%); z-index: 25;
       width: 36px; height: 72px; border-radius: 0 12px 12px 0;
-      background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.3);
-      border-left: none; color: #a5b4fc; cursor: pointer;
+      background: rgba(92,138,114,0.15); border: 1px solid rgba(92,138,114,0.3);
+      border-left: none; color: #7aa88e; cursor: pointer;
       display: none; align-items: center; justify-content: center;
-      font-size: 16px; backdrop-filter: blur(20px); transition: all 0.2s;
+      font-size: 16px; backdrop-filter: none; transition: all 0.2s;
     }
     .expand-chat-btn { left: 0; }
-    .expand-right-btn { right: 0; border-radius: 12px 0 0 12px; border: 1px solid rgba(99,102,241,0.3); border-right: none; }
-    .expand-chat-btn:hover, .expand-right-btn:hover { background: rgba(99,102,241,0.25); }
+    .expand-right-btn { right: 0; border-radius: 12px 0 0 12px; border: 1px solid rgba(92,138,114,0.3); border-right: none; }
+    .expand-chat-btn:hover, .expand-right-btn:hover { background: rgba(92,138,114,0.25); }
     .columns.chat-collapsed ~ .expand-chat-btn { display: flex; }
     .columns.right-collapsed ~ .expand-right-btn { display: flex; }
 
@@ -543,13 +565,13 @@
     }
     .results-section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
     .results-section-count {
-      font-size: 11px; background: rgba(99,102,241,0.15); color: #a5b4fc;
+      font-size: 11px; background: rgba(92,138,114,0.15); color: #7aa88e;
       padding: 2px 8px; border-radius: 10px; font-weight: 600;
     }
 
     .result-card {
-      background: var(--card); backdrop-filter: blur(20px);
-      border: 1px solid var(--border); border-radius: 14px;
+      background: var(--card); backdrop-filter: none;
+      border: 1px solid #ddd7ca; border-radius: 14px;
       padding: 18px 20px; margin-bottom: 12px;
       transition: all 0.3s; cursor: default;
     }
@@ -578,15 +600,55 @@
     .flight-stops-label.has-stops { color: #f59e0b; }
 
     .flight-meta { display: flex; gap: 12px; font-size: 12px; color: var(--text-muted); margin-bottom: 14px; flex-wrap: wrap; }
-    .flight-meta-tag { padding: 4px 10px; border-radius: 6px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); }
+    .flight-meta-tag { padding: 4px 10px; border-radius: 6px; background: rgba(92,138,114,0.06); border: 1px solid #ddd7ca; }
     .flight-book {
       display: inline-flex; align-items: center; gap: 6px;
       padding: 10px 20px; border-radius: 10px; font-size: 13px; font-weight: 600;
-      background: var(--primary); color: #fff; text-decoration: none;
+      background: var(--primary); color: #2c2c2a; text-decoration: none;
       transition: all 0.2s; border: none; cursor: pointer;
       box-shadow: 0 2px 8px var(--primary-glow);
     }
     .flight-book:hover { background: var(--primary-hover); transform: translateY(-1px); }
+    .card-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    .add-trip-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 10px 18px; border-radius: 10px; font-size: 13px; font-weight: 600;
+      background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3);
+      color: var(--green-light); cursor: pointer; font-family: inherit;
+      transition: all 0.2s;
+    }
+    .add-trip-btn:hover { background: rgba(16,185,129,0.2); border-color: rgba(16,185,129,0.5); transform: translateY(-1px); }
+    .add-trip-btn.added { background: var(--green); color: #fff; border-color: var(--green); }
+    .add-trip-btn.added:hover { background: rgba(220,50,50,0.2); color: #f87171; border-color: rgba(220,50,50,0.4); }
+
+    /* Trip summary items */
+    .trip-item {
+      display: flex; gap: 12px; padding: 14px; border-radius: 10px;
+      background: rgba(92,138,114,0.04); border: 1px solid #ddd7ca;
+      margin-bottom: 10px; align-items: center; animation: fadeUp 0.3s ease;
+    }
+    .trip-item-img { width: 56px; height: 56px; border-radius: 8px; object-fit: cover; flex-shrink: 0; background: #fff; }
+    .trip-item-info { flex: 1; min-width: 0; }
+    .trip-item-name { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .trip-item-detail { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+    .trip-item-price { font-size: 14px; font-weight: 700; color: var(--green-bright); white-space: nowrap; }
+    .trip-item-remove {
+      background: none; border: none; color: var(--text-dim); cursor: pointer;
+      font-size: 16px; padding: 4px; transition: color 0.2s;
+    }
+    .trip-item-remove:hover { color: #f87171; }
+    .trip-total {
+      padding: 14px; border-top: 1px solid #ddd7ca; margin-top: 12px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .trip-total-label { font-size: 13px; color: var(--text-muted); font-weight: 500; }
+    .trip-total-price { font-size: 20px; font-weight: 800; color: var(--green-bright); }
+
+    /* Result card photo */
+    .result-card-photo {
+      width: 100%; height: 140px; object-fit: cover; border-radius: 10px;
+      margin-bottom: 14px; background: rgba(92,138,114,0.04);
+    }
     .flight-badge {
       font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 6px;
       background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.3);
@@ -596,7 +658,7 @@
     /* Flight legs breakdown */
     .flight-legs {
       margin: 0 0 14px; padding: 14px 16px; border-radius: 10px;
-      background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);
+      background: rgba(92,138,114,0.03); border: 1px solid rgba(255,255,255,0.05);
     }
     .flight-leg {
       display: flex; align-items: center; gap: 12px; padding: 8px 0;
@@ -607,7 +669,7 @@
       display: flex; align-items: center; justify-content: center;
       font-size: 12px; color: var(--text-muted);
     }
-    .flight-leg-icon.plane { background: rgba(99,102,241,0.1); color: #a5b4fc; }
+    .flight-leg-icon.plane { background: rgba(92,138,114,0.1); color: #7aa88e; }
     .flight-leg-icon.layover { background: rgba(245,158,11,0.1); color: #f59e0b; }
     .flight-leg-times {
       display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; min-width: 120px;
@@ -618,11 +680,11 @@
     .flight-leg-duration { font-size: 11px; color: var(--text-dim); }
     .flight-layover-text { font-size: 12px; color: #f59e0b; font-weight: 600; }
     .flight-legs-toggle {
-      font-size: 12px; color: #a5b4fc; cursor: pointer; background: none;
+      font-size: 12px; color: #7aa88e; cursor: pointer; background: none;
       border: none; padding: 6px 0; font-family: inherit; font-weight: 500;
       transition: color 0.2s;
     }
-    .flight-legs-toggle:hover { color: #fff; }
+    .flight-legs-toggle:hover { color: #2c2c2a; }
 
     /* Hotel card */
     .hotel-card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
@@ -633,11 +695,11 @@
     .hotel-price-total { font-size: 11px; color: var(--text-dim); }
     .hotel-rating { display: flex; align-items: center; gap: 6px; margin-bottom: 10px; }
     .hotel-stars { color: #f59e0b; font-size: 13px; letter-spacing: 1px; }
-    .hotel-score { font-size: 12px; font-weight: 700; background: rgba(99,102,241,0.15); color: #a5b4fc; padding: 2px 8px; border-radius: 6px; }
+    .hotel-score { font-size: 12px; font-weight: 700; background: rgba(92,138,114,0.15); color: #7aa88e; padding: 2px 8px; border-radius: 6px; }
     .hotel-highlights { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
     .hotel-highlight-tag {
       font-size: 11px; padding: 4px 10px; border-radius: 6px;
-      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      background: rgba(92,138,114,0.06); border: 1px solid #ddd7ca;
       color: var(--text-muted);
     }
 
@@ -652,8 +714,8 @@
     @media (max-width: 1100px) { .columns.active { grid-template-columns: 340px 1fr 300px; } }
     @media (max-width: 900px) {
       .columns.active { grid-template-columns: 1fr; height: auto; }
-      .chat-col { height: 50vh; border-right: none; border-bottom: 1px solid var(--border); }
-      .right-col { border-left: none; border-top: 1px solid var(--border); }
+      .chat-col { height: 50vh; border-right: none; border-bottom: 1px solid #ddd7ca; }
+      .right-col { border-left: none; border-top: 1px solid #ddd7ca; }
       body { overflow: auto; }
       .stepper { flex-wrap: wrap; gap: 4px; padding: 10px 16px; }
       .step-connector { width: 24px; }
@@ -661,20 +723,20 @@
       .chat-centered { max-width: 100%; }
     }
     /* ═══ ECO / PURPOSE THEME ═══ */
-    html.purpose-theme { background: #050e08; }
-    .purpose-theme body { background: #050e08; }
+    html.purpose-theme { background: #e8f0eb; }
+    .purpose-theme body { background: #e8f0eb; }
     .purpose-theme .bg-gradients {
       background: radial-gradient(ellipse at 20% 20%, rgba(16,185,129,0.08) 0%, transparent 55%),
                   radial-gradient(ellipse at 80% 80%, rgba(20,184,166,0.05) 0%, transparent 50%) !important;
     }
-    .purpose-theme .header { background: rgba(5,14,8,0.85); }
-    .purpose-theme .stepper { background: rgba(5,14,8,0.6); }
-    .purpose-theme .chat-col { background: rgba(5,14,8,0.5); }
-    .purpose-theme .right-col { background: rgba(5,14,8,0.5); }
+    .purpose-theme .header { background: rgba(92,138,114,0.85); }
+    .purpose-theme .stepper { background: rgba(92,138,114,0.6); }
+    .purpose-theme .chat-col { background: rgba(92,138,114,0.5); }
+    .purpose-theme .right-col { background: rgba(92,138,114,0.5); }
     .purpose-theme .chat-centered { background: transparent; }
-    .purpose-theme .chat-centered .chat-header-bar { background: rgba(5,14,8,0.3); }
-    .purpose-theme .chat-centered .chat-input-wrap { background: rgba(5,14,8,0.3); }
-    .purpose-theme .submit-overlay { background: #050e08; }
+    .purpose-theme .chat-centered .chat-header-bar { background: rgba(92,138,114,0.3); }
+    .purpose-theme .chat-centered .chat-input-wrap { background: rgba(92,138,114,0.3); }
+    .purpose-theme .submit-overlay { background: #e8f0eb; }
     .purpose-theme .submit-overlay-bg { background: radial-gradient(circle at 50% 40%, rgba(16,185,129,0.12) 0%, transparent 60%); }
 
     /* Primary color swap: indigo → green */
@@ -714,7 +776,7 @@
 
     /* Tabs */
     .purpose-theme .tab-btn.active { color: #6ee7b7 !important; border-bottom-color: #059669 !important; }
-    .purpose-theme .tab-nav { background: rgba(5,14,8,0.9) !important; }
+    .purpose-theme .tab-nav { background: rgba(92,138,114,0.9) !important; }
 
     /* Cards */
     .purpose-theme .itin-card.selected { border-color: rgba(16,185,129,0.5) !important; box-shadow: 0 0 30px rgba(16,185,129,0.12), inset 0 0 30px rgba(16,185,129,0.04) !important; }
@@ -745,7 +807,7 @@
     .purpose-theme .timeline-day { color: #6ee7b7 !important; }
 
     /* Sidebar */
-    .purpose-theme .left-sidebar { background: rgba(5,14,8,0.97) !important; }
+    .purpose-theme .left-sidebar { background: rgba(92,138,114,0.97) !important; }
     .purpose-theme .sidebar-item:hover, .purpose-theme .sidebar-item.active { background: rgba(16,185,129,0.15) !important; border-color: rgba(16,185,129,0.3) !important; }
     .purpose-theme .sidebar-item.primary { background: rgba(16,185,129,0.15) !important; border-color: rgba(16,185,129,0.4) !important; color: #6ee7b7 !important; }
 
@@ -770,7 +832,7 @@
     .eco-toggle-wrap { display: flex; align-items: center; gap: 8px; }
     .eco-toggle-btn {
       display: flex; align-items: center; gap: 6px;
-      background: rgba(255,255,255,0.06); border: 1px solid var(--border);
+      background: #fff; border: 1px solid #ddd7ca;
       color: var(--text-muted); padding: 7px 14px; border-radius: 20px;
       font-size: 12px; font-weight: 500; cursor: pointer; font-family: inherit;
       transition: all 0.3s;
@@ -809,7 +871,7 @@
     .sidebar-eco-wrap.active .sidebar-eco-left i { opacity: 1; color: #34d399; }
     .sidebar-eco-switch {
       position: relative; width: 42px; height: 24px;
-      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(92,138,114,0.08); border: 1px solid rgba(255,255,255,0.12);
       border-radius: 12px; cursor: pointer; transition: all 0.3s ease; flex-shrink: 0;
     }
     .sidebar-eco-wrap.active .sidebar-eco-switch {
@@ -834,7 +896,7 @@
 <div class="submit-overlay" id="submitOverlay">
   <div class="submit-overlay-bg"></div>
   <div class="submit-content">
-    <div class="submit-emoji"><svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+    <div class="submit-emoji"><svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#5c8a72" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
     <h1 class="submit-title">Itinerary Ready!</h1>
     <p class="submit-sub">Your trip plan has been saved. View the full itinerary, save it to your account to come back later, or keep editing.</p>
     <div class="submit-actions">
@@ -951,9 +1013,12 @@
       <div class="lisa-name">Lisa</div>
       <div class="lisa-status"><span class="status-dot"></span> Online — your AI travel agent</div>
     </div>
+    <button onclick="resetChat()" style="margin-left:auto;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:var(--text-muted);padding:8px 14px;border-radius:8px;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit;transition:all 0.2s" onmouseover="this.style.color='#fff';this.style.borderColor='rgba(255,255,255,0.3)'" onmouseout="this.style.color='var(--text-muted)';this.style.borderColor='rgba(255,255,255,0.1)'">New Chat</button>
   </div>
   <div class="chat-messages" id="chatMessagesCentered"></div>
+  <div class="chat-image-preview" id="imagePreviewCentered" style="display:none"></div>
   <div class="chat-input-wrap">
+    <button class="chat-upload" onclick="document.getElementById('fileUploadCentered').click()" title="Upload image or file"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg><input type="file" id="fileUploadCentered" accept="image/*,.pdf" onchange="handleFileUpload(this)"></button>
     <input class="chat-input" id="chatInputCentered" placeholder="Tell Lisa where you want to go..." onkeydown="if(event.key==='Enter')sendMessage()">
     <button class="chat-send" onclick="sendMessage()">↑</button>
   </div>
@@ -971,9 +1036,12 @@
         <div class="lisa-name">Lisa</div>
         <div class="lisa-status"><span class="status-dot"></span> Online — your AI travel agent</div>
       </div>
+      <button onclick="resetChat()" style="margin-left:auto;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:var(--text-muted);padding:6px 12px;border-radius:8px;font-size:11px;font-weight:500;cursor:pointer;font-family:inherit;transition:all 0.2s" onmouseover="this.style.color='#fff';this.style.borderColor='rgba(255,255,255,0.3)'" onmouseout="this.style.color='var(--text-muted)';this.style.borderColor='rgba(255,255,255,0.1)'">New Chat</button>
     </div>
     <div class="chat-messages" id="chatMessages"></div>
+    <div class="chat-image-preview" id="imagePreviewColumn" style="display:none"></div>
     <div class="chat-input-wrap">
+      <button class="chat-upload" onclick="document.getElementById('fileUploadColumn').click()" title="Upload image or file"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg><input type="file" id="fileUploadColumn" accept="image/*,.pdf" onchange="handleFileUpload(this)"></button>
       <input class="chat-input" id="chatInput" placeholder="Ask Lisa anything about your trip..." onkeydown="if(event.key==='Enter')sendMessage()">
       <button class="chat-send" onclick="sendMessage()">↑</button>
     </div>
@@ -999,10 +1067,10 @@
       <button class="tab-btn" onclick="switchTab('timeline',this)">Timeline</button>
     </div>
     <div class="tab-content">
-      <div class="tab-panel active" id="tab-summary"><h3 class="section-title">Trip Summary</h3><div id="summaryContent"></div></div>
+      <div class="tab-panel active" id="tab-summary"><h3 class="section-title">Trip Summary</h3><div id="tripSummaryContent"><div style="text-align:center;padding:40px 20px"><div style="font-size:14px;font-weight:600;color:rgba(255,255,255,0.4);margin-bottom:8px">No items added yet</div><div style="font-size:12px;color:rgba(255,255,255,0.25);line-height:1.6">Use the + Add to trip buttons on flight, hotel, and activity cards.</div></div></div></div>
       <div class="tab-panel" id="tab-budget"><h3 class="section-title">Budget Breakdown</h3><div id="budgetContent"></div></div>
       <div class="tab-panel" id="tab-weather"><h3 class="section-title">Weather Forecast</h3><p style="font-size:12px;color:var(--text-dim);margin-bottom:16px">Estimated conditions for your trip dates.</p><div id="weatherGrid"></div></div>
-      <div class="tab-panel" id="tab-map"><h3 class="section-title">Interactive Map</h3><div class="map-card"><svg viewBox="0 0 300 200" style="width:100%;height:100%"><defs><radialGradient id="g1" cx="70%" cy="30%" r="40%"><stop offset="0%" stop-color="#6366f1" stop-opacity="0.15"/><stop offset="100%" stop-color="#6366f1" stop-opacity="0"/></radialGradient><radialGradient id="g2" cx="30%" cy="70%" r="35%"><stop offset="0%" stop-color="#a855f7" stop-opacity="0.1"/><stop offset="100%" stop-color="#a855f7" stop-opacity="0"/></radialGradient></defs><rect width="300" height="200" fill="#0d0d15"/><rect width="300" height="200" fill="url(#g1)"/><rect width="300" height="200" fill="url(#g2)"/><path d="M80,60 Q100,40 140,45 Q180,35 210,50 Q240,55 250,80 Q255,110 240,135 Q220,155 190,160 Q160,165 140,155 Q120,160 100,150 Q80,135 75,110 Q70,85 80,60Z" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/><circle cx="210" cy="55" r="10" fill="none" stroke="#6366f1" stroke-width="1" opacity="0.5"><animate attributeName="r" from="6" to="16" dur="2.5s" repeatCount="indefinite"/><animate attributeName="opacity" from="0.6" to="0" dur="2.5s" repeatCount="indefinite"/></circle><circle cx="210" cy="55" r="5" fill="#6366f1"/><circle cx="210" cy="55" r="2" fill="#fff"/><text x="210" y="45" text-anchor="middle" font-size="7.5" fill="#a5b4fc" font-weight="600">Cairns</text><circle cx="195" cy="68" r="10" fill="none" stroke="#6366f1" stroke-width="1" opacity="0.5"><animate attributeName="r" from="6" to="16" dur="2.5s" repeatCount="indefinite"/><animate attributeName="opacity" from="0.6" to="0" dur="2.5s" repeatCount="indefinite"/></circle><circle cx="195" cy="68" r="5" fill="#6366f1"/><circle cx="195" cy="68" r="2" fill="#fff"/><text x="195" y="58" text-anchor="middle" font-size="7.5" fill="#a5b4fc" font-weight="600">Daintree</text><circle cx="160" cy="92" r="3" fill="rgba(255,255,255,0.25)"/><text x="160" y="82" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.3)">Uluru</text><circle cx="228" cy="128" r="3" fill="rgba(255,255,255,0.25)"/><text x="228" y="118" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.3)">Sydney</text><circle cx="215" cy="143" r="3" fill="rgba(255,255,255,0.25)"/><text x="215" y="133" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.3)">Melbourne</text><path d="M210,55 Q205,60 195,68" fill="none" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.5"/></svg><div class="map-label">Active destinations</div></div><p style="font-size:12px;color:var(--text-dim);margin-top:12px;line-height:1.5">Pins highlight destinations from selected itineraries.</p></div>
+      <div class="tab-panel" id="tab-map"><h3 class="section-title">Interactive Map</h3><div id="tripMapCanvas" style="width:100%;height:350px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid #ddd7ca"></div><p style="font-size:12px;color:var(--text-dim);margin-top:12px;line-height:1.5">Add a hotel to your trip to see it on the map with nearby restaurants and attractions.</p></div>
       <div class="tab-panel" id="tab-social"><h3 class="section-title">Social Pinboard</h3><p style="font-size:13px;color:var(--text-muted);margin-bottom:18px;line-height:1.5">Cross-reference recommendations from real travelers.</p><div class="filter-row"><button class="filter-btn active">All</button><button class="filter-btn">Instagram</button><button class="filter-btn">TikTok</button><button class="filter-btn">Google</button></div><div class="social-grid" id="socialGrid"></div></div>
       <div class="tab-panel" id="tab-timeline"><h3 class="section-title">Trip Timeline</h3><p style="font-size:13px;color:var(--text-muted);margin-bottom:24px;line-height:1.5">High-level journey overview. Customize with Lisa.</p><div class="timeline" id="timelineWrap"><div class="timeline-line"></div></div></div>
     </div>
@@ -1021,16 +1089,16 @@ const itineraries = [];
 // Itineraries will be populated by Lisa's AI recommendations
 
 const budgetSplits = [
-  { pct:0.35, color:"#6366f1", label:"Flights" },
-  { pct:0.30, color:"#a855f7", label:"Accommodation" },
-  { pct:0.20, color:"#ec4899", label:"Activities" },
+  { pct:0.35, color:"#5c8a72", label:"Flights" },
+  { pct:0.30, color:"#c8b48a", label:"Accommodation" },
+  { pct:0.20, color:"#c8b48a", label:"Activities" },
   { pct:0.10, color:"#f59e0b", label:"Food & Dining" },
   { pct:0.05, color:"#10b981", label:"Local Transport" },
 ];
 
 const weatherData = [
   { day:"Day 1 — Mon", icon:"☀️", desc:"Sunny & clear", high:31, low:24, humidity:62, uv:"Very High", wind:"12 km/h", bg:"rgba(251,191,36,0.08)" },
-  { day:"Day 2 — Tue", icon:"⛅", desc:"Partly cloudy", high:30, low:23, humidity:68, uv:"High", wind:"15 km/h", bg:"rgba(99,102,241,0.08)" },
+  { day:"Day 2 — Tue", icon:"⛅", desc:"Partly cloudy", high:30, low:23, humidity:68, uv:"High", wind:"15 km/h", bg:"rgba(92,138,114,0.08)" },
   { day:"Day 3 — Wed", icon:"🌤️", desc:"Mostly sunny", high:32, low:25, humidity:58, uv:"Very High", wind:"10 km/h", bg:"rgba(251,191,36,0.08)" },
   { day:"Day 4 — Thu", icon:"🌧️", desc:"Afternoon showers", high:28, low:23, humidity:82, uv:"Moderate", wind:"18 km/h", bg:"rgba(56,189,248,0.08)" },
   { day:"Day 5 — Fri", icon:"🌦️", desc:"Scattered rain", high:27, low:22, humidity:78, uv:"Low", wind:"20 km/h", bg:"rgba(56,189,248,0.08)" },
@@ -1217,15 +1285,32 @@ let lisaResponseCount = 0;
 async function sendMessage() {
   const chat = getActiveChat();
   const text = chat.input.value.trim();
-  if (!text || isLisaTyping) return;
+  var imageData = pendingImage;
+
+  if ((!text && !imageData) || isLisaTyping) return;
   chat.input.value = '';
   clearQuickReplies();
+  clearPendingImage();
   hasChatted = true;
   updateStepper();
-  chatHistory.push({ from: 'user', text });
 
+  // Build message text (include note about image if attached)
+  var msgText = text || '';
+  if (imageData && imageData.mimeType.startsWith('image/')) {
+    msgText = msgText || 'Can you identify this place?';
+  } else if (imageData) {
+    msgText = msgText || 'I uploaded a file for you to look at.';
+  }
+  chatHistory.push({ from: 'user', text: msgText, image: imageData || null });
+
+  // Show user message with image preview if attached
   const area = chat.area;
-  area.innerHTML += '<div class="msg user"><div class="msg-bubble">' + escapeHtml(text) + '</div><div class="msg-avatar"></div></div>';
+  var userBubbleContent = '';
+  if (imageData && imageData.mimeType.startsWith('image/')) {
+    userBubbleContent += '<img src="data:' + imageData.mimeType + ';base64,' + imageData.base64 + '" style="max-width:200px;border-radius:8px;margin-bottom:8px;display:block">';
+  }
+  if (text) userBubbleContent += escapeHtml(text);
+  area.innerHTML += '<div class="msg user"><div class="msg-bubble">' + userBubbleContent + '</div><div class="msg-avatar"></div></div>';
 
   // Show search status indicator
   isLisaTyping = true;
@@ -1261,7 +1346,7 @@ async function sendMessage() {
     const response = await fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages: apiMessages, ecoMode: ecoMode }),
+      body: JSON.stringify({ messages: apiMessages, ecoMode: ecoMode, lastImage: imageData }),
     });
 
     const data = await response.json();
@@ -1326,6 +1411,47 @@ function formatLisaMessage(text) {
 function escapeHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 
 // ══════════════════════════════════════════════════════════════
+// IMAGE UPLOAD HANDLING
+// ══════════════════════════════════════════════════════════════
+var pendingImage = null; // { base64, mimeType, fileName }
+
+function handleFileUpload(input) {
+  var file = input.files && input.files[0];
+  if (!file) return;
+
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var base64Full = e.target.result;
+    var mimeType = file.type || 'image/jpeg';
+    var base64Data = base64Full.split(',')[1];
+
+    pendingImage = { base64: base64Data, mimeType: mimeType, fileName: file.name };
+
+    // Show preview
+    var previewId = viewMode === 'centered' ? 'imagePreviewCentered' : 'imagePreviewColumn';
+    var previewEl = document.getElementById(previewId);
+    if (previewEl) {
+      if (mimeType.startsWith('image/')) {
+        previewEl.innerHTML = '<img src="' + base64Full + '" alt="Upload preview"><span style="font-size:12px;color:var(--text-muted)">' + file.name + '</span><button class="remove-preview" onclick="clearPendingImage()">x</button>';
+      } else {
+        previewEl.innerHTML = '<div style="width:60px;height:60px;border-radius:8px;background:rgba(255,255,255,0.05);border:1px solid #ddd7ca;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--text-muted)">PDF</div><span style="font-size:12px;color:var(--text-muted)">' + file.name + '</span><button class="remove-preview" onclick="clearPendingImage()">x</button>';
+      }
+      previewEl.style.display = 'flex';
+    }
+  };
+  reader.readAsDataURL(file);
+  input.value = '';
+}
+
+function clearPendingImage() {
+  pendingImage = null;
+  document.getElementById('imagePreviewCentered').style.display = 'none';
+  document.getElementById('imagePreviewColumn').style.display = 'none';
+  document.getElementById('imagePreviewCentered').innerHTML = '';
+  document.getElementById('imagePreviewColumn').innerHTML = '';
+}
+
+// ══════════════════════════════════════════════════════════════
 // QUICK-REPLY CHIPS
 // ══════════════════════════════════════════════════════════════
 function renderQuickReplies(options) {
@@ -1352,6 +1478,46 @@ function renderQuickReplies(options) {
 
 function clearQuickReplies() {
   document.querySelectorAll('.quick-replies').forEach(function(el) { el.remove(); });
+}
+
+function resetChat() {
+  // Clear all state
+  chatHistory = [];
+  addedItineraries = [];
+  selectedItinerary = null;
+  hasChatted = false;
+  lisaResponseCount = 0;
+  viewMode = 'centered';
+
+  // Clear stored data
+  localStorage.removeItem('tripDraft');
+  localStorage.removeItem('currentTrip');
+
+  // Reset UI — show centered chat, hide columns
+  document.getElementById('chatCentered').style.display = '';
+  document.getElementById('mainColumns').classList.remove('active');
+  document.getElementById('chatMessagesCentered').innerHTML = '';
+  document.getElementById('chatMessages').innerHTML = '';
+  document.getElementById('resultsArea').innerHTML = '';
+  clearQuickReplies();
+
+  // Clear trip items and map
+  tripItems = [];
+  window.lastResults = null;
+  mapMarkers.forEach(function(m) { m.setMap(null); });
+  mapMarkers = [];
+
+  // Reset planner sections
+  renderItineraries();
+  updateSummary();
+  updateBudget();
+  updateHeader();
+  updateStepper();
+
+  // Fresh greeting
+  chatHistory.push({ from: 'lisa', text: "Hey, I'm Lisa -- your personal travel agent at One-Up.\n\nTell me where you're dreaming of going, and I'll take it from there. I'll handle flights, hotels, activities, dining -- the whole trip. Where are we heading?" });
+  renderChatHistoryTo(document.getElementById('chatMessagesCentered'));
+  document.getElementById('chatInputCentered').focus();
 }
 
 function selectQuickReply(text) {
@@ -1485,8 +1651,11 @@ function renderResults(data) {
       if (f.frequency) html += '<span class="flight-meta-tag">' + f.frequency + '</span>';
       html += '</div>';
 
-      // Book button
-      html += '<a href="' + (f.bookUrl || 'https://www.skyscanner.com.au') + '" target="_blank" rel="noopener" class="flight-book">View on ' + getDomain(f.bookUrl) + ' →</a>';
+      // Book button + Add to trip
+      html += '<div class="card-actions">';
+      html += '<a href="' + (f.bookUrl || 'https://www.skyscanner.com.au') + '" target="_blank" rel="noopener" class="flight-book" style="color:#fff">View on ' + getDomain(f.bookUrl) + ' →</a>';
+      html += '<button class="add-trip-btn" data-type="flight" data-index="' + i + '" onclick="toggleTripItem(this, \'flight\', ' + i + ')">+ Add to trip</button>';
+      html += '</div>';
       html += '</div>';
     });
     html += '</div>';
@@ -1497,7 +1666,9 @@ function renderResults(data) {
     html += '<div class="results-section">';
     html += '<div class="results-section-title">Accommodation <span class="results-section-count">' + data.hotels.length + ' options</span></div>';
     data.hotels.forEach(function(h) {
-      html += '<div class="result-card">';
+      html += '<div class="result-card" id="hotel-card-' + i + '">';
+      // Photo placeholder — will be filled by Google Places
+      html += '<img class="result-card-photo" id="hotel-photo-' + i + '" src="" alt="' + h.name + '" style="display:none" onerror="this.style.display=\'none\'" onload="this.style.display=\'block\'">';
       html += '<div class="hotel-card-top"><div><div class="hotel-name">' + h.name + '</div><div class="hotel-location">' + (h.location || '') + '</div></div><div class="hotel-price-wrap"><div class="hotel-price-night">' + h.pricePerNight + '<span class="flight-price-label">/night</span></div>' + (h.totalPrice ? '<div class="hotel-price-total">Total: ' + h.totalPrice + '</div>' : '') + '</div></div>';
       html += '<div class="hotel-rating">';
       if (h.stars) { var stars = ''; for (var s = 0; s < h.stars; s++) stars += '<svg width="12" height="12" viewBox="0 0 24 24" fill="#f59e0b" style="display:inline-block;vertical-align:middle"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>'; html += '<span class="hotel-stars">' + stars + '</span>'; }
@@ -1508,7 +1679,10 @@ function renderResults(data) {
         h.highlights.forEach(function(hl) { html += '<span class="hotel-highlight-tag">' + hl + '</span>'; });
         html += '</div>';
       }
-      html += '<a href="' + (h.bookUrl || 'https://www.booking.com') + '" target="_blank" rel="noopener" class="flight-book">View on ' + getDomain(h.bookUrl) + ' →</a>';
+      html += '<div class="card-actions">';
+      html += '<a href="' + (h.bookUrl || 'https://www.booking.com') + '" target="_blank" rel="noopener" class="flight-book" style="color:#fff">View on ' + getDomain(h.bookUrl) + ' →</a>';
+      html += '<button class="add-trip-btn" data-type="hotel" data-index="' + i + '" onclick="toggleTripItem(this, \'hotel\', ' + i + ')">+ Add to trip</button>';
+      html += '</div>';
       html += '</div>';
     });
     html += '</div>';
@@ -1518,15 +1692,19 @@ function renderResults(data) {
   if (data.activities && data.activities.length > 0) {
     html += '<div class="results-section">';
     html += '<div class="results-section-title">Activities & Experiences <span class="results-section-count">' + data.activities.length + ' options</span></div>';
-    data.activities.forEach(function(a) {
-      html += '<div class="result-card">';
+    data.activities.forEach(function(a, i) {
+      html += '<div class="result-card" id="activity-card-' + i + '">';
+      html += '<img class="result-card-photo" id="activity-photo-' + i + '" src="" alt="' + a.name + '" style="display:none" onerror="this.style.display=\'none\'" onload="this.style.display=\'block\'">';
       html += '<div class="activity-card-top"><div class="activity-name">' + a.name + '</div><div class="activity-price">' + a.price + '</div></div>';
       if (a.provider) html += '<div class="activity-provider">via ' + a.provider + '</div>';
       html += '<div class="activity-meta">';
       if (a.duration) html += '<div class="flight-meta-item">' + a.duration + '</div>';
       if (a.rating) html += '<div class="flight-meta-item">' + a.rating + ' rating</div>';
       html += '</div>';
-      html += '<a href="' + (a.bookUrl || 'https://www.getyourguide.com') + '" target="_blank" rel="noopener" class="flight-book">View on ' + getDomain(a.bookUrl) + ' →</a>';
+      html += '<div class="card-actions">';
+      html += '<a href="' + (a.bookUrl || 'https://www.getyourguide.com') + '" target="_blank" rel="noopener" class="flight-book" style="color:#fff">View on ' + getDomain(a.bookUrl) + ' →</a>';
+      html += '<button class="add-trip-btn" data-type="activity" data-index="' + i + '" onclick="toggleTripItem(this, \'activity\', ' + i + ')">+ Add to trip</button>';
+      html += '</div>';
       html += '</div>';
     });
     html += '</div>';
@@ -1534,7 +1712,9 @@ function renderResults(data) {
 
   if (html) {
     area.innerHTML = html;
-    document.getElementById('itinSubtitle').textContent = 'Real-time results from Lisa — click to book.';
+    document.getElementById('itinSubtitle').textContent = 'Real-time results. Click to book or add to your trip.';
+    loadResultPhotos(data);
+    window.lastResults = data;
   }
 }
 
@@ -1542,9 +1722,234 @@ function getDomain(url) {
   if (!url) return 'Booking Site';
   try {
     var hostname = new URL(url).hostname.replace('www.', '');
-    // Capitalize first letter
     return hostname.charAt(0).toUpperCase() + hostname.slice(1);
   } catch(e) { return 'Booking Site'; }
+}
+
+// ══════════════════════════════════════════════════════════════
+// GOOGLE PLACES PHOTOS for results
+// ══════════════════════════════════════════════════════════════
+function loadResultPhotos(data) {
+  if (typeof google === 'undefined' || !google.maps || !google.maps.places) return;
+  var service = new google.maps.places.PlacesService(document.createElement('div'));
+
+  if (data.hotels) {
+    data.hotels.forEach(function(h, i) {
+      var query = h.name + ' ' + (h.location || '');
+      service.findPlaceFromQuery({ query: query, fields: ['photos'] }, function(results, status) {
+        if (status === google.maps.places.PlacesServiceStatus.OK && results && results[0] && results[0].photos) {
+          var imgEl = document.getElementById('hotel-photo-' + i);
+          if (imgEl) imgEl.src = results[0].photos[0].getUrl({ maxWidth: 600, maxHeight: 300 });
+        }
+      });
+    });
+  }
+
+  if (data.activities) {
+    data.activities.forEach(function(a, i) {
+      var query = a.name + ' ' + (a.location || '');
+      service.findPlaceFromQuery({ query: query, fields: ['photos'] }, function(results, status) {
+        if (status === google.maps.places.PlacesServiceStatus.OK && results && results[0] && results[0].photos) {
+          var imgEl = document.getElementById('activity-photo-' + i);
+          if (imgEl) imgEl.src = results[0].photos[0].getUrl({ maxWidth: 600, maxHeight: 300 });
+        }
+      });
+    });
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+// TRIP MANAGEMENT — add/remove items to trip summary
+// ══════════════════════════════════════════════════════════════
+var tripItems = [];
+
+function toggleTripItem(btn, type, index) {
+  var key = type + '-' + index;
+  var existing = tripItems.findIndex(function(t) { return t.key === key; });
+
+  if (existing >= 0) {
+    tripItems.splice(existing, 1);
+    btn.textContent = '+ Add to trip';
+    btn.classList.remove('added');
+  } else {
+    var results = window.lastResults;
+    if (!results) return;
+    var item = null;
+
+    if (type === 'flight' && results.flights && results.flights[index]) {
+      var f = results.flights[index];
+      item = { key: key, type: 'Flight', name: f.airline + ' ' + (f.departAirport || '') + ' to ' + (f.arriveAirport || ''), detail: (f.departTime || '') + ' - ' + (f.arriveTime || '') + ' / ' + (f.duration || ''), price: f.price, bookUrl: f.bookUrl };
+    } else if (type === 'hotel' && results.hotels && results.hotels[index]) {
+      var h = results.hotels[index];
+      item = { key: key, type: 'Hotel', name: h.name, detail: h.location || '', price: h.totalPrice || h.pricePerNight, bookUrl: h.bookUrl, placeQuery: h.name + ' ' + (h.location || '') };
+    } else if (type === 'activity' && results.activities && results.activities[index]) {
+      var a = results.activities[index];
+      item = { key: key, type: 'Activity', name: a.name, detail: (a.duration || '') + ' via ' + (a.provider || ''), price: a.price, bookUrl: a.bookUrl };
+    }
+
+    if (item) {
+      tripItems.push(item);
+      btn.textContent = 'Added';
+      btn.classList.add('added');
+    }
+  }
+
+  renderTripSummary();
+  updateTripMap();
+}
+
+function removeTripItem(key) {
+  tripItems = tripItems.filter(function(t) { return t.key !== key; });
+  // Reset button state
+  var parts = key.split('-');
+  var btns = document.querySelectorAll('.add-trip-btn[data-type="' + parts[0] + '"][data-index="' + parts[1] + '"]');
+  btns.forEach(function(b) { b.textContent = '+ Add to trip'; b.classList.remove('added'); });
+  renderTripSummary();
+  updateTripMap();
+}
+
+function renderTripSummary() {
+  var summaryEl = document.getElementById('tripSummaryContent');
+  if (!summaryEl) return;
+
+  if (tripItems.length === 0) {
+    summaryEl.innerHTML = '<div style="text-align:center;padding:40px 20px"><div style="font-size:14px;font-weight:600;color:rgba(255,255,255,0.4);margin-bottom:8px">No items added yet</div><div style="font-size:12px;color:rgba(255,255,255,0.25);line-height:1.6">Use the + Add to trip buttons on flight, hotel, and activity cards.</div></div>';
+    return;
+  }
+
+  var html = '';
+  var totalEstimate = 0;
+
+  tripItems.forEach(function(item) {
+    var priceNum = parseFloat((item.price || '').replace(/[^0-9.]/g, '')) || 0;
+    totalEstimate += priceNum;
+
+    html += '<div class="trip-item">';
+    html += '<div class="trip-item-info">';
+    html += '<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text-dim);margin-bottom:3px">' + item.type + '</div>';
+    html += '<div class="trip-item-name">' + item.name + '</div>';
+    html += '<div class="trip-item-detail">' + item.detail + '</div>';
+    html += '</div>';
+    html += '<div class="trip-item-price">' + (item.price || '') + '</div>';
+    html += '<button class="trip-item-remove" onclick="removeTripItem(\'' + item.key + '\')" title="Remove">x</button>';
+    html += '</div>';
+  });
+
+  if (totalEstimate > 0) {
+    html += '<div class="trip-total"><span class="trip-total-label">Estimated total</span><span class="trip-total-price">$' + totalEstimate.toLocaleString() + '</span></div>';
+  }
+
+  summaryEl.innerHTML = html;
+}
+
+// ══════════════════════════════════════════════════════════════
+// INTERACTIVE MAP
+// ══════════════════════════════════════════════════════════════
+var tripMap = null;
+var mapMarkers = [];
+
+function initTripMap() {
+  var mapEl = document.getElementById('tripMapCanvas');
+  if (!mapEl || typeof google === 'undefined' || !google.maps) return;
+
+  tripMap = new google.maps.Map(mapEl, {
+    center: { lat: -8.4095, lng: 115.1889 },
+    zoom: 10,
+    styles: [
+      { elementType: 'geometry', stylers: [{ color: '#f5f2ec' }] },
+      { elementType: 'labels.text.stroke', stylers: [{ color: '#f5f2ec' }] },
+      { elementType: 'labels.text.fill', stylers: [{ color: '#6b7280' }] },
+      { featureType: 'water', elementType: 'geometry', stylers: [{ color: '#ddd7ca' }] },
+      { featureType: 'road', elementType: 'geometry', stylers: [{ color: '#e8e2d6' }] },
+      { featureType: 'poi', elementType: 'labels', stylers: [{ visibility: 'off' }] }
+    ],
+    disableDefaultUI: true,
+    zoomControl: true,
+    mapTypeControl: false,
+    streetViewControl: false,
+    fullscreenControl: true
+  });
+}
+
+function updateTripMap() {
+  if (!tripMap || typeof google === 'undefined') return;
+  var service = new google.maps.places.PlacesService(tripMap);
+
+  // Clear existing markers
+  mapMarkers.forEach(function(m) { m.setMap(null); });
+  mapMarkers = [];
+
+  var bounds = new google.maps.LatLngBounds();
+  var hasMarker = false;
+
+  tripItems.forEach(function(item) {
+    if (!item.placeQuery) return;
+    service.findPlaceFromQuery({ query: item.placeQuery, fields: ['geometry', 'name'] }, function(results, status) {
+      if (status === google.maps.places.PlacesServiceStatus.OK && results && results[0] && results[0].geometry) {
+        var loc = results[0].geometry.location;
+        var marker = new google.maps.Marker({
+          position: loc,
+          map: tripMap,
+          title: item.name,
+          icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 8,
+            fillColor: '#5c8a72',
+            fillOpacity: 1,
+            strokeColor: '#fff',
+            strokeWeight: 2
+          }
+        });
+
+        var infoWindow = new google.maps.InfoWindow({
+          content: '<div style="color:#000;font-size:13px;font-weight:600;padding:4px">' + item.name + '</div><div style="color:#666;font-size:11px">' + item.detail + '</div>'
+        });
+        marker.addListener('click', function() { infoWindow.open(tripMap, marker); });
+
+        mapMarkers.push(marker);
+        bounds.extend(loc);
+        hasMarker = true;
+        if (mapMarkers.length > 1) tripMap.fitBounds(bounds, 50);
+        else tripMap.setCenter(loc);
+
+        // Search for nearby places
+        searchNearby(loc);
+      }
+    });
+  });
+}
+
+function searchNearby(location) {
+  if (!tripMap) return;
+  var service = new google.maps.places.PlacesService(tripMap);
+  service.nearbySearch({
+    location: location,
+    radius: 1500,
+    type: ['restaurant']
+  }, function(results, status) {
+    if (status === google.maps.places.PlacesServiceStatus.OK && results) {
+      results.slice(0, 8).forEach(function(place) {
+        var marker = new google.maps.Marker({
+          position: place.geometry.location,
+          map: tripMap,
+          title: place.name,
+          icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 5,
+            fillColor: '#f59e0b',
+            fillOpacity: 0.8,
+            strokeColor: '#fff',
+            strokeWeight: 1
+          }
+        });
+        var info = new google.maps.InfoWindow({
+          content: '<div style="color:#000;font-size:12px;font-weight:600">' + place.name + '</div><div style="color:#666;font-size:11px">' + (place.rating ? place.rating + ' rating' : '') + ' ' + (place.vicinity || '') + '</div>'
+        });
+        marker.addListener('click', function() { info.open(tripMap, marker); });
+        mapMarkers.push(marker);
+      });
+    }
+  });
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -1613,14 +2018,8 @@ function updateHeader() {
 // SUMMARY
 // ══════════════════════════════════════════════════════════════
 function updateSummary() {
-  const c = document.getElementById('summaryContent');
-  if (!addedItineraries.length) { c.innerHTML = `<div class="empty-state"><div class="empty-icon">🗺️</div><div class="empty-text">No itineraries added yet.<br>Chat with Lisa and add itineraries to see your summary here.</div></div>`; return; }
-  const added = itineraries.filter(it=>addedItineraries.includes(it.id));
-  const days = added.reduce((a,b)=>a+b.days,0);
-  const budget = added.reduce((a,b)=>a+b.priceNum,0);
-  let h = `<div class="glass-box"><div class="summary-row"><span class="summary-label">Selected Plans</span><span class="summary-value" style="color:#a5b4fc">${added.length}</span></div><div class="summary-row"><span class="summary-label">Total Days</span><span class="summary-value">${days}</span></div><div class="summary-row"><span class="summary-label">Est. Budget</span><span class="summary-value" style="color:#4ade80">$${budget.toLocaleString()}</span></div></div>`;
-  added.forEach(it => { h += `<div class="summary-item"><img src="${it.img || it.fallbackImg}" style="width:44px;height:44px;border-radius:10px;object-fit:cover;flex-shrink:0"><div style="flex:1"><div style="font-size:14px;font-weight:600">${it.title}</div><div style="font-size:12px;color:var(--text-muted)">${it.days} days — ${it.location}</div></div><button class="remove-btn" onclick="toggleAdd(${it.id})">Remove</button></div>`; });
-  c.innerHTML = h;
+  // Now handled by renderTripSummary() via the add-to-trip buttons
+  renderTripSummary();
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -1641,7 +2040,7 @@ function updateBudget() {
     bars+=`<div class="budget-bar-item"><div class="budget-bar-header"><span class="budget-bar-label">${cat.label}</span><span class="budget-bar-value">$${amt.toLocaleString()} <span style="color:var(--text-dim);font-weight:400">(${Math.round(cat.pct*100)}%)</span></span></div><div class="budget-bar-track"><div class="budget-bar-fill" style="width:${cat.pct*100}%;background:${cat.color};animation-delay:${0.2+i*0.1}s"></div></div></div>`;
   });
   const days = added.reduce((a,b)=>a+b.days,0);
-  c.innerHTML = `<div class="budget-chart-wrap"><div class="donut-container"><svg viewBox="0 0 140 140" class="donut-ring">${segs}</svg><div class="donut-total"><div class="donut-total-label">Total</div><div class="donut-total-value">$${total.toLocaleString()}</div></div></div><div class="budget-legend">${legend}</div></div><div>${bars}</div><div class="glass-box" style="margin-top:16px;padding:14px"><div style="display:flex;justify-content:space-between"><div><div style="font-size:12px;color:var(--text-muted)">Daily Average</div><div style="font-size:18px;font-weight:700;margin-top:2px">$${Math.round(total/days).toLocaleString()}</div></div><div style="text-align:right"><div style="font-size:12px;color:var(--text-muted)">Duration</div><div style="font-size:18px;font-weight:700;color:#a5b4fc;margin-top:2px">${days} days</div></div></div></div>`;
+  c.innerHTML = `<div class="budget-chart-wrap"><div class="donut-container"><svg viewBox="0 0 140 140" class="donut-ring">${segs}</svg><div class="donut-total"><div class="donut-total-label">Total</div><div class="donut-total-value">$${total.toLocaleString()}</div></div></div><div class="budget-legend">${legend}</div></div><div>${bars}</div><div class="glass-box" style="margin-top:16px;padding:14px"><div style="display:flex;justify-content:space-between"><div><div style="font-size:12px;color:var(--text-muted)">Daily Average</div><div style="font-size:18px;font-weight:700;margin-top:2px">$${Math.round(total/days).toLocaleString()}</div></div><div style="text-align:right"><div style="font-size:12px;color:var(--text-muted)">Duration</div><div style="font-size:18px;font-weight:700;color:#7aa88e;margin-top:2px">${days} days</div></div></div></div>`;
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -1804,8 +2203,8 @@ updateBudget();
 updateHeader();
 updateStepper();
 
-document.addEventListener('DOMContentLoaded', () => { if (typeof lucide !== 'undefined') lucide.createIcons(); });
-window.addEventListener('load', () => { if (typeof lucide !== 'undefined') lucide.createIcons(); });
+document.addEventListener('DOMContentLoaded', () => { if (typeof lucide !== 'undefined') lucide.createIcons(); initTripMap(); });
+window.addEventListener('load', () => { if (typeof lucide !== 'undefined') lucide.createIcons(); if (!tripMap) initTripMap(); });
 </script>
 
 <!-- Firebase Integration -->
@@ -1859,34 +2258,34 @@ window.addEventListener('load', () => { if (typeof lucide !== 'undefined') lucid
   <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px;" class="footer-grid">
     <div>
       <a href="/home" style="display:inline-block;margin-bottom:16px;"><img src="logo.png" alt="One-Up Travel" style="height:36px;"></a>
-      <p style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.7;max-width:280px;">AI-powered travel planning. Let Lisa build your perfect itinerary with real hotels, flights, and activities.</p>
+      <p style="font-size:13px;color:#96887a;line-height:1.7;max-width:280px;">AI-powered travel planning. Let Lisa build your perfect itinerary with real hotels, flights, and activities.</p>
       <div style="display:flex;gap:12px;margin-top:20px;">
-        <a href="https://instagram.com/oneuptravel" target="_blank" rel="noopener" style="width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.5);transition:all 0.3s;text-decoration:none;" onmouseover="this.style.background='rgba(99,102,241,0.15)';this.style.borderColor='rgba(99,102,241,0.4)';this.style.color='#a5b4fc'" onmouseout="this.style.background='rgba(255,255,255,0.05)';this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='rgba(255,255,255,0.5)'"><i data-lucide="instagram" style="width:16px;height:16px;"></i></a>
-        <a href="https://linkedin.com/company/oneuptravel" target="_blank" rel="noopener" style="width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.5);transition:all 0.3s;text-decoration:none;" onmouseover="this.style.background='rgba(99,102,241,0.15)';this.style.borderColor='rgba(99,102,241,0.4)';this.style.color='#a5b4fc'" onmouseout="this.style.background='rgba(255,255,255,0.05)';this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='rgba(255,255,255,0.5)'"><i data-lucide="linkedin" style="width:16px;height:16px;"></i></a>
+        <a href="https://instagram.com/oneuptravel" target="_blank" rel="noopener" style="width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.5);transition:all 0.3s;text-decoration:none;" onmouseover="this.style.background='rgba(92,138,114,0.15)';this.style.borderColor='rgba(92,138,114,0.4)';this.style.color='#7aa88e'" onmouseout="this.style.background='rgba(255,255,255,0.05)';this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='rgba(255,255,255,0.5)'"><i data-lucide="instagram" style="width:16px;height:16px;"></i></a>
+        <a href="https://linkedin.com/company/oneuptravel" target="_blank" rel="noopener" style="width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.5);transition:all 0.3s;text-decoration:none;" onmouseover="this.style.background='rgba(92,138,114,0.15)';this.style.borderColor='rgba(92,138,114,0.4)';this.style.color='#7aa88e'" onmouseout="this.style.background='rgba(255,255,255,0.05)';this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='rgba(255,255,255,0.5)'"><i data-lucide="linkedin" style="width:16px;height:16px;"></i></a>
       </div>
     </div>
     <div>
-      <div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,0.35);font-weight:600;margin-bottom:16px;">Product</div>
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:#b5a99a;font-weight:600;margin-bottom:16px;">Product</div>
       <a href="/home" style="display:block;font-size:14px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Home</a>
       <a href="/itinerary" style="display:block;font-size:14px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">My Itinerary</a>
       <a href="/dashboard" style="display:block;font-size:14px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Saved Trips</a>
     </div>
     <div>
-      <div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,0.35);font-weight:600;margin-bottom:16px;">Support</div>
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:#b5a99a;font-weight:600;margin-bottom:16px;">Support</div>
       <a href="/faq" style="display:block;font-size:14px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">FAQs</a>
       <a href="/contact" style="display:block;font-size:14px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Contact Us</a>
       <a href="mailto:Clem@one-up.cloud" style="display:block;font-size:14px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Clem@one-up.cloud</a>
     </div>
     <div>
-      <div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,0.35);font-weight:600;margin-bottom:16px;">Legal</div>
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:#b5a99a;font-weight:600;margin-bottom:16px;">Legal</div>
       <a href="/legal#terms" style="display:block;font-size:14px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Terms of Service</a>
       <a href="/legal#privacy" style="display:block;font-size:14px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Privacy Policy</a>
       <a href="/legal#cookies" style="display:block;font-size:14px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Cookie Policy</a>
     </div>
   </div>
   <div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
-    <p style="font-size:12px;color:rgba(255,255,255,0.3);">&copy; 2026 One-Up Travel Pty Ltd. All rights reserved.</p>
-    <p style="font-size:12px;color:rgba(255,255,255,0.3);">Brisbane, Queensland, Australia</p>
+    <p style="font-size:12px;color:#b5a99a;">&copy; 2026 One-Up Travel Pty Ltd. All rights reserved.</p>
+    <p style="font-size:12px;color:#b5a99a;">Brisbane, Queensland, Australia</p>
   </div>
 </footer>
 <style>

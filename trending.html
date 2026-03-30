@@ -11,8 +11,8 @@
 
     body {
       font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
-      background: #0a0a0f;
-      color: white;
+      background: #f5f2ec;
+      color: #2c2c2a;
       overflow-x: hidden;
       min-height: 100vh;
     }
@@ -21,9 +21,9 @@
     .bg-ambient {
       position: fixed; inset: 0; z-index: 0; pointer-events: none;
       background:
-        radial-gradient(ellipse at 20% 20%, rgba(99,102,241,0.07) 0%, transparent 50%),
+        radial-gradient(ellipse at 20% 20%, rgba(92,138,114,0.07) 0%, transparent 50%),
         radial-gradient(ellipse at 80% 80%, rgba(139,92,246,0.05) 0%, transparent 50%),
-        #0a0a0f;
+        #f5f2ec;
     }
 
     /* =============== HEADER =============== */
@@ -31,8 +31,8 @@
       position: sticky; top: 0; z-index: 100;
       padding: 18px 40px;
       display: flex; justify-content: space-between; align-items: center;
-      background: rgba(10,10,15,0.85); backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.85); backdrop-filter: none;
+      border-bottom: 1px solid #ddd7ca;
     }
 
     .header-left { flex: 1; display: flex; align-items: center; }
@@ -45,20 +45,20 @@
 
     .header-menu-btn {
       background: transparent; border: 1px solid rgba(255,255,255,0.2);
-      color: white; padding: 8px 16px; border-radius: 8px; cursor: pointer;
+      color: #2c2c2a; padding: 8px 16px; border-radius: 8px; cursor: pointer;
       font-weight: 500; font-size: 14px; transition: all 0.3s;
       display: flex; align-items: center; gap: 8px;
       font-family: 'Plus Jakarta Sans', sans-serif;
     }
-    .header-menu-btn:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.3); }
+    .header-menu-btn:hover { background: #ffffff; border-color: #b5a99a; }
     .header-menu-btn i { width: 18px; height: 18px; }
 
     .signin-btn {
-      background: #6366f1; color: white; text-decoration: none;
+      background: #5c8a72; color: #fff; text-decoration: none;
       padding: 10px 24px; border-radius: 10px; font-weight: 600; font-size: 15px;
-      transition: all 0.3s; box-shadow: 0 2px 8px rgba(99,102,241,0.2); margin-left: 20px;
+      transition: all 0.3s; box-shadow: 0 2px 8px rgba(92,138,114,0.2); margin-left: 20px;
     }
-    .signin-btn:hover { background: #4f46e5; transform: translateY(-2px); }
+    .signin-btn:hover { background: #3a6b52; transform: translateY(-2px); }
 
     /* =============== LEFT SIDEBAR =============== */
     .left-sidebar {
@@ -80,7 +80,7 @@
     .sidebar-section { margin-bottom: 28px; width: 100%; }
     .sidebar-section-title {
       font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px;
-      color: rgba(255,255,255,0.35); margin-bottom: 12px; padding-left: 12px; font-weight: 600;
+      color: #b5a99a; margin-bottom: 12px; padding-left: 12px; font-weight: 600;
     }
     .sidebar-item {
       display: flex; align-items: center; gap: 12px; width: 100%;
@@ -90,29 +90,29 @@
       font-weight: 500; font-size: 14px; transition: all 0.25s; cursor: pointer;
     }
     .sidebar-item:hover {
-      background: rgba(99,102,241,0.12); border-color: rgba(99,102,241,0.25); color: white;
-      box-shadow: 0 0 20px rgba(99,102,241,0.15), inset 0 0 20px rgba(99,102,241,0.05);
+      background: rgba(92,138,114,0.12); border-color: rgba(92,138,114,0.25); color: #2c2c2a;
+      box-shadow: 0 0 20px rgba(92,138,114,0.15), inset 0 0 20px rgba(92,138,114,0.05);
     }
-    .sidebar-item.active { background: rgba(99,102,241,0.15); border-color: rgba(99,102,241,0.3); color: white; }
-    .sidebar-item.primary { background: rgba(99,102,241,0.15); border-color: rgba(99,102,241,0.4); color: #a5b4fc; font-weight: 600; }
+    .sidebar-item.active { background: rgba(92,138,114,0.15); border-color: rgba(92,138,114,0.3); color: #2c2c2a; }
+    .sidebar-item.primary { background: rgba(92,138,114,0.15); border-color: rgba(92,138,114,0.4); color: #7aa88e; font-weight: 600; }
     .sidebar-item.primary:hover {
-      background: rgba(99,102,241,0.25); border-color: rgba(99,102,241,0.5); color: white;
-      box-shadow: 0 0 24px rgba(99,102,241,0.25), inset 0 0 20px rgba(99,102,241,0.08);
+      background: rgba(92,138,114,0.25); border-color: rgba(92,138,114,0.5); color: #2c2c2a;
+      box-shadow: 0 0 24px rgba(92,138,114,0.25), inset 0 0 20px rgba(92,138,114,0.08);
     }
     .sidebar-item i { width: 18px; height: 18px; flex-shrink: 0; opacity: 0.7; }
     .sidebar-item:hover i { opacity: 1; }
 
     .sidebar-close-btn {
       position: absolute; top: 20px; right: 16px;
-      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
-      color: white; width: 36px; height: 36px; border-radius: 10px;
+      background: #ffffff; border: 1px solid rgba(255,255,255,0.12);
+      color: #2c2c2a; width: 36px; height: 36px; border-radius: 10px;
       cursor: pointer; transition: all 0.25s;
       display: flex; align-items: center; justify-content: center;
     }
     .sidebar-close-btn:hover { background: rgba(239,68,68,0.15); border-color: rgba(239,68,68,0.4); box-shadow: 0 0 16px rgba(239,68,68,0.15); }
     .sidebar-close-btn svg { width: 18px; height: 18px; stroke: rgba(255,255,255,0.8); stroke-width: 2.5; }
     .sidebar-close-btn:hover svg { stroke: white; }
-    .sidebar-divider { height: 1px; background: rgba(255,255,255,0.06); margin: 8px 0 20px; }
+    .sidebar-divider { height: 1px; background: #ffffff; margin: 8px 0 20px; }
 
     /* =============== MAIN CONTENT =============== */
     .main-content {
@@ -135,14 +135,14 @@
     }
 
     .page-title span {
-      background: linear-gradient(135deg, #f59e0b, #f43f5e, #a855f7);
+      background: linear-gradient(135deg, #f59e0b, #f43f5e, #c8b48a);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
     .page-subtitle {
       font-size: 15px;
-      color: rgba(255,255,255,0.4);
+      color: #96887a;
     }
 
     /* Filter tabs */
@@ -162,14 +162,14 @@
       cursor: pointer;
       transition: all 0.25s;
       white-space: nowrap;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      color: rgba(255,255,255,0.5);
+      background: rgba(92,138,114,0.05);
+      border: 1px solid #ddd7ca;
+      color: #96887a;
       font-family: 'Plus Jakarta Sans', sans-serif;
     }
 
-    .feed-tab:hover { background: rgba(255,255,255,0.08); color: white; }
-    .feed-tab.active { background: rgba(99,102,241,0.15); border-color: rgba(99,102,241,0.4); color: white; }
+    .feed-tab:hover { background: rgba(92,138,114,0.06); color: #2c2c2a; }
+    .feed-tab.active { background: rgba(92,138,114,0.15); border-color: rgba(92,138,114,0.4); color: #2c2c2a; }
 
     /* =============== FEED GRID =============== */
     .feed-grid {
@@ -184,7 +184,7 @@
       overflow: hidden;
       cursor: pointer;
       border-radius: 2px;
-      background: rgba(255,255,255,0.03);
+      background: rgba(92,138,114,0.04);
     }
 
     .feed-card img {
@@ -229,8 +229,8 @@
       z-index: 2;
     }
 
-    .feed-card-type.itinerary { background: rgba(99,102,241,0.7); color: white; }
-    .feed-card-type.photo { background: rgba(16,185,129,0.7); color: white; }
+    .feed-card-type.itinerary { background: rgba(92,138,114,0.7); color: #2c2c2a; }
+    .feed-card-type.photo { background: rgba(92,138,114,0.7); color: #2c2c2a; }
 
     /* Multi-image indicator */
     .feed-card-multi {
@@ -255,8 +255,8 @@
 
     .post-modal-close {
       position: fixed; top: 20px; right: 24px;
-      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15);
-      color: white; width: 40px; height: 40px; border-radius: 50%;
+      background: rgba(92,138,114,0.08); border: 1px solid #c8c0ae;
+      color: #2c2c2a; width: 40px; height: 40px; border-radius: 50%;
       cursor: pointer; display: flex; align-items: center; justify-content: center;
       transition: all 0.25s; z-index: 2001;
     }
@@ -267,8 +267,8 @@
     .post-nav {
       position: fixed; top: 50%; transform: translateY(-50%);
       width: 44px; height: 44px; border-radius: 50%;
-      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
-      color: white; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      background: rgba(92,138,114,0.06); border: 1px solid rgba(255,255,255,0.12);
+      color: #2c2c2a; cursor: pointer; display: flex; align-items: center; justify-content: center;
       transition: all 0.25s; z-index: 2001;
     }
     .post-nav:hover { background: rgba(255,255,255,0.15); }
@@ -284,7 +284,7 @@
       background: #111118;
       border-radius: 16px;
       overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.08);
+      border: 1px solid #ddd7ca;
       box-shadow: 0 40px 120px rgba(0,0,0,0.6);
     }
 
@@ -318,7 +318,7 @@
     }
 
     .post-itin-overlay .itin-meta {
-      font-size: 12px; color: rgba(255,255,255,0.5);
+      font-size: 12px; color: #96887a;
       display: flex; gap: 12px; margin-bottom: 10px;
     }
 
@@ -334,19 +334,19 @@
     }
 
     .itin-tag.flight { background: rgba(245,158,11,0.2); color: #fcd34d; }
-    .itin-tag.hotel { background: rgba(99,102,241,0.2); color: #a5b4fc; }
-    .itin-tag.activity { background: rgba(16,185,129,0.2); color: #6ee7b7; }
+    .itin-tag.hotel { background: rgba(92,138,114,0.2); color: #7aa88e; }
+    .itin-tag.activity { background: rgba(92,138,114,0.2); color: #7aa88e; }
     .itin-tag.budget { background: rgba(244,63,94,0.2); color: #fda4af; }
 
     .post-itin-btn {
       display: inline-flex; align-items: center; gap: 6px;
       margin-top: 12px; padding: 8px 16px;
-      background: #6366f1; border: none; border-radius: 8px;
-      color: white; font-size: 12px; font-weight: 700; cursor: pointer;
+      background: #5c8a72; border: none; border-radius: 8px;
+      color: #2c2c2a; font-size: 12px; font-weight: 700; cursor: pointer;
       transition: all 0.25s;
       font-family: 'Plus Jakarta Sans', sans-serif;
     }
-    .post-itin-btn:hover { background: #4f46e5; transform: translateY(-1px); }
+    .post-itin-btn:hover { background: #3a6b52; transform: translateY(-1px); }
     .post-itin-btn i { width: 14px; height: 14px; }
 
     /* Right: details + comments */
@@ -361,7 +361,7 @@
     .post-header {
       display: flex; align-items: center; gap: 12px;
       padding: 18px 20px;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid #ddd7ca;
     }
 
     .post-avatar {
@@ -380,14 +380,14 @@
     .verified-badge {
       width: 16px; height: 16px;
       border-radius: 50%;
-      background: #6366f1;
+      background: #5c8a72;
       display: inline-flex; align-items: center; justify-content: center;
       flex-shrink: 0;
     }
-    .verified-badge i { width: 10px; height: 10px; color: white; }
+    .verified-badge i { width: 10px; height: 10px; color: #2c2c2a; }
 
     .post-location {
-      font-size: 12px; color: rgba(255,255,255,0.4);
+      font-size: 12px; color: #96887a;
       display: flex; align-items: center; gap: 4px;
     }
     .post-location i { width: 12px; height: 12px; }
@@ -397,13 +397,13 @@
       border-radius: 8px;
       font-size: 12px; font-weight: 700;
       background: transparent;
-      border: 1px solid rgba(99,102,241,0.5);
-      color: #a5b4fc;
+      border: 1px solid rgba(92,138,114,0.5);
+      color: #7aa88e;
       cursor: pointer;
       transition: all 0.25s;
       font-family: 'Plus Jakarta Sans', sans-serif;
     }
-    .post-follow-btn:hover { background: rgba(99,102,241,0.15); color: white; }
+    .post-follow-btn:hover { background: rgba(92,138,114,0.15); color: #2c2c2a; }
 
     /* Comments area */
     .post-comments {
@@ -460,19 +460,19 @@
     /* Actions bar */
     .post-actions {
       padding: 12px 20px;
-      border-top: 1px solid rgba(255,255,255,0.06);
+      border-top: 1px solid #ddd7ca;
       display: flex; align-items: center; gap: 16px;
     }
 
     .post-action-btn {
-      background: none; border: none; color: white;
+      background: none; border: none; color: #2c2c2a;
       cursor: pointer; padding: 4px;
       transition: all 0.2s; display: flex; align-items: center;
     }
     .post-action-btn:hover { transform: scale(1.15); }
     .post-action-btn i { width: 24px; height: 24px; }
     .post-action-btn.liked i { color: #f43f5e; fill: #f43f5e; }
-    .post-action-btn.saved i { color: white; fill: white; }
+    .post-action-btn.saved i { color: #2c2c2a; fill: white; }
     .post-action-spacer { flex: 1; }
 
     .post-likes {
@@ -490,19 +490,19 @@
     .post-comment-input {
       display: flex; align-items: center; gap: 12px;
       padding: 14px 20px;
-      border-top: 1px solid rgba(255,255,255,0.06);
+      border-top: 1px solid #ddd7ca;
     }
 
     .post-comment-input input {
       flex: 1; background: none; border: none; outline: none;
-      color: white; font-size: 13px;
+      color: #2c2c2a; font-size: 13px;
       font-family: 'Plus Jakarta Sans', sans-serif;
     }
     .post-comment-input input::placeholder { color: rgba(255,255,255,0.25); }
 
     .post-comment-submit {
       background: none; border: none;
-      color: #6366f1; font-weight: 700; font-size: 13px;
+      color: #5c8a72; font-weight: 700; font-size: 13px;
       cursor: pointer; opacity: 0.5; transition: opacity 0.2s;
       font-family: 'Plus Jakarta Sans', sans-serif;
     }
@@ -514,14 +514,14 @@
       bottom: 32px; right: 32px;
       width: 56px; height: 56px;
       border-radius: 16px;
-      background: linear-gradient(135deg, #6366f1, #a855f7);
-      border: none; color: white;
+      background: linear-gradient(135deg, #5c8a72, #c8b48a);
+      border: none; color: #2c2c2a;
       display: flex; align-items: center; justify-content: center;
       cursor: pointer;
-      box-shadow: 0 8px 32px rgba(99,102,241,0.4);
+      box-shadow: 0 8px 32px rgba(92,138,114,0.4);
       transition: all 0.3s; z-index: 100;
     }
-    .create-fab:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 12px 40px rgba(99,102,241,0.5); }
+    .create-fab:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 12px 40px rgba(92,138,114,0.5); }
     .create-fab i { width: 26px; height: 26px; }
 
     /* =============== TOAST =============== */
@@ -539,8 +539,8 @@
       backdrop-filter: blur(16px);
     }
 
-    .toast.success { background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.3); color: #6ee7b7; }
-    .toast.info { background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.3); color: #a5b4fc; }
+    .toast.success { background: rgba(92,138,114,0.15); border: 1px solid rgba(92,138,114,0.3); color: #7aa88e; }
+    .toast.info { background: rgba(92,138,114,0.15); border: 1px solid rgba(92,138,114,0.3); color: #7aa88e; }
 
     @keyframes toastIn {
       from { opacity: 0; transform: translateX(40px); }
@@ -552,7 +552,7 @@
       .feed-grid { grid-template-columns: repeat(3, 1fr); }
       .post-modal { flex-direction: column; height: 90vh; max-height: none; width: 95vw; }
       .post-image-side { flex: none; height: 45%; }
-      .post-details-side { flex: 1; border-left: none; border-top: 1px solid rgba(255,255,255,0.06); }
+      .post-details-side { flex: 1; border-left: none; border-top: 1px solid #ddd7ca; }
     }
 
     @media (max-width: 640px) {
@@ -564,16 +564,16 @@
     }
 
     /* ═══ ECO / PURPOSE THEME ═══ */
-    html.purpose-theme { background: #050e08 !important; }
-    .purpose-theme body { background: #050e08 !important; }
-    .purpose-theme header, .purpose-theme .header { background: rgba(5,14,8,0.85) !important; }
-    .purpose-theme .left-sidebar { background: rgba(5,14,8,0.97) !important; }
-    .purpose-theme .signin-btn, .purpose-theme .signin-btn-header { background: #059669 !important; box-shadow: 0 2px 8px rgba(16,185,129,0.25) !important; }
-    .purpose-theme .signin-btn:hover { background: #047857 !important; }
-    .purpose-theme .sidebar-item:hover, .purpose-theme .sidebar-item.active { background: rgba(16,185,129,0.15) !important; border-color: rgba(16,185,129,0.3) !important; }
-    .purpose-theme .sidebar-item.primary { background: rgba(16,185,129,0.15) !important; border-color: rgba(16,185,129,0.4) !important; color: #6ee7b7 !important; }
-    .purpose-theme #sidebarEcoToggle { background: rgba(16,185,129,0.15); border-color: rgba(16,185,129,0.4); color: #6ee7b7; }
-    .purpose-theme ::-webkit-scrollbar-thumb { background: rgba(16,185,129,0.3) !important; }
+    html.purpose-theme { background: #e8f0eb !important; }
+    .purpose-theme body { background: #e8f0eb !important; }
+    .purpose-theme header, .purpose-theme .header { background: rgba(232,240,235,0.85) !important; }
+    .purpose-theme .left-sidebar { background: rgba(232,240,235,0.97) !important; }
+    .purpose-theme .signin-btn, .purpose-theme .signin-btn-header { background: #3a6b52 !important; box-shadow: 0 2px 8px rgba(92,138,114,0.25) !important; }
+    .purpose-theme .signin-btn:hover { background: #2d5c45 !important; }
+    .purpose-theme .sidebar-item:hover, .purpose-theme .sidebar-item.active { background: rgba(92,138,114,0.15) !important; border-color: rgba(92,138,114,0.3) !important; }
+    .purpose-theme .sidebar-item.primary { background: rgba(92,138,114,0.15) !important; border-color: rgba(92,138,114,0.4) !important; color: #7aa88e !important; }
+    .purpose-theme #sidebarEcoToggle { background: rgba(92,138,114,0.15); border-color: rgba(92,138,114,0.4); color: #7aa88e; }
+    .purpose-theme ::-webkit-scrollbar-thumb { background: rgba(92,138,114,0.3) !important; }
 
     /* Sidebar eco animated toggle */
     .sidebar-eco-wrap {
@@ -583,10 +583,10 @@
       transition: all 0.25s; cursor: pointer;
     }
     .sidebar-eco-wrap:hover {
-      background: rgba(16,185,129,0.08); border-color: rgba(16,185,129,0.2);
+      background: rgba(92,138,114,0.08); border-color: rgba(92,138,114,0.2);
     }
     .sidebar-eco-wrap.active {
-      background: rgba(16,185,129,0.12); border-color: rgba(16,185,129,0.3);
+      background: rgba(92,138,114,0.12); border-color: rgba(92,138,114,0.3);
     }
     .sidebar-eco-left {
       display: flex; align-items: center; gap: 12px;
@@ -594,17 +594,17 @@
       cursor: pointer; user-select: none;
     }
     .sidebar-eco-left i { width: 18px; height: 18px; opacity: 0.7; }
-    .sidebar-eco-wrap:hover .sidebar-eco-left { color: #6ee7b7; }
+    .sidebar-eco-wrap:hover .sidebar-eco-left { color: #7aa88e; }
     .sidebar-eco-wrap:hover .sidebar-eco-left i { opacity: 1; }
-    .sidebar-eco-wrap.active .sidebar-eco-left { color: #34d399; font-weight: 600; }
-    .sidebar-eco-wrap.active .sidebar-eco-left i { opacity: 1; color: #34d399; }
+    .sidebar-eco-wrap.active .sidebar-eco-left { color: #7aa88e; font-weight: 600; }
+    .sidebar-eco-wrap.active .sidebar-eco-left i { opacity: 1; color: #7aa88e; }
     .sidebar-eco-switch {
       position: relative; width: 42px; height: 24px;
-      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(92,138,114,0.08); border: 1px solid rgba(255,255,255,0.12);
       border-radius: 12px; cursor: pointer; transition: all 0.3s ease; flex-shrink: 0;
     }
     .sidebar-eco-wrap.active .sidebar-eco-switch {
-      background: rgba(16,185,129,0.25); border-color: rgba(16,185,129,0.5);
+      background: rgba(92,138,114,0.25); border-color: rgba(92,138,114,0.5);
     }
     .sidebar-eco-dot {
       position: absolute; top: 3px; left: 3px;
@@ -612,7 +612,7 @@
       border-radius: 50%; transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
     }
     .sidebar-eco-wrap.active .sidebar-eco-dot {
-      left: 21px; background: #34d399;
+      left: 21px; background: #7aa88e;
       box-shadow: 0 0 10px rgba(52,211,153,0.5);
     }
   </style>
@@ -995,7 +995,7 @@
               </div>
               <div class="post-location"><i data-lucide="map-pin"></i> ${post.location}</div>
             </div>
-            <button class="post-follow-btn" onclick="this.textContent='Following';this.style.background='rgba(99,102,241,0.2)';this.style.borderColor='rgba(99,102,241,0.6)';this.style.color='white';">Follow</button>
+            <button class="post-follow-btn" onclick="this.textContent='Following';this.style.background='rgba(92,138,114,0.2)';this.style.borderColor='rgba(92,138,114,0.6)';this.style.color='#2c2c2a';">Follow</button>
           </div>
 
           <div class="post-comments">
@@ -1153,34 +1153,34 @@
   <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px;" class="footer-grid">
     <div>
       <a href="/home" style="display:inline-block;margin-bottom:16px;"><img src="logo.png" alt="One-Up Travel" style="height:36px;"></a>
-      <p style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.7;max-width:280px;">AI-powered travel planning. Let Lisa build your perfect itinerary with real hotels, flights, and activities.</p>
+      <p style="font-size:13px;color:#96887a;line-height:1.7;max-width:280px;">AI-powered travel planning. Let Lisa build your perfect itinerary with real hotels, flights, and activities.</p>
       <div style="display:flex;gap:12px;margin-top:20px;">
-        <a href="https://instagram.com/oneuptravel" target="_blank" rel="noopener" style="width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.5);transition:all 0.3s;text-decoration:none;" onmouseover="this.style.background='rgba(99,102,241,0.15)';this.style.borderColor='rgba(99,102,241,0.4)';this.style.color='#a5b4fc'" onmouseout="this.style.background='rgba(255,255,255,0.05)';this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='rgba(255,255,255,0.5)'"><i data-lucide="instagram" style="width:16px;height:16px;"></i></a>
-        <a href="https://linkedin.com/company/oneuptravel" target="_blank" rel="noopener" style="width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.5);transition:all 0.3s;text-decoration:none;" onmouseover="this.style.background='rgba(99,102,241,0.15)';this.style.borderColor='rgba(99,102,241,0.4)';this.style.color='#a5b4fc'" onmouseout="this.style.background='rgba(255,255,255,0.05)';this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='rgba(255,255,255,0.5)'"><i data-lucide="linkedin" style="width:16px;height:16px;"></i></a>
+        <a href="https://instagram.com/oneuptravel" target="_blank" rel="noopener" style="width:36px;height:36px;border-radius:10px;background:#ffffff;border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;color:#96887a;transition:all 0.3s;text-decoration:none;" onmouseover="this.style.background='rgba(92,138,114,0.15)';this.style.borderColor='rgba(92,138,114,0.4)';this.style.color='#7aa88e'" onmouseout="this.style.background='rgba(92,138,114,0.05)';this.style.borderColor='#ddd7ca';this.style.color='#96887a'"><i data-lucide="instagram" style="width:16px;height:16px;"></i></a>
+        <a href="https://linkedin.com/company/oneuptravel" target="_blank" rel="noopener" style="width:36px;height:36px;border-radius:10px;background:#ffffff;border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;color:#96887a;transition:all 0.3s;text-decoration:none;" onmouseover="this.style.background='rgba(92,138,114,0.15)';this.style.borderColor='rgba(92,138,114,0.4)';this.style.color='#7aa88e'" onmouseout="this.style.background='rgba(92,138,114,0.05)';this.style.borderColor='#ddd7ca';this.style.color='#96887a'"><i data-lucide="linkedin" style="width:16px;height:16px;"></i></a>
       </div>
     </div>
     <div>
-      <div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,0.35);font-weight:600;margin-bottom:16px;">Product</div>
-      <a href="/home" style="display:block;font-size:14px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Home</a>
-      <a href="/itinerary" style="display:block;font-size:14px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">My Itinerary</a>
-      <a href="/dashboard" style="display:block;font-size:14px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Saved Trips</a>
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:#b5a99a;font-weight:600;margin-bottom:16px;">Product</div>
+      <a href="/home" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Home</a>
+      <a href="/itinerary" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">My Itinerary</a>
+      <a href="/dashboard" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Saved Trips</a>
     </div>
     <div>
-      <div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,0.35);font-weight:600;margin-bottom:16px;">Support</div>
-      <a href="/faq" style="display:block;font-size:14px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">FAQs</a>
-      <a href="/contact" style="display:block;font-size:14px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Contact Us</a>
-      <a href="mailto:Clem@one-up.cloud" style="display:block;font-size:14px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Clem@one-up.cloud</a>
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:#b5a99a;font-weight:600;margin-bottom:16px;">Support</div>
+      <a href="/faq" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">FAQs</a>
+      <a href="/contact" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Contact Us</a>
+      <a href="mailto:Clem@one-up.cloud" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Clem@one-up.cloud</a>
     </div>
     <div>
-      <div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,0.35);font-weight:600;margin-bottom:16px;">Legal</div>
-      <a href="/legal#terms" style="display:block;font-size:14px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Terms of Service</a>
-      <a href="/legal#privacy" style="display:block;font-size:14px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Privacy Policy</a>
-      <a href="/legal#cookies" style="display:block;font-size:14px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Cookie Policy</a>
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:#b5a99a;font-weight:600;margin-bottom:16px;">Legal</div>
+      <a href="/legal#terms" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Terms of Service</a>
+      <a href="/legal#privacy" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Privacy Policy</a>
+      <a href="/legal#cookies" style="display:block;font-size:14px;color:#96887a;text-decoration:none;margin-bottom:12px;transition:color 0.2s;" onmouseover="this.style.color='#2c2c2a'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Cookie Policy</a>
     </div>
   </div>
   <div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
-    <p style="font-size:12px;color:rgba(255,255,255,0.3);">&copy; 2026 One-Up Travel Pty Ltd. All rights reserved.</p>
-    <p style="font-size:12px;color:rgba(255,255,255,0.3);">Brisbane, Queensland, Australia</p>
+    <p style="font-size:12px;color:#b5a99a;">&copy; 2026 One-Up Travel Pty Ltd. All rights reserved.</p>
+    <p style="font-size:12px;color:#b5a99a;">Brisbane, Queensland, Australia</p>
   </div>
 </footer>
 <style>
