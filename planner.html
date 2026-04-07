@@ -1623,9 +1623,11 @@ function renderResults(data) {
       // Top: airline + price
       html += '<div class="flight-card-top">';
       html += '<div><div class="flight-airline">' + f.airline + badge + '</div>';
-      if (f.flightNo) html += '<div class="flight-airline-sub">' + f.flightNo + '</div>';
+      if (f.flightNo && f.flightNo !== f.airline) html += '<div class="flight-airline-sub">' + f.flightNo + '</div>';
       html += '</div>';
-      html += '<div><div class="flight-price">' + f.price + '</div><span class="flight-price-label">' + priceLabel + '</span></div>';
+      var priceStr = f.price || '';
+      if (priceStr && !priceStr.startsWith('from') && !priceStr.startsWith('~')) priceStr = 'from ' + priceStr;
+      html += '<div><div class="flight-price">' + priceStr + '</div><span class="flight-price-label">est. ' + priceLabel + '</span></div>';
       html += '</div>';
 
       // Route: departure → duration → arrival (Expedia style)
@@ -1690,7 +1692,7 @@ function renderResults(data) {
 
       // Book button + Add to trip
       html += '<div class="card-actions">';
-      html += '<a href="' + (f.bookUrl || 'https://www.skyscanner.com.au') + '" target="_blank" rel="noopener" class="flight-book" style="color:#fff">View on ' + getDomain(f.bookUrl) + ' →</a>';
+      html += '<a href="' + (f.bookUrl || 'https://www.skyscanner.com.au') + '" target="_blank" rel="noopener" class="flight-book" style="color:#fff">Check price on ' + getDomain(f.bookUrl) + ' →</a>';
       html += '<button class="add-trip-btn" data-type="flight" data-index="' + i + '" onclick="toggleTripItem(this, \'flight\', ' + i + ')">+ Add to trip</button>';
       html += '</div>';
       html += '</div>';
@@ -1706,7 +1708,7 @@ function renderResults(data) {
       html += '<div class="result-card" id="hotel-card-' + i + '">';
       // Photo placeholder — will be filled by Google Places
       html += '<img class="result-card-photo" id="hotel-photo-' + i + '" src="" alt="' + h.name + '" style="display:none" onerror="this.style.display=\'none\'" onload="this.style.display=\'block\'">';
-      html += '<div class="hotel-card-top"><div><div class="hotel-name">' + h.name + '</div><div class="hotel-location">' + (h.location || '') + '</div></div><div class="hotel-price-wrap"><div class="hotel-price-night">' + h.pricePerNight + '<span class="flight-price-label">/night</span></div>' + (h.totalPrice ? '<div class="hotel-price-total">Total: ' + h.totalPrice + '</div>' : '') + '</div></div>';
+      html += '<div class="hotel-card-top"><div><div class="hotel-name">' + h.name + '</div><div class="hotel-location">' + (h.location || '') + '</div></div><div class="hotel-price-wrap"><div class="hotel-price-night">' + h.pricePerNight + '<span class="flight-price-label"> est./night</span></div>' + (h.totalPrice ? '<div class="hotel-price-total">Est. total: ' + h.totalPrice + '</div>' : '') + '</div></div>';
       html += '<div class="hotel-rating">';
       if (h.stars) { var stars = ''; for (var s = 0; s < h.stars; s++) stars += '<svg width="12" height="12" viewBox="0 0 24 24" fill="#f59e0b" style="display:inline-block;vertical-align:middle"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>'; html += '<span class="hotel-stars">' + stars + '</span>'; }
       if (h.rating) html += '<span class="hotel-score">' + h.rating + '</span>';
@@ -1717,7 +1719,7 @@ function renderResults(data) {
         html += '</div>';
       }
       html += '<div class="card-actions">';
-      html += '<a href="' + (h.bookUrl || 'https://www.booking.com') + '" target="_blank" rel="noopener" class="flight-book" style="color:#fff">View on ' + getDomain(h.bookUrl) + ' →</a>';
+      html += '<a href="' + (h.bookUrl || 'https://www.booking.com') + '" target="_blank" rel="noopener" class="flight-book" style="color:#fff">Check price on ' + getDomain(h.bookUrl) + ' →</a>';
       html += '<button class="add-trip-btn" data-type="hotel" data-index="' + i + '" onclick="toggleTripItem(this, \'hotel\', ' + i + ')">+ Add to trip</button>';
       html += '</div>';
       html += '</div>';
@@ -1739,7 +1741,7 @@ function renderResults(data) {
       if (a.rating) html += '<div class="flight-meta-item">' + a.rating + ' rating</div>';
       html += '</div>';
       html += '<div class="card-actions">';
-      html += '<a href="' + (a.bookUrl || 'https://www.getyourguide.com') + '" target="_blank" rel="noopener" class="flight-book" style="color:#fff">View on ' + getDomain(a.bookUrl) + ' →</a>';
+      html += '<a href="' + (a.bookUrl || 'https://www.getyourguide.com') + '" target="_blank" rel="noopener" class="flight-book" style="color:#fff">Book on ' + getDomain(a.bookUrl) + ' →</a>';
       html += '<button class="add-trip-btn" data-type="activity" data-index="' + i + '" onclick="toggleTripItem(this, \'activity\', ' + i + ')">+ Add to trip</button>';
       html += '</div>';
       html += '</div>';
@@ -1751,13 +1753,72 @@ function renderResults(data) {
   if (data.totalEstimate) {
     html += '<div style="margin-top:20px;padding:20px 24px;background:#fff;border:1px solid #ddd7ca;border-radius:14px;display:flex;justify-content:space-between;align-items:center">';
     html += '<div><div style="font-size:12px;text-transform:uppercase;letter-spacing:1px;color:#b5a99a;font-weight:600;margin-bottom:4px">Estimated Total</div>';
-    html += '<div style="font-size:11px;color:#96887a">Based on Lisa\'s recommended options</div></div>';
+    html += '<div style="font-size:11px;color:#96887a">Approximate — verify when booking</div></div>';
     html += '<div style="font-size:24px;font-weight:800;color:#3a6b52">' + data.totalEstimate + '</div>';
     html += '</div>';
   }
 
   // Price disclaimer
-  html += '<p style="font-size:11px;color:#b5a99a;text-align:center;margin-top:16px;line-height:1.6">Prices are approximate and sourced from the web. Click through for live pricing and availability.</p>';
+  html += '<p style="font-size:11px;color:#b5a99a;text-align:center;margin-top:16px;line-height:1.6">Prices shown are estimates from Lisa\'s web search and may differ from live booking prices. Always check the booking site for the exact fare on your travel date.</p>';
+
+  // Day-by-day itinerary timeline
+  if (data.itinerary && data.itinerary.length > 0) {
+    var iconMap = {
+      plane: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.4-.1.9.3 1.1L11 12l-2 3H6l-1 1 3 2 2 3 1-1v-3l3-2 3.7 7.3c.2.4.7.5 1.1.3l.5-.3c.4-.2.6-.6.5-1.1z"/></svg>',
+      car: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2" ry="2"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>',
+      hotel: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M3 7v14M21 7v14M6 7V3h12v4M9 21v-4h6v4M9 7h6"/></svg>',
+      food: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg>',
+      activity: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
+      beach: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><path d="M12 8v13M5 21h14"/></svg>',
+      shopping: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0"/></svg>',
+      spa: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c-4-3-8-6-8-10a8 8 0 0116 0c0 4-4 7-8 10z"/></svg>',
+      temple: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h20M5 20V8l7-5 7 5v12M9 20v-5h6v5"/></svg>',
+      hike: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 4L2 20h22L13 4z"/></svg>'
+    };
+    var defaultIcon = iconMap.activity;
+
+    html += '<div style="margin-top:28px">';
+    html += '<div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">';
+    html += '<div style="font-size:16px;font-weight:700;color:#2c2c2a">Your Day-by-Day Plan</div>';
+    html += '<div style="flex:1;height:1px;background:#ddd7ca"></div>';
+    html += '</div>';
+
+    data.itinerary.forEach(function(day) {
+      // Day header
+      html += '<div style="margin-bottom:20px">';
+      html += '<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">';
+      html += '<div style="width:36px;height:36px;border-radius:50%;background:#5c8a72;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:700;flex-shrink:0">D' + day.day + '</div>';
+      html += '<div>';
+      html += '<div style="font-size:14px;font-weight:700;color:#2c2c2a">' + (day.title || 'Day ' + day.day) + '</div>';
+      if (day.date) html += '<div style="font-size:11px;color:#96887a">' + day.date + '</div>';
+      html += '</div></div>';
+
+      // Timeline items
+      html += '<div style="margin-left:18px;border-left:2px solid #ddd7ca;padding-left:22px">';
+      if (day.items && day.items.length) {
+        day.items.forEach(function(item, idx) {
+          var isLast = idx === day.items.length - 1;
+          var icon = iconMap[item.icon] || defaultIcon;
+          html += '<div style="position:relative;padding-bottom:' + (isLast ? '4' : '16') + 'px">';
+          // Dot on timeline
+          html += '<div style="position:absolute;left:-29px;top:2px;width:12px;height:12px;border-radius:50%;background:#fff;border:2px solid #5c8a72"></div>';
+          // Time badge
+          html += '<div style="display:flex;align-items:flex-start;gap:10px">';
+          if (item.time) html += '<div style="min-width:42px;font-size:11px;font-weight:600;color:#5c8a72;padding-top:2px">' + item.time + '</div>';
+          html += '<div style="flex:1;background:#fff;border:1px solid #ddd7ca;border-radius:10px;padding:10px 14px">';
+          html += '<div style="display:flex;align-items:center;gap:6px;margin-bottom:3px">';
+          html += '<span style="color:#5c8a72;flex-shrink:0">' + icon + '</span>';
+          html += '<span style="font-size:13px;font-weight:600;color:#2c2c2a">' + (item.title || '') + '</span>';
+          html += '</div>';
+          if (item.desc) html += '<div style="font-size:11.5px;color:#96887a;line-height:1.5">' + item.desc + '</div>';
+          html += '</div></div></div>';
+        });
+      }
+      html += '</div></div>';
+    });
+
+    html += '</div>';
+  }
 
   if (html) {
     area.innerHTML = html;
