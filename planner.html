@@ -1416,9 +1416,10 @@ async function sendMessage() {
       if (viewMode === 'centered') {
         transitionToColumns();
         // Small delay so columns are visible before rendering results
-        setTimeout(function() { renderResults(data.results); }, 300);
+        setTimeout(function() { renderResults(data.results); tryDuffelFlights(data.results); }, 300);
       } else {
         renderResults(data.results);
+        tryDuffelFlights(data.results);
       }
     }
 
@@ -1593,6 +1594,107 @@ function toggleRightPanel() {
 // ══════════════════════════════════════════════════════════════
 // RENDER STRUCTURED RESULTS (flights, hotels, activities)
 // ══════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════════
+// DUFFEL LIVE FLIGHT SEARCH
+// ══════════════════════════════════════════════════════════════
+function tryDuffelFlights(lisaResults) {
+  if (!lisaResults || !lisaResults.flights || lisaResults.flights.length === 0) return;
+
+  // Extract origin/destination from Lisa's flight data
+  var f0 = lisaResults.flights[0];
+  var origin = f0.departAirport || '';
+  var dest = f0.arriveAirport || '';
+  if (!origin || !dest) return;
+
+  // Try to extract date from conversation
+  var departDate = '';
+  for (var i = chatHistory.length - 1; i >= 0; i--) {
+    var msg = chatHistory[i].text || '';
+    // Look for dates like 2026-05-05 or May 5 etc
+    var isoMatch = msg.match(/(\d{4}-\d{2}-\d{2})/);
+    if (isoMatch) { departDate = isoMatch[1]; break; }
+    // Look for "May 5" style
+    var monthMatch = msg.match(/(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\w*\s+(\d{1,2})/i);
+    if (monthMatch) {
+      var months = {jan:'01',feb:'02',mar:'03',apr:'04',may:'05',jun:'06',jul:'07',aug:'08',sep:'09',oct:'10',nov:'11',dec:'12'};
+      var m = months[monthMatch[1].toLowerCase().substring(0,3)];
+      var d = monthMatch[2].padStart(2, '0');
+      departDate = '2026-' + m + '-' + d;
+      break;
+    }
+  }
+  if (!departDate) {
+    // Default to 30 days from now
+    var future = new Date(); future.setDate(future.getDate() + 30);
+    departDate = future.toISOString().split('T')[0];
+  }
+
+  console.log('Duffel search:', origin, '->', dest, 'on', departDate);
+
+  // Show loading indicator on flight section
+  var flightSection = document.querySelector('.results-section');
+  if (flightSection) {
+    var badge = document.createElement('div');
+    badge.id = 'duffel-loading';
+    badge.style.cssText = 'font-size:11px;color:#5c8a72;padding:6px 12px;background:rgba(92,138,114,0.08);border-radius:8px;margin-bottom:12px;display:flex;align-items:center;gap:6px';
+    badge.innerHTML = '<div class="search-spinner" style="width:12px;height:12px;border-width:2px"></div> Fetching live prices from airlines...';
+    flightSection.insertBefore(badge, flightSection.children[1]);
+  }
+
+  // Call our Duffel API
+  fetch('/api/flights', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      origin: origin,
+      destination: dest,
+      departDate: departDate,
+      passengers: 1,
+      cabinClass: 'economy'
+    })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    var loadingBadge = document.getElementById('duffel-loading');
+    if (loadingBadge) loadingBadge.remove();
+
+    if (data.success && data.flights && data.flights.length > 0) {
+      console.log('Duffel returned', data.flights.length, 'flights');
+
+      // Replace Lisa's flight data with real Duffel data
+      var merged = JSON.parse(JSON.stringify(window.lastResults || lisaResults));
+      merged.flights = data.flights;
+
+      // Add live badge
+      var testMode = data.testMode;
+      var sourceLabel = testMode ? 'Test data (Duffel sandbox)' : 'Live prices from airlines';
+
+      renderResults(merged);
+
+      // Add "Live prices" badge
+      var section = document.querySelector('.results-section');
+      if (section) {
+        var liveBadge = document.createElement('div');
+        liveBadge.style.cssText = 'font-size:11px;color:#5c8a72;padding:6px 12px;background:rgba(92,138,114,0.08);border-radius:8px;margin-bottom:8px;font-weight:600';
+        liveBadge.textContent = testMode ? '🧪 Sandbox prices (switch to live key for real fares)' : '✓ ' + sourceLabel;
+        section.insertBefore(liveBadge, section.children[1]);
+      }
+    } else {
+      console.log('Duffel: no results, keeping Lisa estimates');
+      if (loadingBadge) loadingBadge.remove();
+    }
+  })
+  .catch(function(err) {
+    console.error('Duffel fetch failed:', err);
+    var loadingBadge = document.getElementById('duffel-loading');
+    if (loadingBadge) {
+      loadingBadge.innerHTML = 'Could not fetch live prices — showing Lisa\'s estimates';
+      loadingBadge.style.color = '#96887a';
+      setTimeout(function() { loadingBadge.remove(); }, 4000);
+    }
+  });
+}
+
 function renderResults(data) {
   if (!data) return;
   var area = document.getElementById('resultsArea');
